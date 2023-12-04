@@ -1,5 +1,6 @@
 package org.guardteam.mentalguardians.presentation.signin
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -41,7 +42,9 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
 @Composable
 fun SignInScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateSignUp: () -> Unit = {},
+    navigateToHome: () -> Unit = {}
 ) {
     var passwordVisibility by remember { mutableStateOf(false) }
     var emailState by remember {
@@ -127,7 +130,9 @@ fun SignInScreen(
         )
 
         Button(
-            onClick = { },
+            onClick = {
+                navigateToHome()
+            },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary
             ),
@@ -161,7 +166,10 @@ fun SignInScreen(
                 text = "Sign Up",
                 fontFamily = fontFamily,
                 fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.clickable {
+                    navigateSignUp()
+                }
             )
         }
     }

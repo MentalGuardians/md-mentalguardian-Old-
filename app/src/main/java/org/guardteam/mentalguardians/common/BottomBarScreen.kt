@@ -7,29 +7,35 @@ sealed class BottomBarScreen(
     val route: String,
     val title: String,
     @DrawableRes
-    val icon: Int
+    val icon: Int,
+    @DrawableRes
+    val selectedIcon: Int
 ) {
     data object Home : BottomBarScreen(
         route = "home",
         title = "Home",
-        icon = R.drawable.home
+        icon = R.drawable.home,
+        selectedIcon = R.drawable.home_fill
     )
 
     data object History : BottomBarScreen(
         route = "history",
         title = "History",
-        icon = R.drawable.folder
+        icon = R.drawable.history,
+        selectedIcon = R.drawable.history_fill
     )
 
     data object Transaction : BottomBarScreen(
         route = "transaction",
         title = "Transaction",
-        icon = R.drawable.transaction
+        icon = R.drawable.transaction,
+        selectedIcon = R.drawable.transaction_fill
     )
 
     data object Profile : BottomBarScreen(
         route = "profile",
-        title = "Title",
-        icon = R.drawable.profile
+        title = "Profile",
+        icon = R.drawable.profile,
+        selectedIcon = R.drawable.profile_fill
     )
 }

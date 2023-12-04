@@ -1,5 +1,6 @@
 package org.guardteam.mentalguardians.presentation.signup
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -40,7 +41,8 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
 @Composable
 fun SignUpScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    backToSignIn: () -> Unit = {}
 ) {
     var passwordVisibility by remember { mutableStateOf(false) }
     var nameState by remember {
@@ -189,7 +191,10 @@ fun SignUpScreen(
                 text = "Sign In",
                 fontFamily = fontFamily,
                 fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.clickable {
+                    backToSignIn()
+                }
             )
         }
     }

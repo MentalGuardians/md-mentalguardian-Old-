@@ -42,7 +42,8 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 @ExperimentalFoundationApi
 @Composable
 fun WelcomeScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToSignIn: () -> Unit = {}
 ) {
     val pages = listOf(
         OnBoardingPage.First,
@@ -100,7 +101,7 @@ fun WelcomeScreen(
                 .padding(horizontal = 24.dp, vertical = 42.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            TextButton(onClick = {  }) {
+            TextButton(onClick = { navigateToSignIn() }) {
                 Text(
                     text = "Skip",
                     fontFamily = fontFamily,
@@ -112,7 +113,7 @@ fun WelcomeScreen(
                 enter = fadeIn(),
                 exit = fadeOut()
             ) {
-                TextButton(onClick = {  }) {
+                TextButton(onClick = { navigateToSignIn() }) {
                     Text(
                         text = "Get Started",
                         fontFamily = fontFamily,
