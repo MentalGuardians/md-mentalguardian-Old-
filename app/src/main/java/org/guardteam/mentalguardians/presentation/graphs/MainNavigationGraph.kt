@@ -1,7 +1,9 @@
 package org.guardteam.mentalguardians.presentation.graphs
 
+import androidx.compose.foundation.clickable
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,10 +20,14 @@ fun MainNavGraph(
         startDestination = BottomBarScreen.Home.route
     ) {
         composable(route = BottomBarScreen.Home.route) {
-            Text(text = "Home")
+            Text(
+                text = "Home",
+                modifier = Modifier.clickable { navController.navigate(FeaturesScreen.Content.route) }
+            )
         }
         composable(route = BottomBarScreen.History.route) {
-            Text(text = "History")
+            Text(text = "History",
+                modifier = Modifier.clickable { navController.navigate(FeaturesScreen.ContentDetail.route) })
         }
         composable(route = BottomBarScreen.Transaction.route) {
             Text(text = "Transaction")
@@ -29,5 +35,7 @@ fun MainNavGraph(
         composable(route = BottomBarScreen.Profile.route) {
             Text(text = "Profile")
         }
+
+        featuresNavGraph(navController = navController)
     }
 }
