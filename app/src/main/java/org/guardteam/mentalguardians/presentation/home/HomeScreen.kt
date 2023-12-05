@@ -15,11 +15,20 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,13 +38,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.guardteam.mentalguardians.R
+import org.guardteam.mentalguardians.common.state.InputTextState
+import org.guardteam.mentalguardians.presentation.component.InputText
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
+@ExperimentalMaterial3Api
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier
 ) {
+    var openAlertDialog by remember { mutableStateOf(false) }
+    var describeState by remember { mutableStateOf(InputTextState()) }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -83,7 +98,7 @@ fun HomeScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 12.dp)
-                .clickable { }
+                .clickable { openAlertDialog = true }
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -134,6 +149,56 @@ fun HomeScreen(
             modifier = Modifier.padding(vertical = 8.dp)
         )
     }
+    when {
+        openAlertDialog -> {
+            AlertDialog(
+                title = {
+                    Text(text = "Describe your current condition")
+                },
+                text = {
+                    InputText(
+                        value = describeState.value,
+                        onChange = { newValue ->
+                            describeState = describeState.copy(
+                                value = newValue,
+                                isError = newValue.isEmpty()
+                            )
+                        },
+                        isError = describeState.isError,
+                        label = "Describe",
+                        singleLine = false,
+                        minLine = 3,
+                        colors = TextFieldDefaults.colors(
+                            unfocusedTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            focusedTrailingIconColor = MaterialTheme.colorScheme.primary,
+                            focusedContainerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(
+                                4.dp
+                            ),
+                            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(
+                                4.dp
+                            ),
+                            errorContainerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(
+                                4.dp
+                            )
+                        )
+                    )
+                },
+                onDismissRequest = {
+                    openAlertDialog = false
+                },
+                dismissButton = {
+                    TextButton(onClick = { openAlertDialog = false }) {
+                        Text(text = "Cancel")
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = { openAlertDialog = false }) {
+                        Text(text = "Submit")
+                    }
+                }
+            )
+        }
+    }
 }
 
 @Composable
@@ -154,6 +219,7 @@ fun FeaturesItem(
         ),
         modifier = modifier
             .fillMaxWidth()
+            .clip(shape = RoundedCornerShape(16.dp))
             .clickable { onClick() }
     ) {
         Column(
@@ -193,6 +259,7 @@ fun FeaturesItemPreview() {
     }
 }
 
+@ExperimentalMaterial3Api
 @Preview(showSystemUi = true)
 @Composable
 fun HomeScreenPreview() {

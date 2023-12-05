@@ -6,6 +6,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,27 +21,30 @@ fun InputText(
     label: String,
     isError: Boolean,
     modifier: Modifier = Modifier,
+    minLine: Int = 1,
     singleLine: Boolean = true,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     trailingIcon: @Composable () -> Unit = {},
-    supportingText: @Composable () -> Unit = {}
+    supportingText: @Composable () -> Unit = {},
+    colors: TextFieldColors = TextFieldDefaults.colors(
+        unfocusedTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        focusedTrailingIconColor = MaterialTheme.colorScheme.primary,
+        focusedContainerColor = MaterialTheme.colorScheme.background,
+        unfocusedContainerColor = MaterialTheme.colorScheme.background,
+        errorContainerColor = MaterialTheme.colorScheme.background
+    )
 ) {
     OutlinedTextField(
         value = value,
         onValueChange = onChange,
         singleLine = singleLine,
+        minLines = minLine,
         shape = RoundedCornerShape(16.dp),
         visualTransformation = visualTransformation,
         keyboardOptions = keyboardOptions,
         isError = isError,
-        colors = TextFieldDefaults.colors(
-            unfocusedTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-            focusedTrailingIconColor = MaterialTheme.colorScheme.primary,
-            focusedContainerColor = MaterialTheme.colorScheme.background,
-            unfocusedContainerColor = MaterialTheme.colorScheme.background,
-            errorContainerColor = MaterialTheme.colorScheme.background
-        ),
+        colors = colors,
         label = {
             Text(text = label, fontFamily = fontFamily)
         },
