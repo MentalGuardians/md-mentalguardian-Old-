@@ -180,7 +180,12 @@ fun HomeScreen(
                             errorContainerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(
                                 4.dp
                             )
-                        )
+                        ),
+                        supportingText = {
+                            if (describeState.isError) {
+                                Text(text = "Cannot be empty", fontFamily = fontFamily)
+                            }
+                        }
                     )
                 },
                 onDismissRequest = {
