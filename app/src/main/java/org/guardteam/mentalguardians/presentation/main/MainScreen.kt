@@ -1,6 +1,8 @@
 package org.guardteam.mentalguardians.presentation.main
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -31,8 +33,12 @@ fun MainScreen(
         bottomBar = {
             BottomBar(navController = navController)
         }
-    ) {
-        MainNavGraph(navController = navController)
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            MainNavGraph(navController = navController)
+        }
     }
 }
 

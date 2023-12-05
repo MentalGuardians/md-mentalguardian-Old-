@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import org.guardteam.mentalguardians.common.BottomBarScreen
 import org.guardteam.mentalguardians.common.Graph
+import org.guardteam.mentalguardians.presentation.home.HomeScreen
 
 @Composable
 fun MainNavGraph(
@@ -20,10 +21,7 @@ fun MainNavGraph(
         startDestination = BottomBarScreen.Home.route
     ) {
         composable(route = BottomBarScreen.Home.route) {
-            Text(
-                text = "Home",
-                modifier = Modifier.clickable { navController.navigate(FeaturesScreen.Content.route) }
-            )
+            HomeScreen()
         }
         composable(route = BottomBarScreen.History.route) {
             Text(text = "History",
