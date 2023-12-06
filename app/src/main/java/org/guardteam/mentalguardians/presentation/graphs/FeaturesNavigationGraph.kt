@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import org.guardteam.mentalguardians.common.Graph
+import org.guardteam.mentalguardians.presentation.content.ContentScreen
 
 fun NavGraphBuilder.featuresNavGraph(
     navController: NavHostController
@@ -15,7 +16,7 @@ fun NavGraphBuilder.featuresNavGraph(
         startDestination = FeaturesScreen.Content.route
     ) {
         composable(route = FeaturesScreen.Content.route) {
-            Text(text = "Content")
+            ContentScreen()
         }
         composable(route = FeaturesScreen.ContentDetail.route) {
             Text(text = "Content Detail")

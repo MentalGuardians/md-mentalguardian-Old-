@@ -32,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,7 +47,8 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 @ExperimentalMaterial3Api
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToContent: () -> Unit = {},
 ) {
     var openAlertDialog by remember { mutableStateOf(false) }
     var describeState by remember { mutableStateOf(InputTextState()) }
@@ -64,6 +66,7 @@ fun HomeScreen(
             Image(
                 painter = painterResource(id = R.drawable.profile_sample),
                 contentDescription = "Profile Photo",
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(42.dp)
                     .clip(CircleShape)
@@ -140,7 +143,8 @@ fun HomeScreen(
         FeaturesItem(
             label = "Self Help",
             content = "Need Helpful Content?",
-            modifier = Modifier.padding(vertical = 8.dp)
+            modifier = Modifier.padding(vertical = 8.dp),
+            onClick = navigateToContent
         )
 
         FeaturesItem(
