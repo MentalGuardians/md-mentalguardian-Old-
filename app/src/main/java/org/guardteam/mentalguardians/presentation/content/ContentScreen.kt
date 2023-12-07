@@ -4,7 +4,6 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,7 +35,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,7 +46,9 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
 @Composable
 fun ContentScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    active: Boolean = false,
+    onActiveChange: (Boolean) -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -56,9 +56,6 @@ fun ContentScreen(
     ) {
         var query by rememberSaveable {
             mutableStateOf("")
-        }
-        var active by rememberSaveable {
-            mutableStateOf(false)
         }
         val searchPadding by animateDpAsState(
             targetValue = if (active) 0.dp else 24.dp,
@@ -72,11 +69,11 @@ fun ContentScreen(
                 query = newValue
             },
             onSearch = {
-                active = false
+                onActiveChange(false)
             },
             active = active,
             onActiveChange = { newState ->
-                active = newState
+                onActiveChange(newState)
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -119,7 +116,7 @@ fun ContentItem(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .clickable {  },
+            .clickable { },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.background

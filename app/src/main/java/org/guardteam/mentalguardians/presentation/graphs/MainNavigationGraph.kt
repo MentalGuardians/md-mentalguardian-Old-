@@ -16,7 +16,9 @@ import org.guardteam.mentalguardians.presentation.home.HomeScreen
 @Composable
 fun MainNavGraph(
     navController: NavHostController,
-    onFeaturesTitleChange: (String) -> Unit
+    onFeaturesTitleChange: (String) -> Unit,
+    contentSearchActive: Boolean = false,
+    onContentSearchActiveChange: (Boolean) -> Unit = {}
 ) {
     NavHost(
         navController = navController,
@@ -43,7 +45,9 @@ fun MainNavGraph(
 
         featuresNavGraph(
             navController = navController,
-            onFeaturesTitleChange = onFeaturesTitleChange
+            onFeaturesTitleChange = onFeaturesTitleChange,
+            contentSearchActive = contentSearchActive,
+            onContentSearchActiveChange = onContentSearchActiveChange
         )
     }
 }

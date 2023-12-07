@@ -1,12 +1,14 @@
 package org.guardteam.mentalguardians.presentation.main
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Favorite
-import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.rounded.ArrowBackIosNew
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -26,7 +28,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination
@@ -37,7 +38,6 @@ import androidx.navigation.compose.rememberNavController
 import org.guardteam.mentalguardians.common.BottomBarScreen
 import org.guardteam.mentalguardians.presentation.graphs.FeaturesScreen
 import org.guardteam.mentalguardians.presentation.graphs.MainNavGraph
-import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -49,6 +49,9 @@ fun MainScreen(
 
     var featuresTitle by rememberSaveable {
         mutableStateOf("")
+    }
+    var contentSearchActive by rememberSaveable {
+        mutableStateOf(false)
     }
 
     val screens = listOf(
@@ -64,12 +67,22 @@ fun MainScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            TopBar(
-                title = featuresTitle,
-                navController = navController,
-                bottomBarDestination = bottomBarDestination,
-                currentDestination = currentDestination
-            )
+            AnimatedVisibility(
+                visible = !contentSearchActive,
+                enter = slideInVertically(
+                    animationSpec = tween(durationMillis = 200)
+                ),
+                exit = slideOutVertically(
+                    animationSpec = tween(durationMillis = 200)
+                )
+            ) {
+                TopBar(
+                    title = featuresTitle,
+                    navController = navController,
+                    bottomBarDestination = bottomBarDestination,
+                    currentDestination = currentDestination
+                )
+            }
         },
         bottomBar = {
             BottomBar(
@@ -87,6 +100,10 @@ fun MainScreen(
                 navController = navController,
                 onFeaturesTitleChange = { title ->
                     featuresTitle = title
+                },
+                contentSearchActive = contentSearchActive,
+                onContentSearchActiveChange = {
+                    contentSearchActive = it
                 }
             )
         }
@@ -128,7 +145,7 @@ fun TopBar(
             actions = {
                 if (currentDestination?.route == FeaturesScreen.Content.route || currentDestination?.route == FeaturesScreen.Therapist.route) {
                     OutlinedIconButton(
-                        onClick = {  },
+                        onClick = { },
                         border = BorderStroke(width = 1.dp, MaterialTheme.colorScheme.outline)
                     ) {
                         Icon(

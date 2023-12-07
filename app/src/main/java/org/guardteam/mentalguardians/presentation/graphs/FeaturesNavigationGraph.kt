@@ -10,14 +10,19 @@ import org.guardteam.mentalguardians.presentation.content.ContentScreen
 
 fun NavGraphBuilder.featuresNavGraph(
     navController: NavHostController,
-    onFeaturesTitleChange: (String) -> Unit
+    onFeaturesTitleChange: (String) -> Unit,
+    contentSearchActive: Boolean = false,
+    onContentSearchActiveChange: (Boolean) -> Unit = {}
 ) {
     navigation(
         route = Graph.FEATURES,
         startDestination = FeaturesScreen.Content.route
     ) {
         composable(route = FeaturesScreen.Content.route) {
-            ContentScreen()
+            ContentScreen(
+                active = contentSearchActive,
+                onActiveChange = onContentSearchActiveChange
+            )
             onFeaturesTitleChange("Content")
         }
         composable(route = FeaturesScreen.ContentDetail.route) {
