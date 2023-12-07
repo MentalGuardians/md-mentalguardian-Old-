@@ -9,7 +9,8 @@ import org.guardteam.mentalguardians.common.Graph
 import org.guardteam.mentalguardians.presentation.content.ContentScreen
 
 fun NavGraphBuilder.featuresNavGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    onFeaturesTitleChange: (String) -> Unit
 ) {
     navigation(
         route = Graph.FEATURES,
@@ -17,6 +18,7 @@ fun NavGraphBuilder.featuresNavGraph(
     ) {
         composable(route = FeaturesScreen.Content.route) {
             ContentScreen()
+            onFeaturesTitleChange("Content")
         }
         composable(route = FeaturesScreen.ContentDetail.route) {
             Text(text = "Content Detail")

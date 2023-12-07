@@ -15,7 +15,8 @@ import org.guardteam.mentalguardians.presentation.home.HomeScreen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainNavGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    onFeaturesTitleChange: (String) -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -40,6 +41,9 @@ fun MainNavGraph(
             Text(text = "Profile")
         }
 
-        featuresNavGraph(navController = navController)
+        featuresNavGraph(
+            navController = navController,
+            onFeaturesTitleChange = onFeaturesTitleChange
+        )
     }
 }
