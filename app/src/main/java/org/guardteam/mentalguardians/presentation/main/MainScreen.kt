@@ -36,7 +36,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import org.guardteam.mentalguardians.common.BottomBarScreen
-import org.guardteam.mentalguardians.presentation.graphs.FeaturesScreen
+import org.guardteam.mentalguardians.common.FeaturesScreen
 import org.guardteam.mentalguardians.presentation.graphs.MainNavGraph
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
@@ -145,7 +145,11 @@ fun TopBar(
             actions = {
                 if (currentDestination?.route == FeaturesScreen.Content.route || currentDestination?.route == FeaturesScreen.Therapist.route) {
                     OutlinedIconButton(
-                        onClick = { },
+                        onClick = {
+                            navController.navigate(
+                                if (currentDestination.route == FeaturesScreen.Content.route) FeaturesScreen.ContentFavorite.route else FeaturesScreen.TherapistFavorite.route
+                            )
+                        },
                         border = BorderStroke(width = 1.dp, MaterialTheme.colorScheme.outline)
                     ) {
                         Icon(

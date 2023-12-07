@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import org.guardteam.mentalguardians.common.BottomBarScreen
+import org.guardteam.mentalguardians.common.FeaturesScreen
 import org.guardteam.mentalguardians.common.Graph
 import org.guardteam.mentalguardians.presentation.home.HomeScreen
 

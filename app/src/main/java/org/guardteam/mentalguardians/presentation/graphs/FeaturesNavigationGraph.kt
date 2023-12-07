@@ -1,12 +1,16 @@
 package org.guardteam.mentalguardians.presentation.graphs
 
-import androidx.compose.material3.Text
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import org.guardteam.mentalguardians.common.FeaturesScreen
 import org.guardteam.mentalguardians.common.Graph
 import org.guardteam.mentalguardians.presentation.content.ContentScreen
+import org.guardteam.mentalguardians.presentation.contentdetail.ContentDetailScreen
+import org.guardteam.mentalguardians.presentation.contentfavorite.ContentFavoriteScreen
 
 fun NavGraphBuilder.featuresNavGraph(
     navController: NavHostController,
@@ -21,22 +25,24 @@ fun NavGraphBuilder.featuresNavGraph(
         composable(route = FeaturesScreen.Content.route) {
             ContentScreen(
                 active = contentSearchActive,
-                onActiveChange = onContentSearchActiveChange
+                onActiveChange = onContentSearchActiveChange,
+                navigateToDetail = { contentId ->
+                    navController.navigate(FeaturesScreen.ContentDetail.createRoute(contentId))
+                }
             )
             onFeaturesTitleChange("Content")
         }
-        composable(route = FeaturesScreen.ContentDetail.route) {
-            Text(text = "Content Detail")
+        composable(route = FeaturesScreen.ContentFavorite.route) {
+            ContentFavoriteScreen()
+            onFeaturesTitleChange("Favorite Content")
+        }
+        composable(
+            route = FeaturesScreen.ContentDetail.route,
+            arguments = listOf(navArgument("contentId") { type = NavType.IntType })
+        ) {
+            val contentId = it.arguments?.getInt("contentId") ?: 1
+            ContentDetailScreen(contentId = contentId)
+            onFeaturesTitleChange("Detail Content")
         }
     }
-}
-
-sealed class FeaturesScreen(val route: String) {
-    data object Content : FeaturesScreen(route = "content")
-    data object ContentDetail : FeaturesScreen(route = "content_detail")
-    data object ContentFavorite : FeaturesScreen(route = "content_favorite")
-    data object Therapist : FeaturesScreen(route = "therapist")
-    data object TherapistDetail : FeaturesScreen(route = "therapist_detail")
-    data object TherapistFavorite : FeaturesScreen(route = "therapist_favorite")
-    data object TherapistAppointment : FeaturesScreen(route = "therapist_appointment")
 }
