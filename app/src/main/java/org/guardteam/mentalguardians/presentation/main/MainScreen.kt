@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -50,7 +51,10 @@ fun MainScreen(
     var featuresTitle by rememberSaveable {
         mutableStateOf("")
     }
-    var contentSearchActive by rememberSaveable {
+    var contentSearchActive by remember {
+        mutableStateOf(false)
+    }
+    var therapistSearchActive by remember {
         mutableStateOf(false)
     }
 
@@ -68,7 +72,7 @@ fun MainScreen(
         modifier = modifier,
         topBar = {
             AnimatedVisibility(
-                visible = !contentSearchActive,
+                visible = !contentSearchActive && !therapistSearchActive,
                 enter = slideInVertically(
                     animationSpec = tween(durationMillis = 200)
                 ),
@@ -104,6 +108,10 @@ fun MainScreen(
                 contentSearchActive = contentSearchActive,
                 onContentSearchActiveChange = {
                     contentSearchActive = it
+                },
+                therapistSearchActive = therapistSearchActive,
+                onTherapistSearchActiveChange =  {
+                    therapistSearchActive = it
                 }
             )
         }

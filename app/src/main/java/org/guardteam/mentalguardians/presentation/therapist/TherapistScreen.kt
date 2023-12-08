@@ -1,4 +1,4 @@
-package org.guardteam.mentalguardians.presentation.content
+package org.guardteam.mentalguardians.presentation.therapist
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -16,15 +16,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.guardteam.mentalguardians.common.utils.DataDummy
-import org.guardteam.mentalguardians.presentation.component.ContentItem
 import org.guardteam.mentalguardians.presentation.component.SearchBar
-import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
+import org.guardteam.mentalguardians.presentation.component.TherapistItem
 
 @Composable
-fun ContentScreen(
+fun TherapistScreen(
     modifier: Modifier = Modifier,
     active: Boolean = false,
     onActiveChange: (Boolean) -> Unit = {},
@@ -62,26 +60,16 @@ fun ContentScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 contentPadding = PaddingValues(bottom = 24.dp)
             ) {
-                items(DataDummy.contentData, key = { it.id }) {
-                    ContentItem(
-                        author = it.author,
-                        title = it.title,
-                        duration = it.duration,
+                items(DataDummy.therapistData, key = { it.id }) {
+                    TherapistItem(
+                        name = it.name,
+                        primaryFocus = it.primaryFocus,
                         rating = it.rating,
-                        views = it.views,
                         modifier = Modifier
-                            .clickable { navigateToDetail(it.id) }
+                            .clickable { }
                     )
                 }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun ContentScreenPreview() {
-    MentalGuardiansTheme {
-        ContentScreen()
     }
 }

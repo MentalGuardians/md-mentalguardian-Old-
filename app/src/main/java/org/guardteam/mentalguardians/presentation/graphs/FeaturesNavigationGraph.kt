@@ -11,12 +11,15 @@ import org.guardteam.mentalguardians.common.Graph
 import org.guardteam.mentalguardians.presentation.content.ContentScreen
 import org.guardteam.mentalguardians.presentation.contentdetail.ContentDetailScreen
 import org.guardteam.mentalguardians.presentation.contentfavorite.ContentFavoriteScreen
+import org.guardteam.mentalguardians.presentation.therapist.TherapistScreen
 
 fun NavGraphBuilder.featuresNavGraph(
     navController: NavHostController,
     onFeaturesTitleChange: (String) -> Unit,
     contentSearchActive: Boolean = false,
-    onContentSearchActiveChange: (Boolean) -> Unit = {}
+    onContentSearchActiveChange: (Boolean) -> Unit = {},
+    therapistSearchActive: Boolean = false,
+    onTherapistSearchActiveChange: (Boolean) -> Unit = {}
 ) {
     navigation(
         route = Graph.FEATURES,
@@ -43,6 +46,13 @@ fun NavGraphBuilder.featuresNavGraph(
             val contentId = it.arguments?.getInt("contentId") ?: 1
             ContentDetailScreen(contentId = contentId)
             onFeaturesTitleChange("Detail Content")
+        }
+        composable(route = FeaturesScreen.Therapist.route) {
+            TherapistScreen(
+                active = therapistSearchActive,
+                onActiveChange = onTherapistSearchActiveChange
+            )
+            onFeaturesTitleChange("Therapist")
         }
     }
 }

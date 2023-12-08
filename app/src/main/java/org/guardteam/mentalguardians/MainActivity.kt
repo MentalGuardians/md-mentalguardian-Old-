@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         setContent {
             MentalGuardiansTheme(
-                dynamicColor = false
+                dynamicColor = true
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),

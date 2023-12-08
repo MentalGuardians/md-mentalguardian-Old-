@@ -2,7 +2,6 @@ package org.guardteam.mentalguardians.presentation.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
@@ -22,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,12 +31,10 @@ import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
 @Composable
-fun ContentItem(
-    author: String,
-    title: String,
-    duration: String,
+fun TherapistItem(
+    name: String,
+    primaryFocus: String,
     rating: Double,
-    views: String,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -51,30 +47,21 @@ fun ContentItem(
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurfaceVariant)
     ) {
         Row(
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(16.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.content_cover),
-                contentDescription = "Content Image",
-                contentScale = ContentScale.Crop,
+                painter = painterResource(id = R.drawable.therapist_profile),
+                contentDescription = "Therapist Image",
                 modifier = Modifier
-                    .clip(RoundedCornerShape(12.dp))
-                    .height(100.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .height(75.dp)
                     .aspectRatio(1f)
             )
             Column(
-                modifier = Modifier
-                    .padding(start = 8.dp)
+                modifier = Modifier.padding(start = 16.dp)
             ) {
                 Text(
-                    text = author,
-                    fontFamily = fontFamily,
-                    fontSize = 12.sp,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-
-                Text(
-                    text = title,
+                    text = name,
                     fontFamily = fontFamily,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
@@ -82,10 +69,10 @@ fun ContentItem(
                 )
 
                 Text(
-                    text = duration,
+                    text = primaryFocus,
                     fontFamily = fontFamily,
                     fontSize = 12.sp,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurface
                 )
 
                 Row(
@@ -98,7 +85,7 @@ fun ContentItem(
                     )
 
                     Text(
-                        text = "$rating | $views View",
+                        text = rating.toString(),
                         fontFamily = fontFamily,
                         fontSize = 12.sp,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -109,16 +96,14 @@ fun ContentItem(
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
-fun ContentItemPreview() {
+fun TherapistItemPreview() {
     MentalGuardiansTheme {
-        ContentItem(
-            author = "Anonymous",
-            title = "Sleeping with Beautiful",
-            duration = "2-3 min",
-            rating = 4.8,
-            views = "2.4k"
+        TherapistItem(
+            name = "Marcus Nixon",
+            primaryFocus = "Family therapist",
+            rating = 4.8
         )
     }
 }

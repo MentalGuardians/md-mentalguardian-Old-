@@ -19,7 +19,9 @@ fun MainNavGraph(
     navController: NavHostController,
     onFeaturesTitleChange: (String) -> Unit,
     contentSearchActive: Boolean = false,
-    onContentSearchActiveChange: (Boolean) -> Unit = {}
+    onContentSearchActiveChange: (Boolean) -> Unit = {},
+    therapistSearchActive: Boolean = false,
+    onTherapistSearchActiveChange: (Boolean) -> Unit = {}
 ) {
     NavHost(
         navController = navController,
@@ -30,6 +32,9 @@ fun MainNavGraph(
             HomeScreen(
                 navigateToContent = {
                     navController.navigate(FeaturesScreen.Content.route)
+                },
+                navigateToTherapist = {
+                    navController.navigate(FeaturesScreen.Therapist.route)
                 }
             )
         }
@@ -48,7 +53,9 @@ fun MainNavGraph(
             navController = navController,
             onFeaturesTitleChange = onFeaturesTitleChange,
             contentSearchActive = contentSearchActive,
-            onContentSearchActiveChange = onContentSearchActiveChange
+            onContentSearchActiveChange = onContentSearchActiveChange,
+            therapistSearchActive = therapistSearchActive,
+            onTherapistSearchActiveChange =  onTherapistSearchActiveChange
         )
     }
 }

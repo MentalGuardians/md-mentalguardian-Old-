@@ -28,7 +28,7 @@ fun ContentFavoriteScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(vertical = 24.dp)
         ) {
-            items(DataDummy.contentItems, key = { it.id }) {
+            items(DataDummy.contentData, key = { it.id }) {
                 ContentItem(
                     author = it.author,
                     title = it.title,

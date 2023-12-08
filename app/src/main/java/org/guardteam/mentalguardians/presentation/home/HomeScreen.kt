@@ -49,6 +49,7 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 fun HomeScreen(
     modifier: Modifier = Modifier,
     navigateToContent: () -> Unit = {},
+    navigateToTherapist: () -> Unit = {}
 ) {
     var openAlertDialog by remember { mutableStateOf(false) }
     var describeState by remember { mutableStateOf(InputTextState()) }
@@ -150,7 +151,8 @@ fun HomeScreen(
         FeaturesItem(
             label = "Counseling",
             content = "Need a Therapist?",
-            modifier = Modifier.padding(vertical = 8.dp)
+            modifier = Modifier.padding(vertical = 8.dp),
+            onClick = navigateToTherapist
         )
     }
     when {
