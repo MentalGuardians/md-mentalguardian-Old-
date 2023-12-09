@@ -19,34 +19,55 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import org.guardteam.mentalguardians.presentation.history.data.Mood
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
+import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
 @Composable
 fun BottomSheetContent(
-    modifier: Modifier = Modifier,
     date: String,
     time: String,
     description: String,
-    mood: Mood
-){
+    mood: Mood,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(24.dp)
     ) {
-        Row(modifier = modifier.fillMaxWidth().padding(vertical = 8.dp)) {
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+        ) {
             Column {
-                Text(text = date, style = MaterialTheme.typography.bodyMedium)
-                Text(text = time, style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    text = date,
+                    fontFamily = fontFamily,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium
+                )
+                Text(
+                    text = time,
+                    fontFamily = fontFamily,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium
+                )
             }
             Spacer(modifier = modifier.weight(1F))
             MoodIcon(mood = mood)
         }
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = description, style = MaterialTheme.typography.bodyMedium)
+        Text(
+            text = description,
+            fontFamily = fontFamily,
+            fontSize = 16.sp
+        )
     }
 
 }
@@ -57,7 +78,7 @@ fun MoodIcon(
     mood: Mood
 ) {
     val icon = when (mood) {
-       Mood.Bad -> Icons.Rounded.MoodBad
+        Mood.Bad -> Icons.Rounded.MoodBad
         Mood.Good -> Icons.Rounded.Mood
     }
 
@@ -76,8 +97,13 @@ fun MoodIcon(
 
 @Preview(showBackground = true)
 @Composable
-fun BSPreview(){
+fun BSPreview() {
     MentalGuardiansTheme {
-        BottomSheetContent(date = "22 november 20023", time = "22.30 PM", description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", mood = Mood.Bad)
+        BottomSheetContent(
+            date = "22 november 20023",
+            time = "22.30 PM",
+            description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            mood = Mood.Bad
+        )
     }
 }
