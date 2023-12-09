@@ -26,15 +26,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.guardteam.mentalguardians.presentation.history.component.BottomSheetContent
 import org.guardteam.mentalguardians.presentation.history.component.DaftarHistory
-import org.guardteam.mentalguardians.presentation.history.data.DataHistory
-import org.guardteam.mentalguardians.presentation.history.data.DummyHistory
+import org.guardteam.mentalguardians.presentation.history.data.History
 import org.guardteam.mentalguardians.presentation.history.data.Mood
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HistoryScreen(
-    dummyHistory: List<DummyHistory>,
     modifier: Modifier = Modifier,
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -42,8 +40,16 @@ fun HistoryScreen(
 
     if (rememberBottomSheet){
         ModalBottomSheet(onDismissRequest = { rememberBottomSheet = false }) {
-            BottomSheetContent(date = "22 November 2023", time = "22: 30 PM", description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", mood = Mood.Good)
-
+            LazyColumn(){
+                items(History.dummyHistory, key = {it.id}){
+                    BottomSheetContent(
+                        date = it.date,
+                        time = it.time,
+                        description = it.diagnosa,
+                        mood = it.mood
+                    )
+                }
+            }
         }
     }
     
@@ -76,10 +82,10 @@ fun HistoryScreen(
                         .padding(20.dp)
                 )
             }
-            items(dummyHistory) { data ->
+            items(History.dummyHistory, key = {it.id}){
                 DaftarHistory(
-                    date = data.history.date,
-                    time = data.history.time,
+                    date = it.date,
+                    time = it.time,
                     modifier = modifier.clickable {
                         rememberBottomSheet = true
                     }
@@ -93,11 +99,5 @@ fun HistoryScreen(
 @Preview(showBackground = true, device = Devices.DEFAULT)
 @Composable
 fun HistoryPreview(){
-    val dummyHistory = listOf(
-        DummyHistory(DataHistory(1,"22 November 2023", "20:30 PM","nani")),
-        DummyHistory(DataHistory(2,"30 November 2023", "19:30 PM","haa")),
-        DummyHistory(DataHistory(3,"30 November 2023", "19:30 PM","haa")),
-        DummyHistory(DataHistory(4,"30 November 2023", "19:30 PM","haa"))
-    )
-    HistoryScreen(dummyHistory = dummyHistory)
+    HistoryScreen()
 }
