@@ -60,7 +60,6 @@ fun HistoryItem(
             thickness = 2.dp,
             modifier = Modifier
                 .fillMaxWidth()
-
         )
     }
 }
