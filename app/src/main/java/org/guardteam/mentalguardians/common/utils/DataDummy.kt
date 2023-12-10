@@ -2,7 +2,9 @@ package org.guardteam.mentalguardians.common.utils
 
 import org.guardteam.mentalguardians.domain.model.Content
 import org.guardteam.mentalguardians.domain.model.Therapist
-import org.guardteam.mentalguardians.domain.model.History
+import org.guardteam.mentalguardians.presentation.history.data.History
+import org.guardteam.mentalguardians.presentation.transaction.data.Transaction
+
 
 object DataDummy {
     val contentData: List<Content> by lazy {
@@ -53,6 +55,17 @@ object DataDummy {
                 date = "30 November 2023",
                 time = "21.38",
                 diagnose = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            )
+        }
+    }
+    val dataTransaction: List<Transaction> by lazy {
+        (1..12).map { index ->
+            Transaction(
+                id = index,
+                name = "Name $index",
+                date = "22 November 2023",
+                time = "20.30",
+                status = "Scheduled"
             )
         }
     }
