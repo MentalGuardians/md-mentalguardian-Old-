@@ -12,6 +12,7 @@ import org.guardteam.mentalguardians.presentation.content.ContentScreen
 import org.guardteam.mentalguardians.presentation.contentdetail.ContentDetailScreen
 import org.guardteam.mentalguardians.presentation.contentfavorite.ContentFavoriteScreen
 import org.guardteam.mentalguardians.presentation.therapist.TherapistScreen
+import org.guardteam.mentalguardians.presentation.therapistfavorite.TherapistFavoriteScreen
 
 fun NavGraphBuilder.featuresNavGraph(
     navController: NavHostController,
@@ -53,6 +54,11 @@ fun NavGraphBuilder.featuresNavGraph(
                 onActiveChange = onTherapistSearchActiveChange
             )
             onFeaturesTitleChange("Therapist")
+        }
+
+        composable(route = FeaturesScreen.TherapistFavorite.route) {
+            TherapistFavoriteScreen()
+            onFeaturesTitleChange("Favorite Therapist")
         }
     }
 }

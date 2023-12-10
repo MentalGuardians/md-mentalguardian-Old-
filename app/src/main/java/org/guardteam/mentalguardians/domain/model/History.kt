@@ -1,4 +1,4 @@
-package org.guardteam.mentalguardians.presentation.history.data
+package org.guardteam.mentalguardians.domain.model
 
 data class History(
     val id: Int,

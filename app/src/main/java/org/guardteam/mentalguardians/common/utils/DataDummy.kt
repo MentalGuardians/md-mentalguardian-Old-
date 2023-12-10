@@ -2,7 +2,7 @@ package org.guardteam.mentalguardians.common.utils
 
 import org.guardteam.mentalguardians.domain.model.Content
 import org.guardteam.mentalguardians.domain.model.Therapist
-import org.guardteam.mentalguardians.presentation.history.data.History
+import org.guardteam.mentalguardians.domain.model.History
 
 object DataDummy {
     val contentData: List<Content> by lazy {
