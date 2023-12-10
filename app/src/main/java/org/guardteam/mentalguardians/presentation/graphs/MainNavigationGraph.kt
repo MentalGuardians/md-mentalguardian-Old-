@@ -11,6 +11,7 @@ import org.guardteam.mentalguardians.common.FeaturesScreen
 import org.guardteam.mentalguardians.common.Graph
 import org.guardteam.mentalguardians.presentation.history.HistoryScreen
 import org.guardteam.mentalguardians.presentation.home.HomeScreen
+import org.guardteam.mentalguardians.presentation.transaction.TransactionScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,7 +42,7 @@ fun MainNavGraph(
             HistoryScreen()
         }
         composable(route = BottomBarScreen.Transaction.route) {
-            Text(text = "Transaction")
+            TransactionScreen()
         }
         composable(route = BottomBarScreen.Profile.route) {
             Text(text = "Profile")

@@ -37,7 +37,7 @@ fun TransactionScreen(
     if (bottomSheetState){
         ModalBottomSheet(onDismissRequest = { bottomSheetState = false}) {
             TransactionBottomSheet(
-                psychologistName = "Ihfansah Pedo",
+                psychologistName = "Ihfansyah Pedo",
                 date = "23 November 2023",
                 time = "23.30",
                 description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
