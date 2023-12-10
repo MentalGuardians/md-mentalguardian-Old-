@@ -56,11 +56,18 @@ fun DaftarTransaksi(
                 )
             }
             Spacer(modifier = modifier.weight(1f))
+            val statusColor = when(status){
+                "Scheduled" -> Color(0xFFFFA500)
+                "Finished" -> Color(0xFF008000)
+                "Canceled" -> Color(0xFFFF0000)
+                else -> MaterialTheme.colorScheme.primary
+            }
             Text(
                 text = status,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold,
-                fontFamily = fontFamily
+                fontFamily = fontFamily,
+                color = statusColor
             )
             Icon(
                 imageVector = Icons.Default.ArrowForwardIos,
