@@ -1,0 +1,66 @@
+package org.guardteam.mentalguardians.di
+
+import android.content.Context
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import org.guardteam.mentalguardians.BuildConfig
+import org.guardteam.mentalguardians.data.manager.LocalDataManagerImpl
+import org.guardteam.mentalguardians.data.remote.ApiService
+import org.guardteam.mentalguardians.data.repository.AuthRepositoryImpl
+import org.guardteam.mentalguardians.domain.manager.LocalDataManager
+import org.guardteam.mentalguardians.domain.repository.AuthRepository
+import org.guardteam.mentalguardians.domain.use_case.GetOnBoarding
+import org.guardteam.mentalguardians.domain.use_case.OnBoardingUseCase
+import org.guardteam.mentalguardians.domain.use_case.SaveOnBoarding
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+object AppModule {
+
+    @Provides
+    @Singleton
+    fun provideLocalDataManager(
+        @ApplicationContext context: Context
+    ): LocalDataManager = LocalDataManagerImpl(context = context)
+
+    @Provides
+    @Singleton
+    fun provideOnBoardingUseCase(localDataManager: LocalDataManager): OnBoardingUseCase {
+        return OnBoardingUseCase(
+            saveOnBoarding = SaveOnBoarding(localDataManager),
+            getOnBoarding = GetOnBoarding(localDataManager)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideApiService(): ApiService {
+        val loggingInterceptor = if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        } else {
+            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
+        }
+        val client = OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .build()
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
+        return retrofit.create(ApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(apiService: ApiService): AuthRepository =
+        AuthRepositoryImpl(apiService)
+}
