@@ -12,6 +12,7 @@ import org.guardteam.mentalguardians.presentation.content.ContentScreen
 import org.guardteam.mentalguardians.presentation.contentdetail.ContentDetailScreen
 import org.guardteam.mentalguardians.presentation.contentfavorite.ContentFavoriteScreen
 import org.guardteam.mentalguardians.presentation.therapist.TherapistScreen
+import org.guardteam.mentalguardians.presentation.therapistdetail.TherapistDetailScreen
 import org.guardteam.mentalguardians.presentation.therapistfavorite.TherapistFavoriteScreen
 
 fun NavGraphBuilder.featuresNavGraph(
@@ -37,7 +38,11 @@ fun NavGraphBuilder.featuresNavGraph(
             onFeaturesTitleChange("Content")
         }
         composable(route = FeaturesScreen.ContentFavorite.route) {
-            ContentFavoriteScreen()
+            ContentFavoriteScreen(
+                navigateToDetail = { contentId ->
+                    navController.navigate(FeaturesScreen.ContentDetail.createRoute(contentId))
+                }
+            )
             onFeaturesTitleChange("Favorite Content")
         }
         composable(
@@ -51,14 +56,30 @@ fun NavGraphBuilder.featuresNavGraph(
         composable(route = FeaturesScreen.Therapist.route) {
             TherapistScreen(
                 active = therapistSearchActive,
-                onActiveChange = onTherapistSearchActiveChange
+                onActiveChange = onTherapistSearchActiveChange,
+                navigateToDetail = { therapistId ->
+                    navController.navigate(FeaturesScreen.TherapistDetail.createRoute(therapistId))
+                }
             )
             onFeaturesTitleChange("Therapist")
         }
 
         composable(route = FeaturesScreen.TherapistFavorite.route) {
-            TherapistFavoriteScreen()
+            TherapistFavoriteScreen(
+                navigateToDetail = { therapistId ->
+                    navController.navigate(FeaturesScreen.TherapistDetail.createRoute(therapistId))
+                }
+            )
             onFeaturesTitleChange("Favorite Therapist")
+        }
+
+        composable(
+            route = FeaturesScreen.TherapistDetail.route,
+            arguments = listOf(navArgument("therapistId") { type = NavType.IntType })
+        ) {
+            val therapistId = it.arguments?.getInt("therapistId") ?: 1
+            TherapistDetailScreen(therapistId = therapistId)
+            onFeaturesTitleChange("Detail Therapist")
         }
     }
 }
