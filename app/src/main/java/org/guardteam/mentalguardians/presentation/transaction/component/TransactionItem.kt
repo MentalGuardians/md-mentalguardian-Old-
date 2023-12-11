@@ -12,6 +12,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -22,7 +23,7 @@ import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
 @Composable
-fun DaftarTransaksi(
+fun TransactionItem(
     name: String,
     date: String,
     time: String,
@@ -34,9 +35,10 @@ fun DaftarTransaksi(
             .fillMaxWidth()
     ) {
         Row(
+            verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
                 .fillMaxWidth()
-                .padding(vertical = 12.dp)
+                .padding(vertical = 14.dp)
         ) {
             Column(
             ) {
@@ -89,6 +91,6 @@ fun DaftarTransaksi(
 @Composable
 fun DaftarTransaksiPreview(){
     MentalGuardiansTheme {
-        DaftarTransaksi(name = "Ihfansyah Pedo", date = "22 November 2003", time = "20.30", status = "Scheduled")
+        TransactionItem(name = "Ihfansyah Pedo", date = "22 November 2003", time = "20.30", status = "Scheduled")
     }
 }
