@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -56,7 +57,8 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 @Composable
 fun TherapistDetailScreen(
     therapistId: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToBooking: (Int) -> Unit = {}
 ) {
     val therapist: Therapist? = DataDummy.therapistData.find { it.id == therapistId }
     var isFavorite by rememberSaveable {
@@ -66,7 +68,7 @@ fun TherapistDetailScreen(
     therapist?.let {
         Column(
             modifier = modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(24.dp)
                 .verticalScroll(rememberScrollState())
         ) {
@@ -246,6 +248,7 @@ fun TherapistDetailScreen(
 
             Button(
                 onClick = {
+                    navigateToBooking(therapistId)
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary
@@ -260,6 +263,8 @@ fun TherapistDetailScreen(
                     imageVector = Icons.Rounded.BusinessCenter,
                     contentDescription = "Play Button"
                 )
+
+                Spacer(modifier = Modifier.width(8.dp))
 
                 Text(
                     text = "Make an Appointment",

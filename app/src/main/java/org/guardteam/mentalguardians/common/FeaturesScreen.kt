@@ -13,5 +13,7 @@ sealed class FeaturesScreen(val route: String) {
     }
 
     data object TherapistFavorite : FeaturesScreen(route = "therapist_favorite")
-    data object TherapistAppointment : FeaturesScreen(route = "therapist_appointment")
+    data object TherapistAppointment : FeaturesScreen(route = "therapist_appointment/{therapistId}") {
+        fun createRoute(therapistId: Int) = "therapist_appointment/$therapistId"
+    }
 }

@@ -8,6 +8,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import org.guardteam.mentalguardians.common.FeaturesScreen
 import org.guardteam.mentalguardians.common.Graph
+import org.guardteam.mentalguardians.presentation.book.BookScreen
 import org.guardteam.mentalguardians.presentation.content.ContentScreen
 import org.guardteam.mentalguardians.presentation.contentdetail.ContentDetailScreen
 import org.guardteam.mentalguardians.presentation.contentfavorite.ContentFavoriteScreen
@@ -78,8 +79,22 @@ fun NavGraphBuilder.featuresNavGraph(
             arguments = listOf(navArgument("therapistId") { type = NavType.IntType })
         ) {
             val therapistId = it.arguments?.getInt("therapistId") ?: 1
-            TherapistDetailScreen(therapistId = therapistId)
+            TherapistDetailScreen(
+                therapistId = therapistId,
+                navigateToBooking = { id ->
+                    navController.navigate(FeaturesScreen.TherapistAppointment.createRoute(id))
+                }
+            )
             onFeaturesTitleChange("Detail Therapist")
+        }
+
+        composable(
+            route = FeaturesScreen.TherapistAppointment.route,
+            arguments = listOf(navArgument("therapistId") { type = NavType.IntType })
+        ) {
+            val therapistId = it.arguments?.getInt("therapistId") ?: 1
+            BookScreen(therapistId = therapistId)
+            onFeaturesTitleChange("Book Appointment")
         }
     }
 }
