@@ -5,5 +5,5 @@ data class Login(
     val error: Boolean,
     val status: Int,
     val message: String,
-    val loginResult: LoginData
+    val loginResult: UserData
 )

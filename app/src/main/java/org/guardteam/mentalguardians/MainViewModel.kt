@@ -9,11 +9,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.guardteam.mentalguardians.common.Graph
 import org.guardteam.mentalguardians.domain.use_case.OnBoardingUseCase
+import org.guardteam.mentalguardians.domain.use_case.UserDataUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val onBoardingUseCase: OnBoardingUseCase
+    private val onBoardingUseCase: OnBoardingUseCase, private val userDataUseCase: UserDataUseCase
 ) : ViewModel() {
 
     private val _isLoading: MutableState<Boolean> = mutableStateOf(true)
@@ -26,7 +27,9 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             onBoardingUseCase.getOnBoarding().collect { complete ->
                 if (complete) {
-                    _startDestination.value = Graph.AUTH
+                    userDataUseCase.getLoginState().collect { isLogin ->
+                        _startDestination.value = if (isLogin) Graph.MAIN else Graph.AUTH
+                    }
                 } else {
                     _startDestination.value = Graph.WELCOME
                 }

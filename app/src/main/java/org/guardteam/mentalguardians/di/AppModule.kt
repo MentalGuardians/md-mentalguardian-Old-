@@ -14,9 +14,17 @@ import org.guardteam.mentalguardians.data.remote.ApiService
 import org.guardteam.mentalguardians.data.repository.AuthRepositoryImpl
 import org.guardteam.mentalguardians.domain.manager.LocalDataManager
 import org.guardteam.mentalguardians.domain.repository.AuthRepository
+import org.guardteam.mentalguardians.domain.use_case.AuthUseCase
+import org.guardteam.mentalguardians.domain.use_case.ClearUserData
+import org.guardteam.mentalguardians.domain.use_case.GetLoginState
 import org.guardteam.mentalguardians.domain.use_case.GetOnBoarding
+import org.guardteam.mentalguardians.domain.use_case.GetUserData
 import org.guardteam.mentalguardians.domain.use_case.OnBoardingUseCase
+import org.guardteam.mentalguardians.domain.use_case.PostLogin
+import org.guardteam.mentalguardians.domain.use_case.PostRegister
 import org.guardteam.mentalguardians.domain.use_case.SaveOnBoarding
+import org.guardteam.mentalguardians.domain.use_case.SaveUserData
+import org.guardteam.mentalguardians.domain.use_case.UserDataUseCase
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -63,4 +71,24 @@ object AppModule {
     @Singleton
     fun provideAuthRepository(apiService: ApiService): AuthRepository =
         AuthRepositoryImpl(apiService)
+
+    @Provides
+    @Singleton
+    fun provideAuthUseCase(authRepository: AuthRepository): AuthUseCase {
+        return AuthUseCase(
+            postRegister = PostRegister(authRepository),
+            postLogin = PostLogin(authRepository)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun ProvideUserDataUseCase(localDataManager: LocalDataManager): UserDataUseCase {
+        return UserDataUseCase(
+            getUserData = GetUserData(localDataManager),
+            saveUserData = SaveUserData(localDataManager),
+            getLoginState = GetLoginState(localDataManager),
+            clearUserData = ClearUserData(localDataManager)
+        )
+    }
 }

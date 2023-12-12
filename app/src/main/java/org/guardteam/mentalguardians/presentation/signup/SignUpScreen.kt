@@ -1,5 +1,6 @@
 package org.guardteam.mentalguardians.presentation.signup
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,13 +29,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.guardteam.mentalguardians.common.state.InputTextState
+import org.guardteam.mentalguardians.common.utils.Result
+import org.guardteam.mentalguardians.common.utils.isInvalid
 import org.guardteam.mentalguardians.common.utils.isValidEmail
 import org.guardteam.mentalguardians.presentation.component.InputText
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
@@ -42,7 +48,8 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 @Composable
 fun SignUpScreen(
     modifier: Modifier = Modifier,
-    backToSignIn: () -> Unit = {}
+    backToSignIn: () -> Unit = {},
+    viewModel: SignUpViewModel = hiltViewModel()
 ) {
     var passwordVisibility by remember { mutableStateOf(false) }
     var nameState by remember {
@@ -53,6 +60,26 @@ fun SignUpScreen(
     }
     var passwordState by remember {
         mutableStateOf(InputTextState())
+    }
+
+    val result by viewModel.result.collectAsStateWithLifecycle()
+
+    result.let {
+        val context = LocalContext.current
+        if (!result.hasBeenHandled) {
+            when (val unhandled = result.getContentIfNotHandled()) {
+                is Result.Error -> {
+                    Toast.makeText(context, unhandled.error, Toast.LENGTH_SHORT).show()
+                }
+
+                is Result.Success -> {
+                    Toast.makeText(context, unhandled.data.message, Toast.LENGTH_SHORT).show()
+                    backToSignIn()
+                }
+
+                else -> {}
+            }
+        }
     }
 
     Column(
@@ -157,7 +184,19 @@ fun SignUpScreen(
         )
 
         Button(
-            onClick = { },
+            enabled = result.peekContent() !is Result.Loading,
+            onClick = {
+                when {
+                    nameState.isInvalid() -> nameState = nameState.copy(isError = true)
+                    emailState.isInvalid() -> emailState = emailState.copy(isError = true)
+                    passwordState.isInvalid() -> passwordState = passwordState.copy(isError = true)
+                    else -> viewModel.register(
+                        name = nameState.value,
+                        email = emailState.value,
+                        password = passwordState.value
+                    )
+                }
+            },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary
             ),
