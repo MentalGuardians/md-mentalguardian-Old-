@@ -171,7 +171,6 @@ fun SignInScreen(
                         password = passwordState.value
                     )
                 }
-                //navigateToHome()
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary
