@@ -31,7 +31,12 @@ fun RootNavGraph(
             )
         }
         composable(route = Graph.MAIN) {
-            MainScreen()
+            MainScreen(
+                goBackToAuth = {
+                    navController.popBackStack()
+                    navController.navigate(Graph.AUTH)
+                }
+            )
         }
 
         composable(route = Graph.BLANK) {}

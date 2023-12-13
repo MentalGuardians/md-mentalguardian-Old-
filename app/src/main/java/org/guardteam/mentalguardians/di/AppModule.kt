@@ -12,12 +12,16 @@ import org.guardteam.mentalguardians.BuildConfig
 import org.guardteam.mentalguardians.data.manager.LocalDataManagerImpl
 import org.guardteam.mentalguardians.data.remote.ApiService
 import org.guardteam.mentalguardians.data.repository.AuthRepositoryImpl
+import org.guardteam.mentalguardians.data.repository.FeatureRepositoryImpl
 import org.guardteam.mentalguardians.domain.manager.LocalDataManager
 import org.guardteam.mentalguardians.domain.repository.AuthRepository
+import org.guardteam.mentalguardians.domain.repository.FeatureRepository
 import org.guardteam.mentalguardians.domain.use_case.AuthUseCase
 import org.guardteam.mentalguardians.domain.use_case.ClearUserData
+import org.guardteam.mentalguardians.domain.use_case.FeatureUseCase
 import org.guardteam.mentalguardians.domain.use_case.GetLoginState
 import org.guardteam.mentalguardians.domain.use_case.GetOnBoarding
+import org.guardteam.mentalguardians.domain.use_case.GetPredict
 import org.guardteam.mentalguardians.domain.use_case.GetUserData
 import org.guardteam.mentalguardians.domain.use_case.OnBoardingUseCase
 import org.guardteam.mentalguardians.domain.use_case.PostLogin
@@ -83,12 +87,33 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun ProvideUserDataUseCase(localDataManager: LocalDataManager): UserDataUseCase {
+    fun provideUserDataUseCase(localDataManager: LocalDataManager): UserDataUseCase {
         return UserDataUseCase(
             getUserData = GetUserData(localDataManager),
             saveUserData = SaveUserData(localDataManager),
             getLoginState = GetLoginState(localDataManager),
             clearUserData = ClearUserData(localDataManager)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideFeatureRepository(
+        apiService: ApiService,
+        localDataManager: LocalDataManager
+    ): FeatureRepository =
+        FeatureRepositoryImpl(
+            apiService = apiService,
+            localDataManager = localDataManager
+        )
+
+    @Provides
+    @Singleton
+    fun provideFeatureUseCase(
+        featureRepository: FeatureRepository
+    ): FeatureUseCase {
+        return FeatureUseCase(
+            getPredict = GetPredict(featureRepository)
         )
     }
 }

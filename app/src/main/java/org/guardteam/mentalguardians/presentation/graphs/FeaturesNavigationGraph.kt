@@ -22,7 +22,8 @@ fun NavGraphBuilder.featuresNavGraph(
     contentSearchActive: Boolean = false,
     onContentSearchActiveChange: (Boolean) -> Unit = {},
     therapistSearchActive: Boolean = false,
-    onTherapistSearchActiveChange: (Boolean) -> Unit = {}
+    onTherapistSearchActiveChange: (Boolean) -> Unit = {},
+    goBackToAuth: () -> Unit = {}
 ) {
     navigation(
         route = Graph.FEATURES,

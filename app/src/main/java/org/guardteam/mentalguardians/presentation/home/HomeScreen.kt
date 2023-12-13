@@ -1,5 +1,6 @@
 package org.guardteam.mentalguardians.presentation.home
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -27,19 +28,24 @@ import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.guardteam.mentalguardians.R
 import org.guardteam.mentalguardians.common.state.InputTextState
+import org.guardteam.mentalguardians.common.utils.Result
 import org.guardteam.mentalguardians.presentation.component.InputText
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
@@ -49,10 +55,30 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 fun HomeScreen(
     modifier: Modifier = Modifier,
     navigateToContent: () -> Unit = {},
-    navigateToTherapist: () -> Unit = {}
+    navigateToTherapist: () -> Unit = {},
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
-    var openAlertDialog by remember { mutableStateOf(false) }
-    var describeState by remember { mutableStateOf(InputTextState()) }
+    var openAlertDialog by rememberSaveable { mutableStateOf(false) }
+    val describeState by viewModel.describeState
+    val result by viewModel.result.collectAsStateWithLifecycle()
+
+    result.let {
+        val context = LocalContext.current
+        if (!result.hasBeenHandled) {
+            when (val unhandled = result.getContentIfNotHandled()) {
+                is Result.Error -> {
+                    Toast.makeText(context, unhandled.error, Toast.LENGTH_SHORT).show()
+                }
+
+                is Result.Success -> {
+                    openAlertDialog = false
+                    viewModel.setDescribeState(InputTextState())
+                }
+
+                else -> {}
+            }
+        }
+    }
 
     Column(
         modifier = modifier
@@ -93,8 +119,7 @@ fun HomeScreen(
             modifier = Modifier.padding(top = 24.dp, bottom = 12.dp)
         )
 
-        Card(
-            shape = RoundedCornerShape(16.dp),
+        Card(shape = RoundedCornerShape(16.dp),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary
@@ -102,12 +127,10 @@ fun HomeScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 12.dp)
-                .clickable { openAlertDialog = true }
-        ) {
+                .clickable { openAlertDialog = true }) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier
-                    .padding(24.dp)
+                modifier = Modifier.padding(24.dp)
             ) {
                 Text(
                     text = "How's your feeling today?",
@@ -157,17 +180,16 @@ fun HomeScreen(
     }
     when {
         openAlertDialog -> {
-            AlertDialog(
-                title = {
-                    Text(text = "Describe your current condition")
-                },
-                text = {
-                    InputText(
-                        value = describeState.value,
+            AlertDialog(title = {
+                Text(text = "Describe your current condition")
+            }, text = {
+                Column {
+                    InputText(value = describeState.value,
                         onChange = { newValue ->
-                            describeState = describeState.copy(
-                                value = newValue,
-                                isError = newValue.isEmpty()
+                            viewModel.setDescribeState(
+                                describeState.copy(
+                                    value = newValue, isError = newValue.isEmpty()
+                                )
                             )
                         },
                         isError = describeState.isError,
@@ -191,48 +213,62 @@ fun HomeScreen(
                             if (describeState.isError) {
                                 Text(text = "Cannot be empty", fontFamily = fontFamily)
                             }
-                        }
-                    )
-                },
-                onDismissRequest = {
-                    openAlertDialog = false
-                },
-                dismissButton = {
-                    TextButton(onClick = { openAlertDialog = false }) {
-                        Text(text = "Cancel")
-                    }
-                },
-                confirmButton = {
-                    TextButton(onClick = { openAlertDialog = false }) {
-                        Text(text = "Submit")
+                        })
+
+                    if (result.peekContent() is Result.Loading) {
+                        Text(
+                            text = "Please wait",
+                            fontFamily = fontFamily,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
                     }
                 }
-            )
+
+            }, onDismissRequest = {
+                if (result.peekContent() !is Result.Loading) {
+                    openAlertDialog = false
+                    viewModel.setDescribeState(InputTextState())
+                }
+            }, dismissButton = {
+                TextButton(
+                    enabled = result.peekContent() !is Result.Loading,
+                    onClick = {
+                        openAlertDialog = false
+                        viewModel.setDescribeState(InputTextState())
+
+                    }) {
+                    Text(text = "Cancel")
+                }
+            }, confirmButton = {
+                TextButton(
+                    enabled = result.peekContent() !is Result.Loading,
+                    onClick = {
+                        viewModel.getPredict()
+                    }) {
+                    Text(text = "Submit")
+                }
+            })
         }
     }
 }
 
 @Composable
 fun FeaturesItem(
-    label: String,
-    content: String,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit = {}
+    label: String, content: String, modifier: Modifier = Modifier, onClick: () -> Unit = {}
 ) {
-    Card(
-        shape = RoundedCornerShape(16.dp),
+    Card(shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.background
         ),
         border = BorderStroke(
-            width = 1.dp,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            width = 1.dp, color = MaterialTheme.colorScheme.onSurfaceVariant
         ),
         modifier = modifier
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(16.dp))
-            .clickable { onClick() }
-    ) {
+            .clickable { onClick() }) {
         Column(
             modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp)
         ) {
@@ -264,8 +300,7 @@ fun FeaturesItem(
 fun FeaturesItemPreview() {
     MentalGuardiansTheme {
         FeaturesItem(
-            label = "Self Help",
-            content = "Need Helpful Content?"
+            label = "Self Help", content = "Need Helpful Content?"
         )
     }
 }

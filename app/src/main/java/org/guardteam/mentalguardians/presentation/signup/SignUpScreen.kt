@@ -121,7 +121,7 @@ fun SignUpScreen(
                 }
             },
             supportingText = {
-                if (emailState.isError) {
+                if (nameState.isError) {
                     Text(text = "Cannot be empty", fontFamily = fontFamily)
                 }
             },
