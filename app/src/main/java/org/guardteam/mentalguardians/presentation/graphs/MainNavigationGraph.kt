@@ -11,6 +11,7 @@ import org.guardteam.mentalguardians.common.FeaturesScreen
 import org.guardteam.mentalguardians.common.Graph
 import org.guardteam.mentalguardians.presentation.history.HistoryScreen
 import org.guardteam.mentalguardians.presentation.home.HomeScreen
+import org.guardteam.mentalguardians.presentation.profile.ProfileScreen
 import org.guardteam.mentalguardians.presentation.transaction.TransactionScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,7 +46,20 @@ fun MainNavGraph(
             TransactionScreen()
         }
         composable(route = BottomBarScreen.Profile.route) {
-            Text(text = "Profile")
+            ProfileScreen(
+                navigateToEdit = {
+                    navController.navigate(FeaturesScreen.EditProfile.route)
+                },
+                navigateToContent = {
+                    navController.navigate(FeaturesScreen.ContentFavorite.route)
+                },
+                navigateToTherapist = {
+                    navController.navigate(FeaturesScreen.TherapistFavorite.route)
+                },
+                navigateToRegistration = {
+                    navController.navigate(FeaturesScreen.PartnerRegistration.route)
+                }
+            )
         }
 
         featuresNavGraph(

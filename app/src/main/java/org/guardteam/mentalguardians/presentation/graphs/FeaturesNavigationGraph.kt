@@ -11,6 +11,8 @@ import org.guardteam.mentalguardians.common.Graph
 import org.guardteam.mentalguardians.presentation.content.ContentScreen
 import org.guardteam.mentalguardians.presentation.contentdetail.ContentDetailScreen
 import org.guardteam.mentalguardians.presentation.contentfavorite.ContentFavoriteScreen
+import org.guardteam.mentalguardians.presentation.profile.extra.EditProfile
+import org.guardteam.mentalguardians.presentation.profile.extra.PartnerRegistration
 import org.guardteam.mentalguardians.presentation.therapist.TherapistScreen
 import org.guardteam.mentalguardians.presentation.therapistfavorite.TherapistFavoriteScreen
 
@@ -59,6 +61,16 @@ fun NavGraphBuilder.featuresNavGraph(
         composable(route = FeaturesScreen.TherapistFavorite.route) {
             TherapistFavoriteScreen()
             onFeaturesTitleChange("Favorite Therapist")
+        }
+
+        composable(route = FeaturesScreen.EditProfile.route){
+            EditProfile()
+            onFeaturesTitleChange("Edit Profile")
+        }
+
+        composable(route = FeaturesScreen.PartnerRegistration.route){
+            PartnerRegistration()
+            onFeaturesTitleChange("Partner Registration")
         }
     }
 }

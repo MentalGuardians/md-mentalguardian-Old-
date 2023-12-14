@@ -14,4 +14,8 @@ sealed class FeaturesScreen(val route: String) {
 
     data object TherapistFavorite : FeaturesScreen(route = "therapist_favorite")
     data object TherapistAppointment : FeaturesScreen(route = "therapist_appointment")
+
+
+    data object EditProfile : FeaturesScreen(route = "edit_profile")
+    data object PartnerRegistration : FeaturesScreen(route = "partner_registration")
 }
