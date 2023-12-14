@@ -103,12 +103,12 @@ fun TransactionBottomSheet(
 }
 
 private fun openWhatsapp(context: Context, noTelephone: String){
-    var uri = Uri.parse("https://api.whatsapp.com/send?phone=$noTelephone")
+    val uri = Uri.parse("https://api.whatsapp.com/send?phone=$noTelephone")
     val intent = Intent(Intent.ACTION_VIEW, uri)
     context.startActivity(intent)
 }
 private fun openLink(context: Context, link: String){
-    var uri = Uri.parse(link)
+    val uri = Uri.parse(link)
     val intent = Intent(Intent.ACTION_VIEW, uri)
     context.startActivity(intent)
 }

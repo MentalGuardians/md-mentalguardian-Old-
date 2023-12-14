@@ -66,7 +66,7 @@ fun TherapistScreen(
                         primaryFocus = it.primaryFocus,
                         rating = it.rating,
                         modifier = Modifier
-                            .clickable { }
+                            .clickable { navigateToDetail(it.id) }
                     )
                 }
             }

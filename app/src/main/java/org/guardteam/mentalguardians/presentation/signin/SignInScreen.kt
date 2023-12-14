@@ -1,5 +1,6 @@
 package org.guardteam.mentalguardians.presentation.signin
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,6 +29,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -35,7 +37,11 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.guardteam.mentalguardians.common.state.InputTextState
+import org.guardteam.mentalguardians.common.utils.Result
+import org.guardteam.mentalguardians.common.utils.isInvalid
 import org.guardteam.mentalguardians.common.utils.isValidEmail
 import org.guardteam.mentalguardians.presentation.component.InputText
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
@@ -44,7 +50,8 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 fun SignInScreen(
     modifier: Modifier = Modifier,
     navigateSignUp: () -> Unit = {},
-    navigateToHome: () -> Unit = {}
+    navigateToHome: () -> Unit = {},
+    viewModel: SignInViewModel = hiltViewModel()
 ) {
     var passwordVisibility by remember { mutableStateOf(false) }
     var emailState by remember {
@@ -52,6 +59,30 @@ fun SignInScreen(
     }
     var passwordState by remember {
         mutableStateOf(InputTextState())
+    }
+
+    val result by viewModel.result.collectAsStateWithLifecycle()
+    val isLogin by viewModel.isLogin.collectAsStateWithLifecycle()
+
+    if (isLogin) {
+        navigateToHome()
+    }
+
+    result.let {
+        val context = LocalContext.current
+        if (!result.hasBeenHandled) {
+            when (val unhandled = result.getContentIfNotHandled()) {
+                is Result.Error -> {
+                    Toast.makeText(context, unhandled.error, Toast.LENGTH_SHORT).show()
+                }
+
+                is Result.Success -> {
+                    viewModel.saveUseData(unhandled.data.loginResult)
+                }
+
+                else -> {}
+            }
+        }
     }
 
     Column(
@@ -130,8 +161,16 @@ fun SignInScreen(
         )
 
         Button(
+            enabled = result.peekContent() !is Result.Loading,
             onClick = {
-                navigateToHome()
+                when {
+                    emailState.isInvalid() -> emailState = emailState.copy(isError = true)
+                    passwordState.isInvalid() -> passwordState = passwordState.copy(isError = true)
+                    else -> viewModel.login(
+                        email = emailState.value,
+                        password = passwordState.value
+                    )
+                }
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary

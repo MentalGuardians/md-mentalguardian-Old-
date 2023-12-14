@@ -37,13 +37,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
 @ExperimentalFoundationApi
 @Composable
 fun WelcomeScreen(
     modifier: Modifier = Modifier,
-    navigateToSignIn: () -> Unit = {}
+    navigateToSignIn: () -> Unit = {},
+    welcomeViewModel: WelcomeViewModel = hiltViewModel()
 ) {
     val pages = listOf(
         OnBoardingPage.First,
@@ -101,7 +103,10 @@ fun WelcomeScreen(
                 .padding(horizontal = 24.dp, vertical = 42.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            TextButton(onClick = { navigateToSignIn() }) {
+            TextButton(onClick = {
+                welcomeViewModel.saveOnBoardingState(true)
+                navigateToSignIn()
+            }) {
                 Text(
                     text = "Skip",
                     fontFamily = fontFamily,
@@ -113,7 +118,10 @@ fun WelcomeScreen(
                 enter = fadeIn(),
                 exit = fadeOut()
             ) {
-                TextButton(onClick = { navigateToSignIn() }) {
+                TextButton(onClick = {
+                    welcomeViewModel.saveOnBoardingState(true)
+                    navigateToSignIn()
+                }) {
                     Text(
                         text = "Get Started",
                         fontFamily = fontFamily,

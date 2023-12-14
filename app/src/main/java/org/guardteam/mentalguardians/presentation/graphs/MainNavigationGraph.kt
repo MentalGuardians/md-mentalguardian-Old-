@@ -22,7 +22,8 @@ fun MainNavGraph(
     contentSearchActive: Boolean = false,
     onContentSearchActiveChange: (Boolean) -> Unit = {},
     therapistSearchActive: Boolean = false,
-    onTherapistSearchActiveChange: (Boolean) -> Unit = {}
+    onTherapistSearchActiveChange: (Boolean) -> Unit = {},
+    goBackToAuth: () -> Unit = {}
 ) {
     NavHost(
         navController = navController,
@@ -68,7 +69,8 @@ fun MainNavGraph(
             contentSearchActive = contentSearchActive,
             onContentSearchActiveChange = onContentSearchActiveChange,
             therapistSearchActive = therapistSearchActive,
-            onTherapistSearchActiveChange = onTherapistSearchActiveChange
+            onTherapistSearchActiveChange = onTherapistSearchActiveChange,
+            goBackToAuth = goBackToAuth
         )
     }
 }

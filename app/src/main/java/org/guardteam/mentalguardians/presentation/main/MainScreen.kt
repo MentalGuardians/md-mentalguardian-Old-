@@ -1,6 +1,5 @@
 package org.guardteam.mentalguardians.presentation.main
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
@@ -41,11 +40,11 @@ import org.guardteam.mentalguardians.common.FeaturesScreen
 import org.guardteam.mentalguardians.presentation.graphs.MainNavGraph
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    goBackToAuth: () -> Unit = {}
 ) {
 
     var featuresTitle by rememberSaveable {
@@ -110,9 +109,10 @@ fun MainScreen(
                     contentSearchActive = it
                 },
                 therapistSearchActive = therapistSearchActive,
-                onTherapistSearchActiveChange =  {
+                onTherapistSearchActiveChange = {
                     therapistSearchActive = it
-                }
+                },
+                goBackToAuth = goBackToAuth
             )
         }
     }

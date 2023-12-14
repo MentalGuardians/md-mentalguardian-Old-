@@ -16,7 +16,8 @@ import org.guardteam.mentalguardians.presentation.component.TherapistItem
 
 @Composable
 fun TherapistFavoriteScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToDetail: (Int) -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -32,7 +33,7 @@ fun TherapistFavoriteScreen(
                     name = it.name,
                     primaryFocus = it.primaryFocus,
                     rating = it.rating,
-                    modifier = Modifier.clickable { }
+                    modifier = Modifier.clickable { navigateToDetail(it.id) }
                 )
             }
         }

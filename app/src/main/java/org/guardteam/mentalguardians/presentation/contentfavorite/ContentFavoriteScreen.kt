@@ -1,5 +1,6 @@
 package org.guardteam.mentalguardians.presentation.contentfavorite
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,7 +18,8 @@ import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 
 @Composable
 fun ContentFavoriteScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToDetail: (Int) -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -34,7 +36,8 @@ fun ContentFavoriteScreen(
                     title = it.title,
                     duration = it.duration,
                     rating = it.rating,
-                    views = it.views
+                    views = it.views,
+                    modifier = Modifier.clickable { navigateToDetail(it.id) }
                 )
             }
         }

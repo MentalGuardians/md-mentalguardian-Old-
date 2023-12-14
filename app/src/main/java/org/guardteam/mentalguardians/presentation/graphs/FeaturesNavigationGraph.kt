@@ -8,12 +8,14 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import org.guardteam.mentalguardians.common.FeaturesScreen
 import org.guardteam.mentalguardians.common.Graph
+import org.guardteam.mentalguardians.presentation.book.BookScreen
 import org.guardteam.mentalguardians.presentation.content.ContentScreen
 import org.guardteam.mentalguardians.presentation.contentdetail.ContentDetailScreen
 import org.guardteam.mentalguardians.presentation.contentfavorite.ContentFavoriteScreen
 import org.guardteam.mentalguardians.presentation.profile.extra.EditProfile
 import org.guardteam.mentalguardians.presentation.profile.extra.PartnerRegistration
 import org.guardteam.mentalguardians.presentation.therapist.TherapistScreen
+import org.guardteam.mentalguardians.presentation.therapistdetail.TherapistDetailScreen
 import org.guardteam.mentalguardians.presentation.therapistfavorite.TherapistFavoriteScreen
 
 fun NavGraphBuilder.featuresNavGraph(
@@ -22,7 +24,8 @@ fun NavGraphBuilder.featuresNavGraph(
     contentSearchActive: Boolean = false,
     onContentSearchActiveChange: (Boolean) -> Unit = {},
     therapistSearchActive: Boolean = false,
-    onTherapistSearchActiveChange: (Boolean) -> Unit = {}
+    onTherapistSearchActiveChange: (Boolean) -> Unit = {},
+    goBackToAuth: () -> Unit = {}
 ) {
     navigation(
         route = Graph.FEATURES,
@@ -39,7 +42,11 @@ fun NavGraphBuilder.featuresNavGraph(
             onFeaturesTitleChange("Content")
         }
         composable(route = FeaturesScreen.ContentFavorite.route) {
-            ContentFavoriteScreen()
+            ContentFavoriteScreen(
+                navigateToDetail = { contentId ->
+                    navController.navigate(FeaturesScreen.ContentDetail.createRoute(contentId))
+                }
+            )
             onFeaturesTitleChange("Favorite Content")
         }
         composable(
@@ -53,15 +60,23 @@ fun NavGraphBuilder.featuresNavGraph(
         composable(route = FeaturesScreen.Therapist.route) {
             TherapistScreen(
                 active = therapistSearchActive,
-                onActiveChange = onTherapistSearchActiveChange
+                onActiveChange = onTherapistSearchActiveChange,
+                navigateToDetail = { therapistId ->
+                    navController.navigate(FeaturesScreen.TherapistDetail.createRoute(therapistId))
+                }
             )
             onFeaturesTitleChange("Therapist")
         }
 
         composable(route = FeaturesScreen.TherapistFavorite.route) {
-            TherapistFavoriteScreen()
+            TherapistFavoriteScreen(
+                navigateToDetail = { therapistId ->
+                    navController.navigate(FeaturesScreen.TherapistDetail.createRoute(therapistId))
+                }
+            )
             onFeaturesTitleChange("Favorite Therapist")
         }
+
 
         composable(route = FeaturesScreen.EditProfile.route){
             EditProfile()
@@ -71,6 +86,28 @@ fun NavGraphBuilder.featuresNavGraph(
         composable(route = FeaturesScreen.PartnerRegistration.route){
             PartnerRegistration()
             onFeaturesTitleChange("Partner Registration")
+
+        composable(
+            route = FeaturesScreen.TherapistDetail.route,
+            arguments = listOf(navArgument("therapistId") { type = NavType.IntType })
+        ) {
+            val therapistId = it.arguments?.getInt("therapistId") ?: 1
+            TherapistDetailScreen(
+                therapistId = therapistId,
+                navigateToBooking = { id ->
+                    navController.navigate(FeaturesScreen.TherapistAppointment.createRoute(id))
+                }
+            )
+            onFeaturesTitleChange("Detail Therapist")
+        }
+
+        composable(
+            route = FeaturesScreen.TherapistAppointment.route,
+            arguments = listOf(navArgument("therapistId") { type = NavType.IntType })
+        ) {
+            val therapistId = it.arguments?.getInt("therapistId") ?: 1
+            BookScreen(therapistId = therapistId)
+            onFeaturesTitleChange("Book Appointment")
         }
     }
 }
