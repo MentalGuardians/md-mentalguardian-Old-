@@ -1,11 +1,13 @@
 package org.guardteam.mentalguardians.domain.model
 
-data class Content(
-    val id: Int,
+data class ContentData(
+    val contentId: String,
     val title: String,
     val author: String,
-    val duration: String,
-    val rating: Double,
-    val views: String,
-    val desc: String
+    val labels: String,
+    val comments: Int,
+    val likes: Int,
+    val videoId: String,
+    val views: Int,
+    val thumbnail: String
 )

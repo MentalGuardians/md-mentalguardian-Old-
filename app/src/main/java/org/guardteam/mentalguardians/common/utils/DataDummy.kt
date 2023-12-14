@@ -1,6 +1,6 @@
 package org.guardteam.mentalguardians.common.utils
 
-import org.guardteam.mentalguardians.domain.model.Content
+import org.guardteam.mentalguardians.domain.model.ContentData
 import org.guardteam.mentalguardians.domain.model.Day
 import org.guardteam.mentalguardians.domain.model.History
 import org.guardteam.mentalguardians.domain.model.Therapist
@@ -10,9 +10,9 @@ import java.time.LocalDate
 
 
 object DataDummy {
-    val contentData: List<Content> by lazy {
+    val contentData: List<ContentData> by lazy {
         (1..10).map { index ->
-            Content(
+            ContentData(
                 id = index,
                 title = "Title $index",
                 author = "Author $index",

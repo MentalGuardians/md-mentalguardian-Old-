@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.guardteam.mentalguardians.R
 import org.guardteam.mentalguardians.common.utils.DataDummy
-import org.guardteam.mentalguardians.domain.model.Content
+import org.guardteam.mentalguardians.domain.model.ContentData
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
@@ -51,11 +51,11 @@ fun ContentDetailScreen(
     contentId: Int,
     modifier: Modifier = Modifier
 ) {
-    val content: Content? = DataDummy.contentData.find { it.id == contentId }
+    val contentData: ContentData? = DataDummy.contentData.find { it.id == contentId }
     var isFavorite by rememberSaveable {
         mutableStateOf(false)
     }
-    content?.let {
+    contentData?.let {
         Column(
             modifier = modifier
                 .fillMaxWidth()

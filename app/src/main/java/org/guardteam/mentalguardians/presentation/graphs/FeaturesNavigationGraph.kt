@@ -12,6 +12,7 @@ import org.guardteam.mentalguardians.presentation.book.BookScreen
 import org.guardteam.mentalguardians.presentation.content.ContentScreen
 import org.guardteam.mentalguardians.presentation.contentdetail.ContentDetailScreen
 import org.guardteam.mentalguardians.presentation.contentfavorite.ContentFavoriteScreen
+import org.guardteam.mentalguardians.presentation.predict.PredictScreen
 import org.guardteam.mentalguardians.presentation.therapist.TherapistScreen
 import org.guardteam.mentalguardians.presentation.therapistdetail.TherapistDetailScreen
 import org.guardteam.mentalguardians.presentation.therapistfavorite.TherapistFavoriteScreen
@@ -96,6 +97,15 @@ fun NavGraphBuilder.featuresNavGraph(
             val therapistId = it.arguments?.getInt("therapistId") ?: 1
             BookScreen(therapistId = therapistId)
             onFeaturesTitleChange("Book Appointment")
+        }
+
+        composable(
+            route = FeaturesScreen.Prediction.route,
+            arguments = listOf(navArgument("mood") { type = NavType.StringType })
+        ) {
+            val mood = it.arguments?.getString("mood") ?: "good"
+            PredictScreen(moodResult = mood)
+            onFeaturesTitleChange("Prediction Result")
         }
     }
 }
