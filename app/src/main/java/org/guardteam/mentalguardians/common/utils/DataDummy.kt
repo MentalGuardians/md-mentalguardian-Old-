@@ -4,6 +4,7 @@ import org.guardteam.mentalguardians.domain.model.Content
 import org.guardteam.mentalguardians.domain.model.Day
 import org.guardteam.mentalguardians.domain.model.History
 import org.guardteam.mentalguardians.domain.model.Therapist
+import org.guardteam.mentalguardians.presentation.profile.data.Profile
 import org.guardteam.mentalguardians.presentation.transaction.data.Transaction
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -73,6 +74,18 @@ object DataDummy {
         }
     }
 
+
+    val dataProfile = listOf(
+        Profile(
+            1,
+            "Ihfansyahpedo9@gmail.com",
+            "Ihfansyah Pedo",
+            "Jl. Laksda Adisucipto, Papringan, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281",
+            "123456789"
+        )
+    )
+
+
     val listDate: List<Day> by lazy {
         val currentDate = LocalDate.now()
         val startOfSecondWeek = currentDate.plusDays(1)
@@ -98,4 +111,5 @@ object DataDummy {
         Pair("05:00", "pm"),
         Pair("07:00", "pm"),
     )
+
 }
