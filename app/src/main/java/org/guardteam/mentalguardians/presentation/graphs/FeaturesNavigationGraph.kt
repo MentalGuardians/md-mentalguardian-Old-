@@ -86,29 +86,28 @@ fun NavGraphBuilder.featuresNavGraph(
         composable(route = FeaturesScreen.PartnerRegistration.route) {
             PartnerRegistration()
             onFeaturesTitleChange("Partner Registration")
+        }
+        composable(
+            route = FeaturesScreen.TherapistDetail.route,
+            arguments = listOf(navArgument("therapistId") { type = NavType.IntType })
+        ) {
+            val therapistId = it.arguments?.getInt("therapistId") ?: 1
+            TherapistDetailScreen(
+                therapistId = therapistId,
+                navigateToBooking = { id ->
+                    navController.navigate(FeaturesScreen.TherapistAppointment.createRoute(id))
+                }
+            )
+            onFeaturesTitleChange("Detail Therapist")
+        }
 
-            composable(
-                route = FeaturesScreen.TherapistDetail.route,
-                arguments = listOf(navArgument("therapistId") { type = NavType.IntType })
-            ) {
-                val therapistId = it.arguments?.getInt("therapistId") ?: 1
-                TherapistDetailScreen(
-                    therapistId = therapistId,
-                    navigateToBooking = { id ->
-                        navController.navigate(FeaturesScreen.TherapistAppointment.createRoute(id))
-                    }
-                )
-                onFeaturesTitleChange("Detail Therapist")
-            }
-
-            composable(
-                route = FeaturesScreen.TherapistAppointment.route,
-                arguments = listOf(navArgument("therapistId") { type = NavType.IntType })
-            ) {
-                val therapistId = it.arguments?.getInt("therapistId") ?: 1
-                BookScreen(therapistId = therapistId)
-                onFeaturesTitleChange("Book Appointment")
-            }
+        composable(
+            route = FeaturesScreen.TherapistAppointment.route,
+            arguments = listOf(navArgument("therapistId") { type = NavType.IntType })
+        ) {
+            val therapistId = it.arguments?.getInt("therapistId") ?: 1
+            BookScreen(therapistId = therapistId)
+            onFeaturesTitleChange("Book Appointment")
         }
     }
 }
