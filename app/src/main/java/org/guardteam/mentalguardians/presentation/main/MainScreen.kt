@@ -150,24 +150,6 @@ fun TopBar(
                     )
                 }
             },
-            actions = {
-                if (currentDestination?.route == FeaturesScreen.Content.route || currentDestination?.route == FeaturesScreen.Therapist.route) {
-                    OutlinedIconButton(
-                        onClick = {
-                            navController.navigate(
-                                if (currentDestination.route == FeaturesScreen.Content.route) FeaturesScreen.ContentFavorite.route else FeaturesScreen.TherapistFavorite.route
-                            )
-                        },
-                        border = BorderStroke(width = 1.dp, MaterialTheme.colorScheme.outline)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.FavoriteBorder,
-                            contentDescription = "Favorite",
-                            tint = MaterialTheme.colorScheme.onSurface
-                        )
-                    }
-                }
-            },
             modifier = modifier
                 .padding(start = 16.dp, top = 16.dp, end = 16.dp)
         )

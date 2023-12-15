@@ -56,6 +56,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     navigateToContent: () -> Unit = {},
     navigateToTherapist: () -> Unit = {},
+    navigateToPredict: (String) -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     var openAlertDialog by rememberSaveable { mutableStateOf(false) }
@@ -73,6 +74,7 @@ fun HomeScreen(
                 is Result.Success -> {
                     openAlertDialog = false
                     viewModel.setDescribeState(InputTextState())
+                    navigateToPredict(unhandled.data.prediction)
                 }
 
                 else -> {}
