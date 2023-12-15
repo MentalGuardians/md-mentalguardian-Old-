@@ -82,7 +82,6 @@ fun NavGraphBuilder.featuresNavGraph(
             )
             onFeaturesTitleChange("Favorite Therapist")
         }
-
         composable(route = FeaturesScreen.EditProfile.route) {
             EditProfile()
             onFeaturesTitleChange("Edit Profile")
@@ -92,7 +91,6 @@ fun NavGraphBuilder.featuresNavGraph(
             PartnerRegistration()
             onFeaturesTitleChange("Partner Registration")
         }
-
         composable(
             route = FeaturesScreen.TherapistDetail.route,
             arguments = listOf(navArgument("therapistId") { type = NavType.IntType })
@@ -135,3 +133,4 @@ fun NavGraphBuilder.featuresNavGraph(
         }
     }
 }
+
