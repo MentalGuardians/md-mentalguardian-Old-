@@ -1,11 +1,15 @@
 package org.guardteam.mentalguardians.data.remote
 
+import org.guardteam.mentalguardians.data.remote.dto.ContentByIdDto
+import org.guardteam.mentalguardians.data.remote.dto.ContentDto
 import org.guardteam.mentalguardians.data.remote.dto.LoginDto
 import org.guardteam.mentalguardians.data.remote.dto.PredictionDto
 import org.guardteam.mentalguardians.data.remote.dto.ResponseDto
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -35,5 +39,10 @@ interface ApiService {
     @POST("content-recommender")
     suspend fun contentRecommender(
         @Field("content") content: String
-    )
+    ): ContentDto
+
+    @GET("content-recommender")
+    suspend fun contentById(
+        @Query("contentId") contentId: String
+    ): ContentByIdDto
 }

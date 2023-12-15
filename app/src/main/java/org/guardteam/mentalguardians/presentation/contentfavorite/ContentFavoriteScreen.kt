@@ -19,28 +19,28 @@ import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 @Composable
 fun ContentFavoriteScreen(
     modifier: Modifier = Modifier,
-    navigateToDetail: (Int) -> Unit = {}
+    navigateToDetail: (String) -> Unit = {}
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 24.dp)
     ) {
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(vertical = 24.dp)
-        ) {
-            items(DataDummy.contentData, key = { it.id }) {
-                ContentItem(
-                    author = it.author,
-                    title = it.title,
-                    duration = it.duration,
-                    rating = it.rating,
-                    views = it.views,
-                    modifier = Modifier.clickable { navigateToDetail(it.id) }
-                )
-            }
-        }
+//        LazyColumn(
+//            verticalArrangement = Arrangement.spacedBy(16.dp),
+//            contentPadding = PaddingValues(vertical = 24.dp)
+//        ) {
+//            items(DataDummy.contentData, key = { it.id }) {
+//                ContentItem(
+//                    author = it.author,
+//                    title = it.title,
+//                    duration = it.duration,
+//                    rating = it.rating,
+//                    views = it.views,
+//                    modifier = Modifier.clickable { navigateToDetail(it.id) }
+//                )
+//            }
+//        }
     }
 }
 

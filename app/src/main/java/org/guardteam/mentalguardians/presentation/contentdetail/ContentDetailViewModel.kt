@@ -1,4 +1,4 @@
-package org.guardteam.mentalguardians.presentation.content
+package org.guardteam.mentalguardians.presentation.contentdetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,22 +7,21 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.guardteam.mentalguardians.common.utils.Result
-import org.guardteam.mentalguardians.domain.model.Content
+import org.guardteam.mentalguardians.domain.model.ContentById
 import org.guardteam.mentalguardians.domain.use_case.FeatureUseCase
 import javax.inject.Inject
 
 @HiltViewModel
-class ContentViewModel @Inject constructor(
+class ContentDetailViewModel @Inject constructor(
     private val featureUseCase: FeatureUseCase
 ) : ViewModel() {
 
-    private val _result: MutableStateFlow<Result<Content>> =
-        MutableStateFlow(Result.None)
-    val result: StateFlow<Result<Content>> = _result
+    private val _result: MutableStateFlow<Result<ContentById>> = MutableStateFlow(Result.None)
+    val result: StateFlow<Result<ContentById>> = _result
 
-    fun getContent(content: String) {
+    fun getContentById(contentId: String) {
         viewModelScope.launch {
-            featureUseCase.getContent(content).collect {
+            featureUseCase.getContentById(contentId).collect {
                 _result.value = it
             }
         }

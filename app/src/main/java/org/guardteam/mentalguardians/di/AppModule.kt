@@ -19,6 +19,8 @@ import org.guardteam.mentalguardians.domain.repository.FeatureRepository
 import org.guardteam.mentalguardians.domain.use_case.AuthUseCase
 import org.guardteam.mentalguardians.domain.use_case.ClearUserData
 import org.guardteam.mentalguardians.domain.use_case.FeatureUseCase
+import org.guardteam.mentalguardians.domain.use_case.GetContent
+import org.guardteam.mentalguardians.domain.use_case.GetContentById
 import org.guardteam.mentalguardians.domain.use_case.GetLoginState
 import org.guardteam.mentalguardians.domain.use_case.GetOnBoarding
 import org.guardteam.mentalguardians.domain.use_case.GetPredict
@@ -113,7 +115,9 @@ object AppModule {
         featureRepository: FeatureRepository
     ): FeatureUseCase {
         return FeatureUseCase(
-            getPredict = GetPredict(featureRepository)
+            getPredict = GetPredict(featureRepository),
+            getContent = GetContent(featureRepository),
+            getContentById = GetContentById(featureRepository)
         )
     }
 }

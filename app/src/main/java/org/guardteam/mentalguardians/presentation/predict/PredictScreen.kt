@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -114,14 +115,14 @@ fun PredictScreen(
             )
             Spacer(modifier = Modifier.height(12.dp))
             val selectedValues = chipList
-                .filter { it.selected }
-                .map { it.value }
-                .joinToString(", ")
+                .filter { it.selected }.joinToString(", ") { it.value }
             Row {
-                Button(onClick = {
-
-                    navigateToTherapist(selectedValues)
-                }) {
+                Button(
+                    onClick = {
+                        navigateToTherapist(selectedValues)
+                    },
+                    shape = RoundedCornerShape(16.dp)
+                ) {
                     Text(
                         text = "Therapist",
                         fontFamily = fontFamily
@@ -130,9 +131,12 @@ fun PredictScreen(
 
                 Spacer(modifier = Modifier.width(18.dp))
 
-                Button(onClick = {
-                    navigateToContent(selectedValues)
-                }) {
+                Button(
+                    onClick = {
+                        navigateToContent(selectedValues)
+                    },
+                    shape = RoundedCornerShape(16.dp)
+                ) {
                     Text(
                         text = "Content",
                         fontFamily = fontFamily
@@ -144,7 +148,7 @@ fun PredictScreen(
         Spacer(modifier = Modifier.weight(1f))
         Spacer(modifier = Modifier.height(24.dp))
 
-        Button(onClick = { backToHome() }) {
+        Button(onClick = { backToHome() }, shape = RoundedCornerShape(16.dp)) {
             Text(
                 text = "Finish",
                 fontFamily = fontFamily

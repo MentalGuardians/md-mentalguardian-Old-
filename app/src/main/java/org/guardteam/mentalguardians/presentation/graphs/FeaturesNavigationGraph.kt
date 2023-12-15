@@ -13,6 +13,8 @@ import org.guardteam.mentalguardians.presentation.content.ContentScreen
 import org.guardteam.mentalguardians.presentation.contentdetail.ContentDetailScreen
 import org.guardteam.mentalguardians.presentation.contentfavorite.ContentFavoriteScreen
 import org.guardteam.mentalguardians.presentation.predict.PredictScreen
+import org.guardteam.mentalguardians.presentation.profile.extra.EditProfile
+import org.guardteam.mentalguardians.presentation.profile.extra.PartnerRegistration
 import org.guardteam.mentalguardians.presentation.therapist.TherapistScreen
 import org.guardteam.mentalguardians.presentation.therapistdetail.TherapistDetailScreen
 import org.guardteam.mentalguardians.presentation.therapistfavorite.TherapistFavoriteScreen
@@ -30,13 +32,18 @@ fun NavGraphBuilder.featuresNavGraph(
         route = Graph.FEATURES,
         startDestination = FeaturesScreen.Content.route
     ) {
-        composable(route = FeaturesScreen.Content.route) {
+        composable(
+            route = FeaturesScreen.Content.route,
+            arguments = listOf(navArgument("content") { type = NavType.StringType })
+        ) {
+            val content = it.arguments?.getString("content") ?: ""
             ContentScreen(
                 active = contentSearchActive,
                 onActiveChange = onContentSearchActiveChange,
                 navigateToDetail = { contentId ->
                     navController.navigate(FeaturesScreen.ContentDetail.createRoute(contentId))
-                }
+                },
+                content = content
             )
             onFeaturesTitleChange("Content")
         }
@@ -50,9 +57,9 @@ fun NavGraphBuilder.featuresNavGraph(
         }
         composable(
             route = FeaturesScreen.ContentDetail.route,
-            arguments = listOf(navArgument("contentId") { type = NavType.IntType })
+            arguments = listOf(navArgument("contentId") { type = NavType.StringType })
         ) {
-            val contentId = it.arguments?.getInt("contentId") ?: 1
+            val contentId = it.arguments?.getString("contentId") ?: ""
             ContentDetailScreen(contentId = contentId)
             onFeaturesTitleChange("Detail Content")
         }
@@ -74,6 +81,16 @@ fun NavGraphBuilder.featuresNavGraph(
                 }
             )
             onFeaturesTitleChange("Favorite Therapist")
+        }
+
+        composable(route = FeaturesScreen.EditProfile.route) {
+            EditProfile()
+            onFeaturesTitleChange("Edit Profile")
+        }
+
+        composable(route = FeaturesScreen.PartnerRegistration.route) {
+            PartnerRegistration()
+            onFeaturesTitleChange("Partner Registration")
         }
 
         composable(
@@ -102,9 +119,18 @@ fun NavGraphBuilder.featuresNavGraph(
         composable(
             route = FeaturesScreen.Prediction.route,
             arguments = listOf(navArgument("mood") { type = NavType.StringType })
-        ) {
+        ) { it ->
             val mood = it.arguments?.getString("mood") ?: "good"
-            PredictScreen(moodResult = mood)
+            PredictScreen(
+                moodResult = mood,
+                navigateToContent = {
+                    if (it.isEmpty()) {
+                        navController.navigate(FeaturesScreen.Content.route)
+                    } else {
+                        navController.navigate(FeaturesScreen.Content.createRoute(it))
+                    }
+                }
+            )
             onFeaturesTitleChange("Prediction Result")
         }
     }

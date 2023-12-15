@@ -12,7 +12,7 @@ data class ContentDataDto(
     @field:SerializedName("Author")
     val author: String,
 
-    @field:SerializedName("Bullying")
+    @field:SerializedName("Labels")
     val labels: String,
 
     @field:SerializedName("Comments")
