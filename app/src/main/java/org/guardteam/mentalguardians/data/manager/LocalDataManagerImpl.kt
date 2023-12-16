@@ -9,13 +9,13 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import org.guardteam.mentalguardians.common.utils.Contants.APP_PREF
-import org.guardteam.mentalguardians.common.utils.Contants.EMAIL_KEY
-import org.guardteam.mentalguardians.common.utils.Contants.LOGINSTATE_KEY
-import org.guardteam.mentalguardians.common.utils.Contants.ONBOARDING_KEY
-import org.guardteam.mentalguardians.common.utils.Contants.PICTURE_KEY
-import org.guardteam.mentalguardians.common.utils.Contants.USERID_KEY
-import org.guardteam.mentalguardians.common.utils.Contants.USERNAME_KEY
+import org.guardteam.mentalguardians.common.utils.Constants.APP_PREF
+import org.guardteam.mentalguardians.common.utils.Constants.EMAIL_KEY
+import org.guardteam.mentalguardians.common.utils.Constants.LOGINSTATE_KEY
+import org.guardteam.mentalguardians.common.utils.Constants.ONBOARDING_KEY
+import org.guardteam.mentalguardians.common.utils.Constants.PICTURE_KEY
+import org.guardteam.mentalguardians.common.utils.Constants.USERID_KEY
+import org.guardteam.mentalguardians.common.utils.Constants.USERNAME_KEY
 import org.guardteam.mentalguardians.domain.manager.LocalDataManager
 import org.guardteam.mentalguardians.domain.model.UserData
 

@@ -37,6 +37,9 @@ fun MainNavGraph(
                 },
                 navigateToTherapist = {
                     navController.navigate(FeaturesScreen.Therapist.route)
+                },
+                navigateToPredict = {
+                    navController.navigate(FeaturesScreen.Prediction.createRoute(it))
                 }
             )
         }

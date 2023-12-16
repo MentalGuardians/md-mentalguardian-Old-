@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
         }
         setContent {
             MentalGuardiansTheme(
-                dynamicColor = true
+                dynamicColor = false
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),

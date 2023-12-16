@@ -2,6 +2,8 @@ package org.guardteam.mentalguardians.data.remote
 
 import org.guardteam.mentalguardians.data.remote.dto.HistoryDataItem
 import org.guardteam.mentalguardians.data.remote.dto.HistoryDto
+import org.guardteam.mentalguardians.data.remote.dto.ContentByIdDto
+import org.guardteam.mentalguardians.data.remote.dto.ContentDto
 import org.guardteam.mentalguardians.data.remote.dto.LoginDto
 import org.guardteam.mentalguardians.data.remote.dto.PredictionDto
 import org.guardteam.mentalguardians.data.remote.dto.ResponseDto
@@ -39,7 +41,7 @@ interface ApiService {
     @POST("content-recommender")
     suspend fun contentRecommender(
         @Field("content") content: String
-    )
+    ): ContentDto
 
 
     @FormUrlEncoded
@@ -47,4 +49,9 @@ interface ApiService {
     suspend fun historyPredict(
         @Query("userId") userId: String
     ): HistoryDto
+
+    @GET("content-recommender")
+    suspend fun contentById(
+        @Query("contentId") contentId: String
+    ): ContentByIdDto
 }

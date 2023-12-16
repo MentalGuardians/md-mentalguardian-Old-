@@ -1,6 +1,6 @@
 package org.guardteam.mentalguardians.common.utils
 
-object Contants {
+object Constants {
     const val APP_PREF = "mg_pref"
     const val ONBOARDING_KEY = "on_boarding_completed"
     const val LOGINSTATE_KEY = "login_state_key"

@@ -1,17 +1,18 @@
 package org.guardteam.mentalguardians.presentation.component
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.ThumbUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -21,13 +22,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import org.guardteam.mentalguardians.R
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
@@ -36,9 +38,10 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 fun ContentItem(
     author: String,
     title: String,
-    duration: String,
-    rating: Double,
-    views: String,
+    label: String,
+    likes: Int,
+    views: Int,
+    image: String,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -53,10 +56,12 @@ fun ContentItem(
         Row(
             modifier = Modifier.padding(8.dp)
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.content_cover),
+            AsyncImage(
+                model = image,
                 contentDescription = "Content Image",
                 contentScale = ContentScale.Crop,
+                error = painterResource(id = R.drawable.content_cover),
+                placeholder = painterResource(id = R.drawable.content_cover),
                 modifier = Modifier
                     .clip(RoundedCornerShape(12.dp))
                     .height(100.dp)
@@ -76,13 +81,16 @@ fun ContentItem(
                 Text(
                     text = title,
                     fontFamily = fontFamily,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.fillMaxWidth(),
+                    maxLines = 1
                 )
 
                 Text(
-                    text = duration,
+                    text = label,
                     fontFamily = fontFamily,
                     fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -92,13 +100,16 @@ fun ContentItem(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        imageVector = Icons.Rounded.Star,
-                        contentDescription = "Rating",
-                        tint = Color.Yellow
+                        imageVector = Icons.Rounded.ThumbUp,
+                        contentDescription = "Likes",
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(14.dp)
                     )
 
+                    Spacer(modifier = Modifier.width(4.dp))
+
                     Text(
-                        text = "$rating | $views View",
+                        text = "$likes | $views View",
                         fontFamily = fontFamily,
                         fontSize = 12.sp,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -115,10 +126,11 @@ fun ContentItemPreview() {
     MentalGuardiansTheme {
         ContentItem(
             author = "Anonymous",
-            title = "Sleeping with Beautiful",
-            duration = "2-3 min",
-            rating = 4.8,
-            views = "2.4k"
+            title = "Sleeping with Beautiful jfnjv dkjndkj kjfkefe fekjnfk",
+            label = "Family",
+            likes = 155,
+            views = 2444,
+            image = "akjnska"
         )
     }
 }
