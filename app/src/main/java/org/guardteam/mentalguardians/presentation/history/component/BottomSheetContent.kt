@@ -68,14 +68,14 @@ fun MoodIcon(
     mood: String
 ) {
     val icon = when (mood) {
-        "Bad" -> painterResource(id = R.drawable.ic_negative)
-        "Good" -> painterResource(id = R.drawable.ic_positive)
+        "bad" -> painterResource(id = R.drawable.ic_negative)
+        "good" -> painterResource(id = R.drawable.ic_positive)
         else -> painterResource(id = R.drawable.ic_positive)
     }
 
     val color = when (mood) {
-        "Bad" -> Color.Red
-        "Good" -> Color.Green
+        "bad" -> Color.Red
+        "good" -> Color.Green
         else -> Color.Gray
     }
 
