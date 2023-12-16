@@ -1,5 +1,7 @@
 package org.guardteam.mentalguardians.data.remote
 
+import org.guardteam.mentalguardians.data.remote.dto.HistoryDataItem
+import org.guardteam.mentalguardians.data.remote.dto.HistoryDto
 import org.guardteam.mentalguardians.data.remote.dto.ContentByIdDto
 import org.guardteam.mentalguardians.data.remote.dto.ContentDto
 import org.guardteam.mentalguardians.data.remote.dto.LoginDto
@@ -35,13 +37,20 @@ interface ApiService {
     suspend fun predict(
         @Field("userId") userId: String,
         @Field("text") text: String
-    ): PredictionDto
+    ): PredictionDto 
 
     @FormUrlEncoded
     @POST("content-recommender")
     suspend fun contentRecommender(
         @Field("content") content: String
     ): ContentDto
+
+
+    @FormUrlEncoded
+    @GET("predict")
+    suspend fun historyPredict(
+        @Query("userId") userId: String
+    ): HistoryDto
 
     @GET("content-recommender")
     suspend fun contentById(

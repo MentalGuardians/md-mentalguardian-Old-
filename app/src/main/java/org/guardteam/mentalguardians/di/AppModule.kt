@@ -19,6 +19,7 @@ import org.guardteam.mentalguardians.domain.repository.FeatureRepository
 import org.guardteam.mentalguardians.domain.use_case.AuthUseCase
 import org.guardteam.mentalguardians.domain.use_case.ClearUserData
 import org.guardteam.mentalguardians.domain.use_case.FeatureUseCase
+import org.guardteam.mentalguardians.domain.use_case.GetHistory
 import org.guardteam.mentalguardians.domain.use_case.GetContent
 import org.guardteam.mentalguardians.domain.use_case.GetContentById
 import org.guardteam.mentalguardians.domain.use_case.GetLoginState
@@ -119,6 +120,7 @@ object AppModule {
     ): FeatureUseCase {
         return FeatureUseCase(
             getPredict = GetPredict(featureRepository),
+            getHistory = GetHistory(featureRepository),
             getContent = GetContent(featureRepository),
             getContentById = GetContentById(featureRepository),
             getTherapist = GetTherapist(featureRepository),
@@ -126,4 +128,5 @@ object AppModule {
             postBooking = PostBooking(featureRepository)
         )
     }
+
 }

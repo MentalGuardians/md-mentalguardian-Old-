@@ -27,9 +27,8 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 @Composable
 fun BottomSheetContent(
     date: String,
-    time: String,
     description: String,
-    mood: Mood,
+    mood: String,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -45,12 +44,6 @@ fun BottomSheetContent(
             Column {
                 Text(
                     text = date,
-                    fontFamily = fontFamily,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium
-                )
-                Text(
-                    text = time,
                     fontFamily = fontFamily,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium
@@ -72,20 +65,22 @@ fun BottomSheetContent(
 @Composable
 fun MoodIcon(
     modifier: Modifier = Modifier,
-    mood: Mood
+    mood: String
 ) {
     val icon = when (mood) {
-        Mood.Bad -> R.drawable.ic_negative
-        Mood.Good -> R.drawable.ic_positive
+        "Bad" -> painterResource(id = R.drawable.ic_negative)
+        "Good" -> painterResource(id = R.drawable.ic_positive)
+        else -> painterResource(id = R.drawable.ic_positive)
     }
 
     val color = when (mood) {
-        Mood.Bad -> Color.Red
-        Mood.Good -> Color.Green
+        "Bad" -> Color.Red
+        "Good" -> Color.Green
+        else -> Color.Gray
     }
 
     Icon(
-        painter = painterResource(id = icon),
+        painter = icon,
         contentDescription = null,
         tint = color,
         modifier = modifier
@@ -93,15 +88,15 @@ fun MoodIcon(
     )
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun BSPreview() {
     MentalGuardiansTheme {
         BottomSheetContent(
-            date = "22 november 20023",
-            time = "22.30 PM",
+            date = "22 november 20023 12:30",
             description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            mood = Mood.Bad
+            mood = "Good"
         )
     }
 }

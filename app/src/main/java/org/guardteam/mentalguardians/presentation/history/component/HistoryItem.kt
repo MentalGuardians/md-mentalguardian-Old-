@@ -23,7 +23,6 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 @Composable
 fun HistoryItem(
     date: String,
-    time: String,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -41,13 +40,6 @@ fun HistoryItem(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(modifier = modifier.weight(1F))
-            Text(
-                text = time,
-                fontSize = 14.sp,
-                fontFamily = fontFamily,
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
             Icon(
                 imageVector = Icons.Default.ArrowForwardIos,
                 contentDescription = null,
@@ -68,6 +60,6 @@ fun HistoryItem(
 @Composable
 fun DaftarHistoryPreview() {
     MentalGuardiansTheme {
-        HistoryItem(date = "22 November 2023", time = "20:30 PM")
+        HistoryItem(date = "22 November 2023 12:30")
     }
 }
