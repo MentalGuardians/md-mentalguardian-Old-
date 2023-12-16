@@ -6,18 +6,17 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import org.guardteam.mentalguardians.common.BottomBarScreen
 import org.guardteam.mentalguardians.common.FeaturesScreen
 import org.guardteam.mentalguardians.common.Graph
 import org.guardteam.mentalguardians.presentation.book.BookScreen
 import org.guardteam.mentalguardians.presentation.content.ContentScreen
 import org.guardteam.mentalguardians.presentation.contentdetail.ContentDetailScreen
-import org.guardteam.mentalguardians.presentation.contentfavorite.ContentFavoriteScreen
 import org.guardteam.mentalguardians.presentation.predict.PredictScreen
 import org.guardteam.mentalguardians.presentation.profile.extra.EditProfile
 import org.guardteam.mentalguardians.presentation.profile.extra.PartnerRegistration
 import org.guardteam.mentalguardians.presentation.therapist.TherapistScreen
 import org.guardteam.mentalguardians.presentation.therapistdetail.TherapistDetailScreen
-import org.guardteam.mentalguardians.presentation.therapistfavorite.TherapistFavoriteScreen
 
 fun NavGraphBuilder.featuresNavGraph(
     navController: NavHostController,
@@ -47,14 +46,6 @@ fun NavGraphBuilder.featuresNavGraph(
             )
             onFeaturesTitleChange("Content")
         }
-        composable(route = FeaturesScreen.ContentFavorite.route) {
-            ContentFavoriteScreen(
-                navigateToDetail = { contentId ->
-                    navController.navigate(FeaturesScreen.ContentDetail.createRoute(contentId))
-                }
-            )
-            onFeaturesTitleChange("Favorite Content")
-        }
         composable(
             route = FeaturesScreen.ContentDetail.route,
             arguments = listOf(navArgument("contentId") { type = NavType.StringType })
@@ -63,24 +54,19 @@ fun NavGraphBuilder.featuresNavGraph(
             ContentDetailScreen(contentId = contentId)
             onFeaturesTitleChange("Detail Content")
         }
-        composable(route = FeaturesScreen.Therapist.route) {
+        composable(
+            route = FeaturesScreen.Therapist.route,
+            arguments = listOf(navArgument("expert") { NavType.StringType })
+        ) {
+
+            val expert = it.arguments?.getString("expert") ?: ""
             TherapistScreen(
-                active = therapistSearchActive,
-                onActiveChange = onTherapistSearchActiveChange,
                 navigateToDetail = { therapistId ->
                     navController.navigate(FeaturesScreen.TherapistDetail.createRoute(therapistId))
-                }
+                },
+                expert = expert
             )
             onFeaturesTitleChange("Therapist")
-        }
-
-        composable(route = FeaturesScreen.TherapistFavorite.route) {
-            TherapistFavoriteScreen(
-                navigateToDetail = { therapistId ->
-                    navController.navigate(FeaturesScreen.TherapistDetail.createRoute(therapistId))
-                }
-            )
-            onFeaturesTitleChange("Favorite Therapist")
         }
         composable(route = FeaturesScreen.EditProfile.route) {
             EditProfile()
@@ -93,13 +79,14 @@ fun NavGraphBuilder.featuresNavGraph(
         }
         composable(
             route = FeaturesScreen.TherapistDetail.route,
-            arguments = listOf(navArgument("therapistId") { type = NavType.IntType })
+            arguments = listOf(navArgument("therapistId") { type = NavType.StringType })
         ) {
-            val therapistId = it.arguments?.getInt("therapistId") ?: 1
+            val therapistId = it.arguments?.getString("therapistId") ?: ""
             TherapistDetailScreen(
                 therapistId = therapistId,
-                navigateToBooking = { id ->
-                    navController.navigate(FeaturesScreen.TherapistAppointment.createRoute(id))
+                navigateToTransaction = {
+                    navController.popBackStack(BottomBarScreen.Home.route, false)
+                    navController.navigate(BottomBarScreen.Transaction.route)
                 }
             )
             onFeaturesTitleChange("Detail Therapist")
@@ -122,11 +109,24 @@ fun NavGraphBuilder.featuresNavGraph(
             PredictScreen(
                 moodResult = mood,
                 navigateToContent = {
-                    if (it.isEmpty()) {
-                        navController.navigate(FeaturesScreen.Content.route)
-                    } else {
-                        navController.navigate(FeaturesScreen.Content.createRoute(it))
-                    }
+                    navController.popBackStack(BottomBarScreen.Home.route, false)
+                    navController.navigate(
+                        if (it.isEmpty()) {
+                            FeaturesScreen.Content.route
+                        } else {
+                            FeaturesScreen.Content.createRoute(it)
+                        }
+                    )
+                },
+                navigateToTherapist = {
+                    navController.popBackStack(BottomBarScreen.Home.route, false)
+                    navController.navigate(
+                        if (it.isEmpty()) {
+                            FeaturesScreen.Therapist.route
+                        } else {
+                            FeaturesScreen.Therapist.createRoute(it)
+                        }
+                    )
                 }
             )
             onFeaturesTitleChange("Prediction Result")

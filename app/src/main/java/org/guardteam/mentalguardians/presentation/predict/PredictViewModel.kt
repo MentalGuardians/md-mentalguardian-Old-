@@ -13,12 +13,14 @@ class PredictViewModel @Inject constructor() : ViewModel() {
         ChipState(value = "Bullying"),
         ChipState(value = "Child"),
         ChipState(value = "Cognitive"),
-        ChipState(value = "Educational"),
+        ChipState(value = "Educational, School"),
         ChipState(value = "Family"),
         ChipState(value = "Finance"),
-        ChipState(value = "Love"),
+        ChipState(value = "Love, Romance"),
         ChipState(value = "Nature-Nurture"),
-        ChipState(value = "Parenting")
+        ChipState(value = "Parenting"),
+        ChipState(value = "Friend"),
+        ChipState(value = "Sexual")
     )
     val chipState: List<ChipState> = _chipState
 

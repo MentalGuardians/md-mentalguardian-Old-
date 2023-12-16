@@ -4,5 +4,8 @@ data class FeatureUseCase(
     val getPredict: GetPredict,
     val getHistory: GetHistory,
     val getContent: GetContent,
-    val getContentById: GetContentById
+    val getContentById: GetContentById,
+    val getTherapist: GetTherapist,
+    val getTherapistById: GetTherapistById,
+    val postBooking: PostBooking
 )

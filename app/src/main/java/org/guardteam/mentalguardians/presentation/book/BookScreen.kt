@@ -58,160 +58,160 @@ fun BookScreen(
     modifier: Modifier = Modifier
 ) {
 
-    val therapist: Therapist? = DataDummy.therapistData.find { it.id == therapistId }
-    var selectedDate by rememberSaveable {
-        mutableStateOf("")
-    }
-
-    var selectedTime by rememberSaveable {
-        mutableStateOf("")
-    }
-
-    therapist?.let {
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(24.dp)
-                .verticalScroll(rememberScrollState())
-        ) {
-            Row {
-                Image(
-                    painter = painterResource(id = R.drawable.therapist_profile),
-                    contentDescription = "Therapist Profile",
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .height(75.dp)
-                        .aspectRatio(1f)
-                )
-                Spacer(modifier = Modifier.width(12.dp))
-                Column {
-                    Text(
-                        text = it.name,
-                        fontFamily = fontFamily,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                    Text(
-                        text = it.primaryFocus,
-                        fontFamily = fontFamily,
-                        fontSize = 12.sp,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Star,
-                            contentDescription = "Rating",
-                            tint = Color.Yellow
-                        )
-
-                        Text(
-                            text = it.rating.toString(),
-                            fontFamily = fontFamily,
-                            fontSize = 12.sp,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Text(
-                text = "Select a day",
-                fontFamily = fontFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                DataDummy.listDate.forEach { day ->
-                    DateItem(
-                        date = day.day,
-                        day = day.dayName.lowercase().replaceFirstChar(Char::uppercase),
-                        selected = day.date == selectedDate,
-                        modifier = Modifier
-                            .clickable(
-                                interactionSource = remember {
-                                    MutableInteractionSource()
-                                },
-                                indication = null
-                            ) {
-                                selectedDate = day.date
-                            }
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Text(
-                text = "Select an hour",
-                fontFamily = fontFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-
-            FlowRow(
-                maxItemsInEachRow = 2,
-                horizontalArrangement = Arrangement.spacedBy(
-                    space = 12.dp
-                ),
-                verticalArrangement = Arrangement.spacedBy(
-                    space = 12.dp
-                )
-            ) {
-                DataDummy.listTime.forEach { data ->
-                    TimeItem(
-                        time = data.first,
-                        period = data.second,
-                        selected = data.first == selectedTime,
-                        modifier = Modifier
-                            .weight(1f)
-                            .clickable { selectedTime = data.first }
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            Button(
-                onClick = {
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary
-                ),
-                shape = RoundedCornerShape(16.dp),
-                contentPadding = PaddingValues(14.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 24.dp)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.send),
-                    contentDescription = "Book Button"
-                )
-
-                Spacer(modifier = Modifier.width(8.dp))
-
-                Text(
-                    text = "Book",
-                    fontFamily = fontFamily,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 16.sp
-                )
-            }
-        }
-    }
+//    val therapist: Therapist? = DataDummy.therapistData.find { it.id == therapistId }
+//    var selectedDate by rememberSaveable {
+//        mutableStateOf("")
+//    }
+//
+//    var selectedTime by rememberSaveable {
+//        mutableStateOf("")
+//    }
+//
+//    therapist?.let {
+//        Column(
+//            modifier = modifier
+//                .fillMaxSize()
+//                .padding(24.dp)
+//                .verticalScroll(rememberScrollState())
+//        ) {
+//            Row {
+//                Image(
+//                    painter = painterResource(id = R.drawable.therapist_profile),
+//                    contentDescription = "Therapist Profile",
+//                    modifier = Modifier
+//                        .clip(RoundedCornerShape(8.dp))
+//                        .height(75.dp)
+//                        .aspectRatio(1f)
+//                )
+//                Spacer(modifier = Modifier.width(12.dp))
+//                Column {
+//                    Text(
+//                        text = it.name,
+//                        fontFamily = fontFamily,
+//                        fontWeight = FontWeight.Bold,
+//                        fontSize = 18.sp,
+//                        color = MaterialTheme.colorScheme.onSurface
+//                    )
+//                    Text(
+//                        text = it.primaryFocus,
+//                        fontFamily = fontFamily,
+//                        fontSize = 12.sp,
+//                        color = MaterialTheme.colorScheme.onSurfaceVariant
+//                    )
+//                    Row(
+//                        verticalAlignment = Alignment.CenterVertically
+//                    ) {
+//                        Icon(
+//                            imageVector = Icons.Rounded.Star,
+//                            contentDescription = "Rating",
+//                            tint = Color.Yellow
+//                        )
+//
+//                        Text(
+//                            text = it.rating.toString(),
+//                            fontFamily = fontFamily,
+//                            fontSize = 12.sp,
+//                            color = MaterialTheme.colorScheme.onSurfaceVariant
+//                        )
+//                    }
+//                }
+//            }
+//
+//            Spacer(modifier = Modifier.height(24.dp))
+//
+//            Text(
+//                text = "Select a day",
+//                fontFamily = fontFamily,
+//                fontWeight = FontWeight.Bold,
+//                fontSize = 18.sp,
+//                color = MaterialTheme.colorScheme.onSurface
+//            )
+//
+//            Spacer(modifier = Modifier.height(12.dp))
+//
+//            Row(
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                modifier = Modifier.fillMaxWidth()
+//            ) {
+//                DataDummy.listDate.forEach { day ->
+//                    DateItem(
+//                        date = day.day,
+//                        day = day.dayName.lowercase().replaceFirstChar(Char::uppercase),
+//                        selected = day.date == selectedDate,
+//                        modifier = Modifier
+//                            .clickable(
+//                                interactionSource = remember {
+//                                    MutableInteractionSource()
+//                                },
+//                                indication = null
+//                            ) {
+//                                selectedDate = day.date
+//                            }
+//                    )
+//                }
+//            }
+//
+//            Spacer(modifier = Modifier.height(24.dp))
+//
+//            Text(
+//                text = "Select an hour",
+//                fontFamily = fontFamily,
+//                fontWeight = FontWeight.Bold,
+//                fontSize = 18.sp,
+//                color = MaterialTheme.colorScheme.onSurface
+//            )
+//
+//            FlowRow(
+//                maxItemsInEachRow = 2,
+//                horizontalArrangement = Arrangement.spacedBy(
+//                    space = 12.dp
+//                ),
+//                verticalArrangement = Arrangement.spacedBy(
+//                    space = 12.dp
+//                )
+//            ) {
+//                DataDummy.listTime.forEach { data ->
+//                    TimeItem(
+//                        time = data.first,
+//                        period = data.second,
+//                        selected = data.first == selectedTime,
+//                        modifier = Modifier
+//                            .weight(1f)
+//                            .clickable { selectedTime = data.first }
+//                    )
+//                }
+//            }
+//
+//            Spacer(modifier = Modifier.weight(1f))
+//
+//            Button(
+//                onClick = {
+//                },
+//                colors = ButtonDefaults.buttonColors(
+//                    containerColor = MaterialTheme.colorScheme.primary
+//                ),
+//                shape = RoundedCornerShape(16.dp),
+//                contentPadding = PaddingValues(14.dp),
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(top = 24.dp)
+//            ) {
+//                Icon(
+//                    painter = painterResource(id = R.drawable.send),
+//                    contentDescription = "Book Button"
+//                )
+//
+//                Spacer(modifier = Modifier.width(8.dp))
+//
+//                Text(
+//                    text = "Book",
+//                    fontFamily = fontFamily,
+//                    fontWeight = FontWeight.Medium,
+//                    fontSize = 16.sp
+//                )
+//            }
+//        }
+//    }
 }
 
 @Composable
@@ -282,6 +282,34 @@ fun TimeItem(
             Icon(imageVector = Icons.Rounded.AccessTime, contentDescription = null)
             Spacer(modifier = Modifier.width(12.dp))
             Text(text = "$time $period")
+        }
+    }
+}
+
+@Composable
+fun MethodItem(
+    name: String,
+    selected: Boolean,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        border = BorderStroke(
+            width = 2.dp,
+            color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.background
+        ),
+        shape = RoundedCornerShape(16.dp),
+        modifier = modifier
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .padding(12.dp)
+        ) {
+            Text(text = name)
         }
     }
 }

@@ -8,6 +8,9 @@ import kotlinx.coroutines.runBlocking
 import org.guardteam.mentalguardians.common.utils.Result
 import org.guardteam.mentalguardians.data.mapper.toHistoryData
 import org.guardteam.mentalguardians.data.mapper.toPrediction
+import org.guardteam.mentalguardians.data.mapper.toResponse
+import org.guardteam.mentalguardians.data.mapper.toTherapist
+import org.guardteam.mentalguardians.data.mapper.toTherapistById
 import org.guardteam.mentalguardians.data.remote.ApiService
 import org.guardteam.mentalguardians.domain.manager.LocalDataManager
 import org.guardteam.mentalguardians.domain.model.HistoryData
@@ -17,6 +20,8 @@ import org.guardteam.mentalguardians.domain.model.Content
 import org.guardteam.mentalguardians.domain.model.ContentById
 import org.guardteam.mentalguardians.domain.model.Prediction
 import org.guardteam.mentalguardians.domain.model.Response
+import org.guardteam.mentalguardians.domain.model.Therapist
+import org.guardteam.mentalguardians.domain.model.TherapistById
 import org.guardteam.mentalguardians.domain.repository.FeatureRepository
 import retrofit2.HttpException
 
@@ -97,3 +102,61 @@ class FeatureRepositoryImpl(
     }
 }
 
+    override fun expert(expert: String): Flow<Result<Therapist>> = flow {
+        emit(Result.Loading)
+        try {
+            val response = apiService.expertRecommender(expert)
+
+            emit(Result.Success(response.toTherapist()))
+        } catch (e: Exception) {
+            if (e is HttpException) {
+                val jsonInString = e.response()?.errorBody()?.string()
+                val errorBody = Gson().fromJson(jsonInString, Response::class.java)
+                emit(Result.Error(errorBody.message))
+            } else {
+                emit(Result.Error(e.message.toString()))
+            }
+        }
+    }
+
+    override fun expertById(therapistId: String): Flow<Result<TherapistById>> = flow {
+        emit(Result.Loading)
+        try {
+            val response = apiService.expertById(therapistId)
+
+            emit(Result.Success(response.toTherapistById()))
+        } catch (e: Exception) {
+            if (e is HttpException) {
+                val jsonInString = e.response()?.errorBody()?.string()
+                val errorBody = Gson().fromJson(jsonInString, Response::class.java)
+                emit(Result.Error(errorBody.message))
+            } else {
+                emit(Result.Error(e.message.toString()))
+            }
+        }
+    }
+
+    override fun booking(
+        therapistId: String,
+        date: String,
+        time: String,
+        method: String
+    ): Flow<Result<Response>> = flow {
+        emit(Result.Loading)
+        try {
+            val userId = runBlocking { localDataManager.getUserData().first().userId }
+            val response = apiService.booking(userId, therapistId, date, time, method)
+
+            emit(Result.Success(response.toResponse()))
+        } catch (e: Exception) {
+            if (e is HttpException) {
+                val jsonInString = e.response()?.errorBody()?.string()
+                val errorBody = Gson().fromJson(jsonInString, Response::class.java)
+                emit(Result.Error(errorBody.message))
+            } else {
+                emit(Result.Error(e.message.toString()))
+            }
+        }
+    }
+
+}
