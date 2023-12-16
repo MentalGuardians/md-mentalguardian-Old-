@@ -45,8 +45,6 @@ interface ApiService {
         @Field("content") content: String
     ): ContentDto
 
-
-    @FormUrlEncoded
     @GET("predict")
     suspend fun historyPredict(
         @Query("userId") userId: String

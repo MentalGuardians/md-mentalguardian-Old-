@@ -51,10 +51,11 @@ class FeatureRepositoryImpl(
         }
     }
 
-    override fun history(historyId: String): Flow<Result<HistoryData>> = flow {
+    override fun history(): Flow<Result<HistoryData>> = flow {
         emit(Result.Loading)
         try {
-            val response = apiService.historyPredict(historyId)
+            val userId = runBlocking { localDataManager.getUserData().first().userId }
+            val response = apiService.historyPredict(userId = userId)
             emit(Result.Success(response.toHistoryData()))
         } catch (e: Exception) {
             if (e is HttpException) {

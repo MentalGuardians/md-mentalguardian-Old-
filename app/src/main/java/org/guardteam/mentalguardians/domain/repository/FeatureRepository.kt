@@ -13,7 +13,7 @@ import org.guardteam.mentalguardians.domain.model.TherapistById
 interface FeatureRepository {
 
     fun predict(text: String): Flow<Result<Prediction>>
-    fun history(historyId: String) : Flow<Result<HistoryData>>
+    fun history() : Flow<Result<HistoryData>>
     fun content(content: String): Flow<Result<Content>>
     fun contentById(contentId: String): Flow<Result<ContentById>>
 
