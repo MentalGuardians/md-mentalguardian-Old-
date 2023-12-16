@@ -6,6 +6,11 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.guardteam.mentalguardians.common.utils.Result
+import org.guardteam.mentalguardians.data.mapper.toHistoryData
+import org.guardteam.mentalguardians.data.mapper.toPrediction
+import org.guardteam.mentalguardians.data.remote.ApiService
+import org.guardteam.mentalguardians.domain.manager.LocalDataManager
+import org.guardteam.mentalguardians.domain.model.HistoryData
 import org.guardteam.mentalguardians.data.mapper.toContent
 import org.guardteam.mentalguardians.data.mapper.toContentById
 import org.guardteam.mentalguardians.data.mapper.toPrediction
@@ -44,6 +49,14 @@ class FeatureRepositoryImpl(
         }
     }
 
+    override fun history(historyId: String): Flow<Result<HistoryData>> = flow {
+        emit(Result.Loading)
+        try {
+            val response = apiService.historyPredict(historyId)
+            emit(Result.Success(response.toHistoryData()))
+        } catch (e: Exception){
+            if (e is HttpException){
+              
     override fun content(content: String): Flow<Result<Content>> = flow {
         emit(Result.Loading)
         try {

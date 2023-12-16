@@ -35,16 +35,20 @@ fun TransactionScreen(
 
     if (bottomSheetState) {
         ModalBottomSheet(onDismissRequest = { bottomSheetState = false }) {
-            TransactionBottomSheet(
-                psychologistName = "Ihfansyah Pedo",
-                date = "23 November 2023",
-                time = "23.30",
-                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                link = "https://meet.google.com/tsi/frfb-nzt",
-                status = "Scheduled",
-                whatsapp = "+6282146804920"
-            ) {
+            LazyColumn(){
+                items(DataDummy.dataTransaction, key = {it.id}){
+                    TransactionBottomSheet(
+                        psychologistName = it.name,
+                        date = it.date,
+                        time = it.time,
+                        description = it.description,
+                        link = it.link,
+                        status = it.status,
+                        whatsapp = it.whatsapp
+                    ) {
 
+                    }
+                }
             }
         }
     }
