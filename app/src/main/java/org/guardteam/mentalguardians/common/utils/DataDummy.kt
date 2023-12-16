@@ -4,6 +4,7 @@ import org.guardteam.mentalguardians.domain.model.Content
 import org.guardteam.mentalguardians.domain.model.Day
 import org.guardteam.mentalguardians.domain.model.History
 import org.guardteam.mentalguardians.domain.model.Therapist
+import org.guardteam.mentalguardians.presentation.history.data.Mood
 import org.guardteam.mentalguardians.presentation.profile.data.Profile
 import org.guardteam.mentalguardians.presentation.transaction.data.Transaction
 import java.time.DayOfWeek
@@ -55,10 +56,10 @@ object DataDummy {
     val historyData: List<History> by lazy {
         (1..20).map { index ->
             History(
-                id = index,
-                date = "30 November 2023",
-                time = "21.38",
-                diagnose = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                id = "$index",
+                date = "30 November 2023 12:30",
+                diagnose = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                mood = "Bad"
             )
         }
     }
@@ -69,7 +70,10 @@ object DataDummy {
                 name = "Name $index",
                 date = "22 November 2023",
                 time = "20.30",
-                status = "Scheduled"
+                status = "Scheduled",
+                description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                link = "https://meet.google.com/tsi/frfb-nzt",
+                whatsapp ="+6282146804920"
             )
         }
     }
