@@ -117,7 +117,7 @@ object AppModule {
     ): FeatureUseCase {
         return FeatureUseCase(
             getPredict = GetPredict(featureRepository),
-            getHistory = GetHistory(featureRepository)
+            getHistory = GetHistory(featureRepository),
             getContent = GetContent(featureRepository),
             getContentById = GetContentById(featureRepository)
         )
