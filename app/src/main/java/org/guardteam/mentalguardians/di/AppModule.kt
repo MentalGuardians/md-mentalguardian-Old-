@@ -24,8 +24,11 @@ import org.guardteam.mentalguardians.domain.use_case.GetContentById
 import org.guardteam.mentalguardians.domain.use_case.GetLoginState
 import org.guardteam.mentalguardians.domain.use_case.GetOnBoarding
 import org.guardteam.mentalguardians.domain.use_case.GetPredict
+import org.guardteam.mentalguardians.domain.use_case.GetTherapist
+import org.guardteam.mentalguardians.domain.use_case.GetTherapistById
 import org.guardteam.mentalguardians.domain.use_case.GetUserData
 import org.guardteam.mentalguardians.domain.use_case.OnBoardingUseCase
+import org.guardteam.mentalguardians.domain.use_case.PostBooking
 import org.guardteam.mentalguardians.domain.use_case.PostLogin
 import org.guardteam.mentalguardians.domain.use_case.PostRegister
 import org.guardteam.mentalguardians.domain.use_case.SaveOnBoarding
@@ -117,7 +120,10 @@ object AppModule {
         return FeatureUseCase(
             getPredict = GetPredict(featureRepository),
             getContent = GetContent(featureRepository),
-            getContentById = GetContentById(featureRepository)
+            getContentById = GetContentById(featureRepository),
+            getTherapist = GetTherapist(featureRepository),
+            getTherapistById = GetTherapistById(featureRepository),
+            postBooking = PostBooking(featureRepository)
         )
     }
 }

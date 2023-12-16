@@ -5,6 +5,8 @@ import org.guardteam.mentalguardians.data.remote.dto.ContentDto
 import org.guardteam.mentalguardians.data.remote.dto.LoginDto
 import org.guardteam.mentalguardians.data.remote.dto.PredictionDto
 import org.guardteam.mentalguardians.data.remote.dto.ResponseDto
+import org.guardteam.mentalguardians.data.remote.dto.TherapistByIdDto
+import org.guardteam.mentalguardians.data.remote.dto.TherapistDto
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -45,4 +47,25 @@ interface ApiService {
     suspend fun contentById(
         @Query("contentId") contentId: String
     ): ContentByIdDto
+
+    @FormUrlEncoded
+    @POST("expert-recommender")
+    suspend fun expertRecommender(
+        @Field("expert") expert: String
+    ): TherapistDto
+
+    @GET("expert-recommender")
+    suspend fun expertById(
+        @Query("therapistId") therapistId: String
+    ): TherapistByIdDto
+
+    @FormUrlEncoded
+    @POST("booking")
+    suspend fun booking(
+        @Field("userId") userId: String,
+        @Field("therapistId") therapistId: String,
+        @Field("tanggal_konseling") date: String,
+        @Field("jam_konseling") time: String,
+        @Field("jenis_konseling") method: String
+    ): ResponseDto
 }

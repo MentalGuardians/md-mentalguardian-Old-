@@ -2,7 +2,6 @@ package org.guardteam.mentalguardians.presentation.home
 
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -43,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.AsyncImage
 import org.guardteam.mentalguardians.R
 import org.guardteam.mentalguardians.common.state.InputTextState
 import org.guardteam.mentalguardians.common.utils.Result
@@ -62,6 +62,7 @@ fun HomeScreen(
     var openAlertDialog by rememberSaveable { mutableStateOf(false) }
     val describeState by viewModel.describeState
     val result by viewModel.result.collectAsStateWithLifecycle()
+    val profile by viewModel.profile
 
     result.let {
         val context = LocalContext.current
@@ -91,9 +92,10 @@ fun HomeScreen(
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            //AsyncImage(model = R.drawable.profile_sample, contentDescription = "Profile photo")
-            Image(
-                painter = painterResource(id = R.drawable.profile_sample),
+            AsyncImage(
+                model = profile.picture,
+                error = painterResource(id = R.drawable.profile_sample),
+                placeholder = painterResource(id = R.drawable.profile_sample),
                 contentDescription = "Profile Photo",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -102,7 +104,7 @@ fun HomeScreen(
                     .border(1.dp, MaterialTheme.colorScheme.outline, CircleShape)
             )
             Text(
-                text = "Users",
+                text = profile.username,
                 fontWeight = FontWeight.Medium,
                 fontSize = 18.sp,
                 fontFamily = fontFamily,

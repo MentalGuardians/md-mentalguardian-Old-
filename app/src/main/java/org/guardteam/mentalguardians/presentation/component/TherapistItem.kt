@@ -4,10 +4,12 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Star
@@ -23,6 +25,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,7 +37,9 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 fun TherapistItem(
     name: String,
     primaryFocus: String,
-    rating: Double,
+    status: String,
+    method: String,
+    rating: String,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -54,7 +59,7 @@ fun TherapistItem(
                 contentDescription = "Therapist Image",
                 modifier = Modifier
                     .clip(RoundedCornerShape(8.dp))
-                    .height(75.dp)
+                    .height(95.dp)
                     .aspectRatio(1f)
             )
             Column(
@@ -64,12 +69,22 @@ fun TherapistItem(
                     text = name,
                     fontFamily = fontFamily,
                     fontSize = 18.sp,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Text(
+                    text = status,
+                    fontFamily = fontFamily,
+                    fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.onSurface
                 )
 
                 Text(
-                    text = primaryFocus,
+                    text = "$primaryFocus Specialist",
                     fontFamily = fontFamily,
                     fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.onSurface
@@ -85,7 +100,16 @@ fun TherapistItem(
                     )
 
                     Text(
-                        text = rating.toString(),
+                        text = rating,
+                        fontFamily = fontFamily,
+                        fontSize = 12.sp,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    Text(
+                        text = method,
                         fontFamily = fontFamily,
                         fontSize = 12.sp,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -102,8 +126,10 @@ fun TherapistItemPreview() {
     MentalGuardiansTheme {
         TherapistItem(
             name = "Marcus Nixon",
-            primaryFocus = "Family therapist",
-            rating = 4.8
+            primaryFocus = "Family",
+            rating = "4.8",
+            status = "Psychologist",
+            method = "Online"
         )
     }
 }

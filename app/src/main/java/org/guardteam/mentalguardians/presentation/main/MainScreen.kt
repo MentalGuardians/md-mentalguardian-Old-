@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBackIosNew
-import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -36,7 +35,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import org.guardteam.mentalguardians.common.BottomBarScreen
-import org.guardteam.mentalguardians.common.FeaturesScreen
 import org.guardteam.mentalguardians.presentation.graphs.MainNavGraph
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
@@ -174,6 +172,9 @@ fun BottomBar(
                     selected = selected,
                     onClick = {
                         if (!selected) {
+                            if (screen is BottomBarScreen.Home) {
+                                navController.popBackStack()
+                            }
                             navController.navigate(screen.route) {
                                 popUpTo(navController.graph.findStartDestination().id) {
                                     saveState = true

@@ -3,5 +3,8 @@ package org.guardteam.mentalguardians.domain.use_case
 data class FeatureUseCase(
     val getPredict: GetPredict,
     val getContent: GetContent,
-    val getContentById: GetContentById
+    val getContentById: GetContentById,
+    val getTherapist: GetTherapist,
+    val getTherapistById: GetTherapistById,
+    val postBooking: PostBooking
 )

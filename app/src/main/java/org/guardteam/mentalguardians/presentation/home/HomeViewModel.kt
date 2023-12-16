@@ -14,12 +14,15 @@ import org.guardteam.mentalguardians.common.utils.Event
 import org.guardteam.mentalguardians.common.utils.Result
 import org.guardteam.mentalguardians.common.utils.isInvalid
 import org.guardteam.mentalguardians.domain.model.Prediction
+import org.guardteam.mentalguardians.domain.model.UserData
 import org.guardteam.mentalguardians.domain.use_case.FeatureUseCase
+import org.guardteam.mentalguardians.domain.use_case.UserDataUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val featureUseCase: FeatureUseCase
+    private val featureUseCase: FeatureUseCase,
+    private val userDataUseCase: UserDataUseCase
 ) : ViewModel() {
 
     private val _result: MutableStateFlow<Event<Result<Prediction>>> =
@@ -31,6 +34,17 @@ class HomeViewModel @Inject constructor(
 
     fun setDescribeState(inputTextState: InputTextState) {
         _describeState.value = inputTextState
+    }
+
+    private val _profile: MutableState<UserData> = mutableStateOf(UserData("", "", "", ""))
+    val profile: State<UserData> = _profile
+
+    init {
+        viewModelScope.launch {
+            userDataUseCase.getUserData().collect {
+                _profile.value = it
+            }
+        }
     }
 
     fun getPredict() {
