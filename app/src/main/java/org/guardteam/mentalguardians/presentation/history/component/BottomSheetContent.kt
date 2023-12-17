@@ -7,12 +7,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -20,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.guardteam.mentalguardians.R
-import org.guardteam.mentalguardians.presentation.history.data.Mood
+import org.guardteam.mentalguardians.common.utils.toFormat
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
@@ -31,6 +29,8 @@ fun BottomSheetContent(
     mood: String,
     modifier: Modifier = Modifier
 ) {
+    val splitDate = date.split(" ")
+    val formatterDate = "${splitDate[0].toFormat("dd MMMM yyyy")} ${splitDate[1]}"
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -43,7 +43,7 @@ fun BottomSheetContent(
         ) {
             Column {
                 Text(
-                    text = date,
+                    text = formatterDate,
                     fontFamily = fontFamily,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium
