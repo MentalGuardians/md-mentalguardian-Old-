@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -63,7 +65,7 @@ fun HistoryScreen(
                 .fillMaxWidth()
                 .padding(vertical = 16.dp)
         )
-        when(val historyData = history){
+        when (val historyData = history) {
             is Result.Loading -> {
                 StatusItem(
                     modifier = modifier,
@@ -74,8 +76,18 @@ fun HistoryScreen(
             is Result.Error -> {
                 StatusItem(
                     modifier = modifier,
-                    status = "error"
-                )
+                    status = "an error has occurred"
+                ) {
+                    Button(
+                        onClick = { viewModel.getHistory() },
+                        shape = RoundedCornerShape(16.dp)
+                    ) {
+                        Text(
+                            text = "Reload",
+                            fontFamily = fontFamily
+                        )
+                    }
+                }
             }
 
             is Result.Success -> {

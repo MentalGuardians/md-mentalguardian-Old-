@@ -5,9 +5,17 @@ import android.util.Patterns
 import org.guardteam.mentalguardians.domain.model.Day
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 fun String.isValidEmail(): Boolean =
     !TextUtils.isEmpty(this) && Patterns.EMAIL_ADDRESS.matcher(this).matches()
+
+fun String.toFormat(pattern: String): String {
+    val date = LocalDate.parse(this)
+    val formatter = DateTimeFormatter.ofPattern(pattern, Locale.getDefault())
+    return formatter.format(date)
+}
 
 val listDate: List<Day> by lazy {
     val currentDate = LocalDate.now()

@@ -10,6 +10,7 @@ import org.guardteam.mentalguardians.domain.model.Response
 import org.guardteam.mentalguardians.domain.model.Therapist
 import org.guardteam.mentalguardians.domain.model.TherapistById
 import org.guardteam.mentalguardians.presentation.profile.data.Profile
+import org.guardteam.mentalguardians.domain.model.Transaction
 
 interface FeatureRepository {
 
@@ -30,4 +31,5 @@ interface FeatureRepository {
     ): Flow<Result<Response>>
 
     fun profile(): Flow<Result<Profile>>
+    fun transaction(): Flow<Result<Transaction>>
 }

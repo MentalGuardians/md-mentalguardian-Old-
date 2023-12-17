@@ -40,7 +40,7 @@ class HistoryViewModel @Inject constructor(
         _bottomSheetData.value = history
     }
 
-    private fun getHistory(){
+    fun getHistory(){
         viewModelScope.launch {
             featureUseCase.getHistory().collect{
                 _history.value = it

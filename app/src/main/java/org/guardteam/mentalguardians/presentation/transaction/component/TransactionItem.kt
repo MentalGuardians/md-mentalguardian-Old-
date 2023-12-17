@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.guardteam.mentalguardians.common.utils.toFormat
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
@@ -30,6 +31,7 @@ fun TransactionItem(
     status: String,
     modifier: Modifier = Modifier
 ){
+    val formattedDate = date.toFormat("dd MMMM yyyy")
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -50,7 +52,7 @@ fun TransactionItem(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
-                    text = "$date at $time",
+                    text = "$formattedDate at $time",
                     fontSize = 14.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onSurfaceVariant

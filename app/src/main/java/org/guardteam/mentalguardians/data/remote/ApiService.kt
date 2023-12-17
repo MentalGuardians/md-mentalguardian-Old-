@@ -1,6 +1,5 @@
 package org.guardteam.mentalguardians.data.remote
 
-import org.guardteam.mentalguardians.data.remote.dto.HistoryDataItem
 import org.guardteam.mentalguardians.data.remote.dto.HistoryDto
 import org.guardteam.mentalguardians.data.remote.dto.ContentByIdDto
 import org.guardteam.mentalguardians.data.remote.dto.ContentDto
@@ -10,6 +9,7 @@ import org.guardteam.mentalguardians.data.remote.dto.ProfileDto
 import org.guardteam.mentalguardians.data.remote.dto.ResponseDto
 import org.guardteam.mentalguardians.data.remote.dto.TherapistByIdDto
 import org.guardteam.mentalguardians.data.remote.dto.TherapistDto
+import org.guardteam.mentalguardians.data.remote.dto.TransactionDto
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -81,4 +81,9 @@ interface ApiService {
     suspend fun profile(
         @Query("userId") userId: String
     ): ProfileDto
+  
+    @GET("booking")
+    suspend fun Transaction(
+        @Query("userId") userId: String
+    ): TransactionDto
 }

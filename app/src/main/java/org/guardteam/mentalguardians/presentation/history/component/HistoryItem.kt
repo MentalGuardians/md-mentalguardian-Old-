@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.guardteam.mentalguardians.common.utils.toFormat
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
@@ -25,6 +26,8 @@ fun HistoryItem(
     date: String,
     modifier: Modifier = Modifier
 ) {
+    val splitDate = date.split(" ")
+    val formatterDate = "${splitDate[0].toFormat("dd MMMM yyyy")} ${splitDate[1]}"
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -33,7 +36,7 @@ fun HistoryItem(
             modifier = Modifier.padding(vertical = 12.dp)
         ) {
             Text(
-                text = date,
+                text = formatterDate,
                 fontSize = 14.sp,
                 fontFamily = fontFamily,
                 fontWeight = FontWeight.SemiBold,
