@@ -15,6 +15,8 @@ import androidx.compose.material.icons.filled.Article
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Help
+import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material.icons.filled.ModeNight
 import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.Work
 import androidx.compose.material3.Card
@@ -73,31 +75,13 @@ fun ExtraComponent(
                     .clickable { onClickContent() }
             ){
                 Icon(
-                    imageVector = Icons.Default.Article,
+                    imageVector = Icons.Default.ModeNight,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = modifier.width(8.dp))
                 Text(
-                    text = "Favorite Content",
-                    fontFamily = fontFamily,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.SemiBold,
-                )
-            }
-            Row (
-                modifier = modifier
-                    .padding(10.dp)
-                    .clickable { onClickTherapist() }
-            ){
-                Icon(
-                    imageVector = Icons.Default.Psychology,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
-                )
-                Spacer(modifier = modifier.width(8.dp))
-                Text(
-                    text = "Favorite Therapist",
+                    text = "Theme",
                     fontFamily = fontFamily,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.SemiBold,
@@ -116,6 +100,24 @@ fun ExtraComponent(
                 Spacer(modifier = modifier.width(8.dp))
                 Text(
                     text = "Partner registration",
+                    fontFamily = fontFamily,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.SemiBold,
+                )
+            }
+            Row (
+                modifier = modifier
+                    .padding(10.dp)
+                    .clickable { onClickTherapist() }
+            ){
+                Icon(
+                    imageVector = Icons.Default.Logout,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = modifier.width(8.dp))
+                Text(
+                    text = "Logout",
                     fontFamily = fontFamily,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.SemiBold,
