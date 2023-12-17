@@ -46,16 +46,16 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.guardteam.mentalguardians.R
-import org.guardteam.mentalguardians.common.utils.Result
-import org.guardteam.mentalguardians.common.utils.listDate
-import org.guardteam.mentalguardians.common.utils.listTime
+import org.guardteam.mentalguardians.utils.Result
+import org.guardteam.mentalguardians.utils.listDate
+import org.guardteam.mentalguardians.utils.listTime
 import org.guardteam.mentalguardians.domain.model.TherapistData
-import org.guardteam.mentalguardians.presentation.book.DateItem
-import org.guardteam.mentalguardians.presentation.book.MethodItem
-import org.guardteam.mentalguardians.presentation.book.TimeItem
 import org.guardteam.mentalguardians.presentation.component.StatusItem
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
+import org.guardteam.mentalguardians.presentation.therapistdetail.component.DateItem
+import org.guardteam.mentalguardians.presentation.therapistdetail.component.MethodItem
+import org.guardteam.mentalguardians.presentation.therapistdetail.component.TimeItem
 
 @Composable
 fun TherapistDetailScreen(

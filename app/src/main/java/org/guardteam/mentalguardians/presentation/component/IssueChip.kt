@@ -23,6 +23,7 @@ fun IssueChip(
     onClick: () -> Unit = {}
 ) {
     FilterChip(
+        modifier = modifier,
         selected = selected,
         onClick = onClick,
         label = {

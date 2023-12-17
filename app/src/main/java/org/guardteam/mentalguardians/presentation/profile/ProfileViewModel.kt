@@ -7,10 +7,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import org.guardteam.mentalguardians.common.utils.Result
+import org.guardteam.mentalguardians.utils.Result
 import org.guardteam.mentalguardians.domain.use_case.FeatureUseCase
 import org.guardteam.mentalguardians.domain.use_case.UserDataUseCase
-import org.guardteam.mentalguardians.presentation.profile.data.Profile
+import org.guardteam.mentalguardians.domain.model.Profile
 import javax.inject.Inject
 
 

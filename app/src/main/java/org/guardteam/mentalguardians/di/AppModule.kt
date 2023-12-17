@@ -137,7 +137,7 @@ object AppModule {
             postBooking = PostBooking(featureRepository),
             getProfile = GetProfile(featureRepository),
             getTransaction = GetTransaction(featureRepository),
-            postEditProfile = PostEditProfile(featureRepository)
+            postEditProfile = PostEditProfile(featureRepository),
             putCancelBooking = PutCancelBooking(featureRepository)
         )
     }

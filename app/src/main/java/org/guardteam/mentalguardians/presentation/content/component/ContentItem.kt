@@ -1,4 +1,4 @@
-package org.guardteam.mentalguardians.presentation.component
+package org.guardteam.mentalguardians.presentation.content.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column

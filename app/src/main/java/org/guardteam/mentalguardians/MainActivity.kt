@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
         }
         setContent {
             val dynamicColor by mainViewModel.dynamicColor.collectAsStateWithLifecycle(initialValue = true)
-            val darkTheme by mainViewModel.DarkTheme.collectAsStateWithLifecycle(initialValue = "Automatic")
+            val darkTheme by mainViewModel.darkTheme.collectAsStateWithLifecycle(initialValue = "Automatic")
             MentalGuardiansTheme(
                 dynamicColor = dynamicColor,
                 darkTheme = when (darkTheme) {

@@ -1,7 +1,6 @@
 package org.guardteam.mentalguardians.presentation.profile.extra
 
 import android.widget.Toast
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Button
@@ -36,10 +34,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import org.guardteam.mentalguardians.common.state.InputTextState
-import org.guardteam.mentalguardians.common.utils.Result
-import org.guardteam.mentalguardians.common.utils.isInvalid
-import org.guardteam.mentalguardians.common.utils.isValidEmail
+import org.guardteam.mentalguardians.presentation.common.InputTextState
+import org.guardteam.mentalguardians.utils.Result
+import org.guardteam.mentalguardians.utils.isInvalid
+import org.guardteam.mentalguardians.utils.isValidEmail
 import org.guardteam.mentalguardians.presentation.component.InputText
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
@@ -48,8 +46,7 @@ fun EditProfile(
     modifier: Modifier = Modifier,
     backToEdit: () -> Unit = {},
     editProfileViewModel: EditProfileViewModel = hiltViewModel()
-    modifier: Modifier = Modifier
-){
+) {
     var nameEdit by remember { mutableStateOf(InputTextState()) }
     var emailEdit by remember { mutableStateOf(InputTextState()) }
     var telephoneEdit by remember {
@@ -65,8 +62,8 @@ fun EditProfile(
 
     editProfile.let {
         val context = LocalContext.current
-        if (!editProfile.hasBeenHandled){
-            when (val unhandled = editProfile.getContentIfNotHandled()){
+        if (!editProfile.hasBeenHandled) {
+            when (val unhandled = editProfile.getContentIfNotHandled()) {
                 is Result.Error -> {
                     Toast.makeText(context, unhandled.error, Toast.LENGTH_SHORT).show()
                 }
@@ -111,7 +108,7 @@ fun EditProfile(
             isError = nameEdit.isError,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             supportingText = {
-                if (nameEdit.isError){
+                if (nameEdit.isError) {
                     Text(text = "Username cannot be empty", fontFamily = fontFamily)
                 }
             },
@@ -159,7 +156,7 @@ fun EditProfile(
             isError = emailEdit.isError,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             supportingText = {
-                if (emailEdit.isError){
+                if (emailEdit.isError) {
                     Text(text = "Email not valid", fontFamily = fontFamily)
                 }
             },
@@ -167,8 +164,8 @@ fun EditProfile(
         )
         InputText(
             value = telephoneEdit.value,
-            onChange = {newTelephone ->
-                val formattedTelephone = if (!newTelephone.startsWith("62")){
+            onChange = { newTelephone ->
+                val formattedTelephone = if (!newTelephone.startsWith("62")) {
                     "62$newTelephone"
                 } else {
                     newTelephone
@@ -182,7 +179,7 @@ fun EditProfile(
             isError = telephoneEdit.isError,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             supportingText = {
-                if (telephoneEdit.isError){
+                if (telephoneEdit.isError) {
                     Text(text = "Telephone not valid", fontFamily = fontFamily)
                 }
             },
@@ -200,7 +197,7 @@ fun EditProfile(
             isError = nameEdit.isError,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             supportingText = {
-                if (nameEdit.isError){
+                if (nameEdit.isError) {
                     Text(text = "Cannot be empty", fontFamily = fontFamily)
                 }
             },
@@ -211,20 +208,20 @@ fun EditProfile(
         Button(
             enabled = editProfile.peekContent() !is Result.Loading,
             onClick = {
-                      when {
-                          nameEdit.isInvalid() -> nameEdit = nameEdit.copy(isError = true)
-                          emailEdit.isInvalid() -> emailEdit = emailEdit.copy(isError = true)
-                          passwordEdit.isInvalid() -> passwordEdit = passwordEdit.copy(isError = true)
-                          telephoneEdit.isInvalid() -> telephoneEdit = telephoneEdit.copy(isError = true)
-                          addressEdit.isInvalid() -> addressEdit = addressEdit.copy(isError = true)
-                          else -> editProfileViewModel.editProfile(
-                              username = nameEdit.value,
-                              email = emailEdit.value,
-                              password = passwordEdit.value,
-                              phone = telephoneEdit.value,
-                              alamat = addressEdit.value
-                          )
-                      }
+                when {
+                    nameEdit.isInvalid() -> nameEdit = nameEdit.copy(isError = true)
+                    emailEdit.isInvalid() -> emailEdit = emailEdit.copy(isError = true)
+                    passwordEdit.isInvalid() -> passwordEdit = passwordEdit.copy(isError = true)
+                    telephoneEdit.isInvalid() -> telephoneEdit = telephoneEdit.copy(isError = true)
+                    addressEdit.isInvalid() -> addressEdit = addressEdit.copy(isError = true)
+                    else -> editProfileViewModel.editProfile(
+                        username = nameEdit.value,
+                        email = emailEdit.value,
+                        password = passwordEdit.value,
+                        phone = telephoneEdit.value,
+                        address = addressEdit.value
+                    )
+                }
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary
@@ -247,8 +244,8 @@ fun EditProfile(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewEdit(){
+fun PreviewEdit() {
     MaterialTheme {
-        EditProfile(
+        EditProfile()
     }
 }

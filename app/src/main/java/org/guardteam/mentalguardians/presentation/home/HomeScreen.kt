@@ -44,8 +44,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import org.guardteam.mentalguardians.R
-import org.guardteam.mentalguardians.common.state.InputTextState
-import org.guardteam.mentalguardians.common.utils.Result
+import org.guardteam.mentalguardians.presentation.common.InputTextState
+import org.guardteam.mentalguardians.utils.Result
 import org.guardteam.mentalguardians.presentation.component.InputText
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily

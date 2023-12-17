@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.guardteam.mentalguardians.common.utils.Result
+import org.guardteam.mentalguardians.utils.Result
 import org.guardteam.mentalguardians.domain.model.TransactionData
 import org.guardteam.mentalguardians.presentation.component.StatusItem
 import org.guardteam.mentalguardians.presentation.theme.fontFamily

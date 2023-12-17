@@ -1,4 +1,4 @@
-package org.guardteam.mentalguardians.presentation.profile.data
+package org.guardteam.mentalguardians.domain.model
 
 data class Profile(
     val id: String,

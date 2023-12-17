@@ -1,4 +1,4 @@
-package org.guardteam.mentalguardians.common
+package org.guardteam.mentalguardians.presentation.common
 
 object Graph {
     const val ROOT = "root_graph"

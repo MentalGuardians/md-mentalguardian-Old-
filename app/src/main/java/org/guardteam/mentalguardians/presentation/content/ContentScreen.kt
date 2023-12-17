@@ -19,8 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.guardteam.mentalguardians.common.utils.Result
-import org.guardteam.mentalguardians.presentation.component.ContentItem
+import org.guardteam.mentalguardians.utils.Result
+import org.guardteam.mentalguardians.presentation.content.component.ContentItem
 import org.guardteam.mentalguardians.presentation.component.StatusItem
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
@@ -28,8 +28,6 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 @Composable
 fun ContentScreen(
     modifier: Modifier = Modifier,
-    active: Boolean = false,
-    onActiveChange: (Boolean) -> Unit = {},
     navigateToDetail: (String) -> Unit = {},
     content: String = "",
     viewModel: ContentViewModel = hiltViewModel()

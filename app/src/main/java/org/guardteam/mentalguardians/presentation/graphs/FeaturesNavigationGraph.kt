@@ -6,10 +6,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import org.guardteam.mentalguardians.common.BottomBarScreen
-import org.guardteam.mentalguardians.common.FeaturesScreen
-import org.guardteam.mentalguardians.common.Graph
-import org.guardteam.mentalguardians.presentation.book.BookScreen
+import org.guardteam.mentalguardians.presentation.common.BottomBarScreen
+import org.guardteam.mentalguardians.presentation.common.FeaturesScreen
+import org.guardteam.mentalguardians.presentation.common.Graph
 import org.guardteam.mentalguardians.presentation.content.ContentScreen
 import org.guardteam.mentalguardians.presentation.contentdetail.ContentDetailScreen
 import org.guardteam.mentalguardians.presentation.predict.PredictScreen
@@ -21,12 +20,7 @@ import org.guardteam.mentalguardians.presentation.therapistdetail.TherapistDetai
 
 fun NavGraphBuilder.featuresNavGraph(
     navController: NavHostController,
-    onFeaturesTitleChange: (String) -> Unit,
-    contentSearchActive: Boolean = false,
-    onContentSearchActiveChange: (Boolean) -> Unit = {},
-    therapistSearchActive: Boolean = false,
-    onTherapistSearchActiveChange: (Boolean) -> Unit = {},
-    goBackToAuth: () -> Unit = {}
+    onFeaturesTitleChange: (String) -> Unit
 ) {
     navigation(
         route = Graph.FEATURES,
@@ -38,8 +32,6 @@ fun NavGraphBuilder.featuresNavGraph(
         ) {
             val content = it.arguments?.getString("content") ?: ""
             ContentScreen(
-                active = contentSearchActive,
-                onActiveChange = onContentSearchActiveChange,
                 navigateToDetail = { contentId ->
                     navController.navigate(FeaturesScreen.ContentDetail.createRoute(contentId))
                 },
@@ -70,7 +62,9 @@ fun NavGraphBuilder.featuresNavGraph(
             onFeaturesTitleChange("Therapist")
         }
         composable(route = FeaturesScreen.EditProfile.route) {
-            EditProfile()
+            EditProfile(backToEdit = {
+                navController.navigateUp()
+            })
             onFeaturesTitleChange("Edit Profile")
         }
 
@@ -91,15 +85,6 @@ fun NavGraphBuilder.featuresNavGraph(
                 }
             )
             onFeaturesTitleChange("Detail Therapist")
-        }
-
-        composable(
-            route = FeaturesScreen.TherapistAppointment.route,
-            arguments = listOf(navArgument("therapistId") { type = NavType.IntType })
-        ) {
-            val therapistId = it.arguments?.getInt("therapistId") ?: 1
-            BookScreen(therapistId = therapistId)
-            onFeaturesTitleChange("Book Appointment")
         }
 
         composable(

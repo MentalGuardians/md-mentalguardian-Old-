@@ -41,7 +41,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import org.guardteam.mentalguardians.R
-import org.guardteam.mentalguardians.common.utils.Result
+import org.guardteam.mentalguardians.utils.Result
 import org.guardteam.mentalguardians.domain.model.ContentData
 import org.guardteam.mentalguardians.presentation.component.StatusItem
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme

@@ -1,4 +1,4 @@
-package org.guardteam.mentalguardians.common.state
+package org.guardteam.mentalguardians.presentation.common
 
 data class InputTextState(
     val value: String = "",

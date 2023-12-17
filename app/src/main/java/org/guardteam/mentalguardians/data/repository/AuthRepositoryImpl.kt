@@ -3,7 +3,7 @@ package org.guardteam.mentalguardians.data.repository
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import org.guardteam.mentalguardians.common.utils.Result
+import org.guardteam.mentalguardians.utils.Result
 import org.guardteam.mentalguardians.data.mapper.toLogin
 import org.guardteam.mentalguardians.data.mapper.toResponse
 import org.guardteam.mentalguardians.data.remote.ApiService

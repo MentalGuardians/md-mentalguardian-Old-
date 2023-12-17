@@ -4,7 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import org.guardteam.mentalguardians.common.Graph
+import org.guardteam.mentalguardians.presentation.common.Graph
 import org.guardteam.mentalguardians.presentation.signin.SignInScreen
 import org.guardteam.mentalguardians.presentation.signup.SignUpScreen
 

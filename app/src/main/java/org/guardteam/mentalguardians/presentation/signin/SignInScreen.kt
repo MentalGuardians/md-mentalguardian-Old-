@@ -39,10 +39,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.guardteam.mentalguardians.common.state.InputTextState
-import org.guardteam.mentalguardians.common.utils.Result
-import org.guardteam.mentalguardians.common.utils.isInvalid
-import org.guardteam.mentalguardians.common.utils.isValidEmail
+import org.guardteam.mentalguardians.presentation.common.InputTextState
+import org.guardteam.mentalguardians.utils.Result
+import org.guardteam.mentalguardians.utils.isInvalid
+import org.guardteam.mentalguardians.utils.isValidEmail
 import org.guardteam.mentalguardians.presentation.component.InputText
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 

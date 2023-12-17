@@ -9,10 +9,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import org.guardteam.mentalguardians.common.state.InputTextState
-import org.guardteam.mentalguardians.common.utils.Event
-import org.guardteam.mentalguardians.common.utils.Result
-import org.guardteam.mentalguardians.common.utils.isInvalid
+import org.guardteam.mentalguardians.presentation.common.InputTextState
+import org.guardteam.mentalguardians.utils.Event
+import org.guardteam.mentalguardians.utils.Result
+import org.guardteam.mentalguardians.utils.isInvalid
 import org.guardteam.mentalguardians.domain.model.Prediction
 import org.guardteam.mentalguardians.domain.model.UserData
 import org.guardteam.mentalguardians.domain.use_case.FeatureUseCase

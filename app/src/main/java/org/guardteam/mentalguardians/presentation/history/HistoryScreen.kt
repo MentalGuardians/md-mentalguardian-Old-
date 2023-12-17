@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import org.guardteam.mentalguardians.common.utils.Result
+import org.guardteam.mentalguardians.utils.Result
 import org.guardteam.mentalguardians.presentation.component.StatusItem
 import org.guardteam.mentalguardians.presentation.history.component.BottomSheetContent
 import org.guardteam.mentalguardians.presentation.history.component.HistoryItem

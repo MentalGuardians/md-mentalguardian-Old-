@@ -1,4 +1,4 @@
-package org.guardteam.mentalguardians.common
+package org.guardteam.mentalguardians.presentation.common
 
 import androidx.annotation.DrawableRes
 import org.guardteam.mentalguardians.R

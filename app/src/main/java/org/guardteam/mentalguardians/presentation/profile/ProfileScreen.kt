@@ -30,11 +30,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import org.guardteam.mentalguardians.common.utils.Result
+import org.guardteam.mentalguardians.utils.Result
 import org.guardteam.mentalguardians.presentation.profile.component.ExtraComponent
 import org.guardteam.mentalguardians.presentation.profile.component.ProfileComponent
 import org.guardteam.mentalguardians.presentation.profile.component.ProfileDetail
-import org.guardteam.mentalguardians.presentation.profile.data.Profile
+import org.guardteam.mentalguardians.domain.model.Profile
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 

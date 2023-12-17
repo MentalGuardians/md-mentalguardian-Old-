@@ -1,4 +1,4 @@
-package org.guardteam.mentalguardians.common.utils
+package org.guardteam.mentalguardians.utils
 
 import android.text.TextUtils
 import android.util.Patterns
@@ -20,7 +20,7 @@ fun String.toFormat(pattern: String): String {
 val listDate: List<Day> by lazy {
     val currentDate = LocalDate.now()
     val startOfSecondWeek = currentDate.plusDays(1)
-    (0..6).map {
+    (0..6).mapNotNull {
         val currentDateInLoop = startOfSecondWeek.plusDays(it.toLong())
         if (currentDateInLoop.dayOfWeek != DayOfWeek.SATURDAY && currentDateInLoop.dayOfWeek != DayOfWeek.SUNDAY) {
             Day(
@@ -31,7 +31,7 @@ val listDate: List<Day> by lazy {
         } else {
             null
         }
-    }.filterNotNull()
+    }
 }
 
 val listTime: List<Pair<String, String>> = listOf(

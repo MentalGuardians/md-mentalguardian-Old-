@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.guardteam.mentalguardians.R
-import org.guardteam.mentalguardians.common.utils.toFormat
+import org.guardteam.mentalguardians.utils.toFormat
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 

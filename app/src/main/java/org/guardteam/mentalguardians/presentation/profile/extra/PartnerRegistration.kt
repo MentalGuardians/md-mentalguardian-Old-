@@ -1,7 +1,5 @@
 package org.guardteam.mentalguardians.presentation.profile.extra
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -10,15 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.outlined.Clear
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,8 +23,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.guardteam.mentalguardians.common.state.InputTextState
-import org.guardteam.mentalguardians.common.utils.isValidEmail
+import org.guardteam.mentalguardians.presentation.common.InputTextState
+import org.guardteam.mentalguardians.utils.isValidEmail
 import org.guardteam.mentalguardians.presentation.component.InputText
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
@@ -41,14 +32,14 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 @Composable
 fun PartnerRegistration(
     modifier: Modifier = Modifier,
-){
-   PartnerRegistrationComponent()
+) {
+    PartnerRegistrationComponent(modifier = modifier)
 }
 
 @Composable
 fun PartnerRegistrationComponent(
     modifier: Modifier = Modifier,
-){
+) {
     var namePartner by remember {
         mutableStateOf(InputTextState())
     }
@@ -79,7 +70,7 @@ fun PartnerRegistrationComponent(
 
         InputText(
             value = namePartner.value,
-            onChange = {newValue ->
+            onChange = { newValue ->
                 namePartner = namePartner.copy(
                     value = newValue,
                     isError = newValue.isEmpty()
@@ -89,7 +80,7 @@ fun PartnerRegistrationComponent(
             isError = namePartner.isError,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             supportingText = {
-                if (namePartner.isError){
+                if (namePartner.isError) {
                     Text(text = "Cannot be empty", fontFamily = fontFamily)
                 }
             },
@@ -115,8 +106,8 @@ fun PartnerRegistrationComponent(
         )
         InputText(
             value = phonePartner.value,
-            onChange = {newTelephone ->
-                val formattedTelephone = if (!newTelephone.startsWith("62")){
+            onChange = { newTelephone ->
+                val formattedTelephone = if (!newTelephone.startsWith("62")) {
                     "62$newTelephone"
                 } else {
                     newTelephone
@@ -130,7 +121,7 @@ fun PartnerRegistrationComponent(
             isError = phonePartner.isError,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             supportingText = {
-                if (phonePartner.isError){
+                if (phonePartner.isError) {
                     Text(text = "Telephone not valid", fontFamily = fontFamily)
                 }
             },
@@ -161,7 +152,7 @@ fun PartnerRegistrationComponent(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewPartner(){
+fun PreviewPartner() {
     MentalGuardiansTheme {
         PartnerRegistration()
     }

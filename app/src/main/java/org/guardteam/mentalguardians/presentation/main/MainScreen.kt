@@ -1,9 +1,5 @@
 package org.guardteam.mentalguardians.presentation.main
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -21,7 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -34,7 +29,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import org.guardteam.mentalguardians.common.BottomBarScreen
+import org.guardteam.mentalguardians.presentation.common.BottomBarScreen
 import org.guardteam.mentalguardians.presentation.graphs.MainNavGraph
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
@@ -42,18 +37,11 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 fun MainScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    goBackToAuth: () -> Unit = {},
-    navigateToLogin: () -> Unit = {}
+    goBackToAuth: () -> Unit = {}
 ) {
 
     var featuresTitle by rememberSaveable {
         mutableStateOf("")
-    }
-    var contentSearchActive by remember {
-        mutableStateOf(false)
-    }
-    var therapistSearchActive by remember {
-        mutableStateOf(false)
     }
 
     val screens = listOf(
@@ -69,22 +57,11 @@ fun MainScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            AnimatedVisibility(
-                visible = !contentSearchActive && !therapistSearchActive,
-                enter = slideInVertically(
-                    animationSpec = tween(durationMillis = 200)
-                ),
-                exit = slideOutVertically(
-                    animationSpec = tween(durationMillis = 200)
-                )
-            ) {
-                TopBar(
-                    title = featuresTitle,
-                    navController = navController,
-                    bottomBarDestination = bottomBarDestination,
-                    currentDestination = currentDestination
-                )
-            }
+            TopBar(
+                title = featuresTitle,
+                navController = navController,
+                bottomBarDestination = bottomBarDestination
+            )
         },
         bottomBar = {
             BottomBar(
@@ -102,20 +79,11 @@ fun MainScreen(
                 navController = navController,
                 onFeaturesTitleChange = { title ->
                     featuresTitle = title
-                },
-                contentSearchActive = contentSearchActive,
-                onContentSearchActiveChange = {
-                    contentSearchActive = it
-                },
-                therapistSearchActive = therapistSearchActive,
-                onTherapistSearchActiveChange = {
-                    therapistSearchActive = it
-                },
-                goBackToAuth = {
-                    navController.popBackStack()
-                    goBackToAuth()
                 }
-            )
+            ) {
+                navController.popBackStack()
+                goBackToAuth()
+            }
         }
     }
 }
@@ -125,7 +93,6 @@ fun MainScreen(
 fun TopBar(
     title: String,
     navController: NavHostController,
-    currentDestination: NavDestination?,
     bottomBarDestination: Boolean,
     modifier: Modifier = Modifier
 ) {

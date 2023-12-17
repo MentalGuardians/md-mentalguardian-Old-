@@ -1,4 +1,4 @@
-package org.guardteam.mentalguardians.common.utils
+package org.guardteam.mentalguardians.utils
 
 object Constants {
     const val APP_PREF = "mg_pref"

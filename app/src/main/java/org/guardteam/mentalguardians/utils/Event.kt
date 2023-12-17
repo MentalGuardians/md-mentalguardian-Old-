@@ -1,8 +1,7 @@
-package org.guardteam.mentalguardians.common.utils
+package org.guardteam.mentalguardians.utils
 
 open class Event<out T>(private val content: T) {
 
-    @Suppress("MemberVisibilityCanBePrivate")
     var hasBeenHandled = false
         private set
 

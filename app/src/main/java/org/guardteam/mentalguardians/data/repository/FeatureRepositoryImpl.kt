@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
-import org.guardteam.mentalguardians.common.utils.Result
+import org.guardteam.mentalguardians.utils.Result
 import org.guardteam.mentalguardians.data.mapper.toContent
 import org.guardteam.mentalguardians.data.mapper.toContentById
 import org.guardteam.mentalguardians.data.mapper.toHistoryData
@@ -26,7 +26,7 @@ import org.guardteam.mentalguardians.domain.model.Therapist
 import org.guardteam.mentalguardians.domain.model.TherapistById
 import org.guardteam.mentalguardians.domain.model.Transaction
 import org.guardteam.mentalguardians.domain.repository.FeatureRepository
-import org.guardteam.mentalguardians.presentation.profile.data.Profile
+import org.guardteam.mentalguardians.domain.model.Profile
 import retrofit2.HttpException
 
 class FeatureRepositoryImpl(

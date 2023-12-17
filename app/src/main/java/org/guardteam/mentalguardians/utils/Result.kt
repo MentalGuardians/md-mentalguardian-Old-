@@ -1,4 +1,4 @@
-package org.guardteam.mentalguardians.common.utils
+package org.guardteam.mentalguardians.utils
 
 sealed class Result<out T : Any?> {
 

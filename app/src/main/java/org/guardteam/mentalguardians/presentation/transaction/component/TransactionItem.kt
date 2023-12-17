@@ -19,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.guardteam.mentalguardians.common.utils.toFormat
+import org.guardteam.mentalguardians.utils.toFormat
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
@@ -42,8 +42,7 @@ fun TransactionItem(
                 .fillMaxWidth()
                 .padding(vertical = 14.dp)
         ) {
-            Column(
-            ) {
+            Column {
                 Text(
                     text = name,
                     fontSize = 14.sp,

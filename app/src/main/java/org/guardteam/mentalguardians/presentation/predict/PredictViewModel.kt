@@ -3,7 +3,7 @@ package org.guardteam.mentalguardians.presentation.predict
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.guardteam.mentalguardians.common.state.ChipState
+import org.guardteam.mentalguardians.presentation.common.ChipState
 import javax.inject.Inject
 
 @HiltViewModel

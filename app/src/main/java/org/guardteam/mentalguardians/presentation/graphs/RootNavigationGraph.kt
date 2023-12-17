@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import org.guardteam.mentalguardians.common.Graph
+import org.guardteam.mentalguardians.presentation.common.Graph
 import org.guardteam.mentalguardians.presentation.main.MainScreen
 import org.guardteam.mentalguardians.presentation.welcome.WelcomeScreen
 
@@ -31,12 +31,10 @@ fun RootNavGraph(
             )
         }
         composable(route = Graph.MAIN) {
-            MainScreen(
-                goBackToAuth = {
-                    navController.popBackStack()
-                    navController.navigate(Graph.AUTH)
-                }
-            )
+            MainScreen {
+                navController.popBackStack()
+                navController.navigate(Graph.AUTH)
+            }
         }
 
         composable(route = Graph.BLANK) {}

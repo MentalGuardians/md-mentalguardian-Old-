@@ -1,7 +1,7 @@
 package org.guardteam.mentalguardians.data.mapper
 
 import org.guardteam.mentalguardians.data.remote.dto.ProfileDto
-import org.guardteam.mentalguardians.presentation.profile.data.Profile
+import org.guardteam.mentalguardians.domain.model.Profile
 
 fun ProfileDto.toProfileData() : Profile {
     return Profile(

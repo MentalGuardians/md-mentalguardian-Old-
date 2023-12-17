@@ -1,7 +1,7 @@
 package org.guardteam.mentalguardians.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import org.guardteam.mentalguardians.common.utils.Result
+import org.guardteam.mentalguardians.utils.Result
 import org.guardteam.mentalguardians.domain.model.Content
 import org.guardteam.mentalguardians.domain.model.ContentById
 import org.guardteam.mentalguardians.domain.model.HistoryData
@@ -10,7 +10,7 @@ import org.guardteam.mentalguardians.domain.model.Response
 import org.guardteam.mentalguardians.domain.model.Therapist
 import org.guardteam.mentalguardians.domain.model.TherapistById
 import org.guardteam.mentalguardians.domain.model.Transaction
-import org.guardteam.mentalguardians.presentation.profile.data.Profile
+import org.guardteam.mentalguardians.domain.model.Profile
 
 interface FeatureRepository {
 

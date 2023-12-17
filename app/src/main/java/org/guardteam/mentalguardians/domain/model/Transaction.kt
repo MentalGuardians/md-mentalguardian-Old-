@@ -1,7 +1,5 @@
 package org.guardteam.mentalguardians.domain.model
 
-import com.google.gson.annotations.SerializedName
-
 data class Transaction(
     val error: Boolean,
     val status: Int,

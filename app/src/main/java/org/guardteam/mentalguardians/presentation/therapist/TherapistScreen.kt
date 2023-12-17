@@ -18,9 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.guardteam.mentalguardians.common.utils.Result
+import org.guardteam.mentalguardians.utils.Result
 import org.guardteam.mentalguardians.presentation.component.StatusItem
-import org.guardteam.mentalguardians.presentation.component.TherapistItem
+import org.guardteam.mentalguardians.presentation.therapist.component.TherapistItem
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
 @Composable

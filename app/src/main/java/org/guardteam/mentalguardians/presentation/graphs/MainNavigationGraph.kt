@@ -5,9 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import org.guardteam.mentalguardians.common.BottomBarScreen
-import org.guardteam.mentalguardians.common.FeaturesScreen
-import org.guardteam.mentalguardians.common.Graph
+import org.guardteam.mentalguardians.presentation.common.BottomBarScreen
+import org.guardteam.mentalguardians.presentation.common.FeaturesScreen
+import org.guardteam.mentalguardians.presentation.common.Graph
 import org.guardteam.mentalguardians.presentation.history.HistoryScreen
 import org.guardteam.mentalguardians.presentation.home.HomeScreen
 import org.guardteam.mentalguardians.presentation.profile.ProfileScreen
@@ -18,10 +18,6 @@ import org.guardteam.mentalguardians.presentation.transaction.TransactionScreen
 fun MainNavGraph(
     navController: NavHostController,
     onFeaturesTitleChange: (String) -> Unit,
-    contentSearchActive: Boolean = false,
-    onContentSearchActiveChange: (Boolean) -> Unit = {},
-    therapistSearchActive: Boolean = false,
-    onTherapistSearchActiveChange: (Boolean) -> Unit = {},
     goBackToAuth: () -> Unit = {}
 ) {
     NavHost(
@@ -65,12 +61,7 @@ fun MainNavGraph(
 
         featuresNavGraph(
             navController = navController,
-            onFeaturesTitleChange = onFeaturesTitleChange,
-            contentSearchActive = contentSearchActive,
-            onContentSearchActiveChange = onContentSearchActiveChange,
-            therapistSearchActive = therapistSearchActive,
-            onTherapistSearchActiveChange = onTherapistSearchActiveChange,
-            goBackToAuth = goBackToAuth
+            onFeaturesTitleChange = onFeaturesTitleChange
         )
     }
 }

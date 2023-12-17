@@ -1,4 +1,4 @@
-package org.guardteam.mentalguardians.presentation.component
+package org.guardteam.mentalguardians.presentation.therapist.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
