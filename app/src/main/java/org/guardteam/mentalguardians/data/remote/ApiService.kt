@@ -1,6 +1,5 @@
 package org.guardteam.mentalguardians.data.remote
 
-import org.guardteam.mentalguardians.data.remote.dto.HistoryDataItem
 import org.guardteam.mentalguardians.data.remote.dto.HistoryDto
 import org.guardteam.mentalguardians.data.remote.dto.ContentByIdDto
 import org.guardteam.mentalguardians.data.remote.dto.ContentDto
