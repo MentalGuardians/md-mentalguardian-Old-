@@ -25,9 +25,27 @@ class HistoryViewModel @Inject constructor(
         MutableStateFlow(false)
     val bottomSheetState :StateFlow<Boolean> = _bottomSheetState
 
-    fun getHistory(historyId : String){
+    private val _bottomSheetData: MutableStateFlow<History> = MutableStateFlow(
+        History(
+            id = "",
+            date = "",
+            diagnose = "",
+            mood = ""
+        )
+    )
+    val bottomSheetData: StateFlow<History> = _bottomSheetData
+
+    fun setBottomSheetData(history: History) {
+        _bottomSheetData.value = history
+    }
+
+    init {
+        getHistory()
+    }
+
+    fun getHistory(){
         viewModelScope.launch {
-            featureUseCase.getHistory(historyId).collect{
+            featureUseCase.getHistory().collect{
                 _history.value = it
             }
         }
