@@ -17,8 +17,6 @@ import org.guardteam.mentalguardians.data.mapper.toTransaction
 import org.guardteam.mentalguardians.data.remote.ApiService
 import org.guardteam.mentalguardians.domain.manager.LocalDataManager
 import org.guardteam.mentalguardians.domain.model.HistoryData
-import org.guardteam.mentalguardians.data.mapper.toContent
-import org.guardteam.mentalguardians.data.mapper.toContentById
 import org.guardteam.mentalguardians.data.mapper.toProfileData
 import org.guardteam.mentalguardians.domain.model.Content
 import org.guardteam.mentalguardians.domain.model.ContentById
@@ -187,9 +185,26 @@ class FeatureRepositoryImpl(
         emit(Result.Loading)
         try {
             val userId = runBlocking { localDataManager.getUserData().first().userId }
-            val response = apiService.Transaction(userId)
+            val response = apiService.transaction(userId)
 
             emit(Result.Success(response.toTransaction()))
+        } catch (e: Exception) {
+            if (e is HttpException) {
+                val jsonInString = e.response()?.errorBody()?.string()
+                val errorBody = Gson().fromJson(jsonInString, Response::class.java)
+                emit(Result.Error(errorBody.message))
+            } else {
+                emit(Result.Error(e.message.toString()))
+            }
+        }
+    }
+
+    override fun cancelBooking(bookingId: String): Flow<Result<Response>> = flow {
+        emit(Result.Loading)
+        try {
+            val response = apiService.cancelBooking(bookingId)
+
+            emit(Result.Success(response.toResponse()))
         } catch (e: Exception) {
             if (e is HttpException) {
                 val jsonInString = e.response()?.errorBody()?.string()

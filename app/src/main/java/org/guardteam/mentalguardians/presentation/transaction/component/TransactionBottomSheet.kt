@@ -39,6 +39,7 @@ fun TransactionBottomSheet(
     status: String,
     onClick: () -> Unit,
     bookDate: String,
+    buttonActive: Boolean,
     modifier: Modifier = Modifier,
     link: String? = null,
 ) {
@@ -136,7 +137,8 @@ fun TransactionBSPreview() {
             status = "Scheduled",
             method = "online",
             onClick = {},
-            bookDate = "2023-12-17 09:09"
+            bookDate = "2023-12-17 09:09",
+            buttonActive = false
         )
     }
 }

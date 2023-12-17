@@ -6,16 +6,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.guardteam.mentalguardians.common.Graph
 import org.guardteam.mentalguardians.domain.use_case.OnBoardingUseCase
+import org.guardteam.mentalguardians.domain.use_case.ThemeUseCase
 import org.guardteam.mentalguardians.domain.use_case.UserDataUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val onBoardingUseCase: OnBoardingUseCase, private val userDataUseCase: UserDataUseCase
+    private val onBoardingUseCase: OnBoardingUseCase,
+    private val userDataUseCase: UserDataUseCase,
+    private val themeUseCase: ThemeUseCase
 ) : ViewModel() {
+
+    val dynamicColor: Flow<Boolean> = themeUseCase.getDynamicColor()
+    val DarkTheme: Flow<String> = themeUseCase.getDarkTheme()
 
     private val _isLoading: MutableState<Boolean> = mutableStateOf(true)
     val isLoading: State<Boolean> = _isLoading

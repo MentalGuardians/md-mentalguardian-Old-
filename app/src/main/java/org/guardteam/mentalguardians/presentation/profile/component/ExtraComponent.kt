@@ -2,6 +2,7 @@ package org.guardteam.mentalguardians.presentation.profile.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,14 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Album
-import androidx.compose.material.icons.filled.Article
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Help
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.ModeNight
-import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.Work
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -36,10 +32,10 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 fun ExtraComponent(
     modifier: Modifier = Modifier,
     onClickProfile: () -> Unit = {},
-    onClickContent: () -> Unit = {},
-    onClickTherapist: () -> Unit = {},
-    onClickRegistration: () -> Unit ={}
-){
+    onClickTheme: () -> Unit = {},
+    onClickLogout: () -> Unit = {},
+    onClickRegistration: () -> Unit = {}
+) {
     Card(
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(
@@ -50,12 +46,14 @@ fun ExtraComponent(
             .fillMaxWidth()
             .padding(vertical = 10.dp),
     ) {
-        Column {
-            Row (
+        Column(
+        ) {
+            Row(
                 modifier = modifier
-                    .padding(10.dp)
+                    .fillMaxWidth()
                     .clickable { onClickProfile() }
-            ){
+                    .padding(12.dp)
+            ) {
                 Icon(
                     imageVector = Icons.Default.Edit,
                     contentDescription = null,
@@ -69,11 +67,12 @@ fun ExtraComponent(
                     fontWeight = FontWeight.SemiBold,
                 )
             }
-            Row (
+            Row(
                 modifier = modifier
-                    .padding(10.dp)
-                    .clickable { onClickContent() }
-            ){
+                    .fillMaxWidth()
+                    .clickable { onClickTheme() }
+                    .padding(12.dp)
+            ) {
                 Icon(
                     imageVector = Icons.Default.ModeNight,
                     contentDescription = null,
@@ -87,11 +86,12 @@ fun ExtraComponent(
                     fontWeight = FontWeight.SemiBold,
                 )
             }
-            Row (
+            Row(
                 modifier = modifier
-                    .padding(10.dp)
+                    .fillMaxWidth()
                     .clickable { onClickRegistration() }
-            ){
+                    .padding(12.dp)
+            ) {
                 Icon(
                     imageVector = Icons.Default.Work,
                     contentDescription = null,
@@ -105,11 +105,12 @@ fun ExtraComponent(
                     fontWeight = FontWeight.SemiBold,
                 )
             }
-            Row (
+            Row(
                 modifier = modifier
-                    .padding(10.dp)
-                    .clickable { onClickTherapist() }
-            ){
+                    .fillMaxWidth()
+                    .clickable { onClickLogout() }
+                    .padding(12.dp)
+            ) {
                 Icon(
                     imageVector = Icons.Default.Logout,
                     contentDescription = null,
@@ -129,7 +130,7 @@ fun ExtraComponent(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewExtra(){
+fun PreviewExtra() {
     MaterialTheme {
         ExtraComponent()
     }

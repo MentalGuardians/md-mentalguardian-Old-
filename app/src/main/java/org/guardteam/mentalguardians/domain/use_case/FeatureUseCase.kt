@@ -9,5 +9,6 @@ data class FeatureUseCase(
     val getTherapistById: GetTherapistById,
     val postBooking: PostBooking,
     val getProfile: GetProfile,
-    val getTransaction: GetTransaction
+    val getTransaction: GetTransaction,
+    val putCancelBooking: PutCancelBooking
 )

@@ -15,6 +15,7 @@ import org.guardteam.mentalguardians.presentation.contentdetail.ContentDetailScr
 import org.guardteam.mentalguardians.presentation.predict.PredictScreen
 import org.guardteam.mentalguardians.presentation.profile.extra.EditProfile
 import org.guardteam.mentalguardians.presentation.profile.extra.PartnerRegistration
+import org.guardteam.mentalguardians.presentation.themesetting.ThemeSettingScreen
 import org.guardteam.mentalguardians.presentation.therapist.TherapistScreen
 import org.guardteam.mentalguardians.presentation.therapistdetail.TherapistDetailScreen
 
@@ -130,6 +131,11 @@ fun NavGraphBuilder.featuresNavGraph(
                 }
             )
             onFeaturesTitleChange("Prediction Result")
+        }
+
+        composable(route = FeaturesScreen.ThemeSetting.route) {
+            ThemeSettingScreen()
+            onFeaturesTitleChange("Theme Setting")
         }
     }
 }

@@ -1,5 +1,6 @@
 package org.guardteam.mentalguardians.presentation.transaction
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,6 +19,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,6 +43,23 @@ fun TransactionScreen(
     var bottomSheetState by remember { mutableStateOf(false) }
     val bottomSheetData by viewModel.transactionData.collectAsStateWithLifecycle()
     val result by viewModel.result.collectAsStateWithLifecycle()
+    val cancel by viewModel.cancel.collectAsStateWithLifecycle()
+
+    if (!cancel.hasBeenHandled) {
+        when (cancel.getContentIfNotHandled()) {
+            is Result.Success -> {
+                bottomSheetState = false
+                viewModel.getTransaction()
+            }
+
+            is Result.Error -> {
+                Toast.makeText(LocalContext.current, "Cancel Booking Failed", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            else -> {}
+        }
+    }
 
     if (bottomSheetState) {
         ModalBottomSheet(onDismissRequest = { bottomSheetState = false }) {
@@ -52,7 +71,10 @@ fun TransactionScreen(
                 status = bottomSheetData.status,
                 link = bottomSheetData.link,
                 bookDate = bottomSheetData.bookingDate,
-                onClick = {}
+                onClick = {
+                    viewModel.cancelBooking(bottomSheetData.bookingId)
+                },
+                buttonActive = cancel.peekContent() !is Result.Loading
             )
         }
     }

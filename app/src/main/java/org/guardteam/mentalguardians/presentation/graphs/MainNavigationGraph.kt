@@ -53,12 +53,10 @@ fun MainNavGraph(
                 navigateToEdit = {
                     navController.navigate(FeaturesScreen.EditProfile.route)
                 },
-                navigateToContent = {
-                    navController.navigate(FeaturesScreen.ContentFavorite.route)
+                navigateToTheme = {
+                    navController.navigate(FeaturesScreen.ThemeSetting.route)
                 },
-                navigateToTherapist = {
-                    navController.navigate(FeaturesScreen.TherapistFavorite.route)
-                },
+                navigateToLogin = goBackToAuth,
                 navigateToRegistration = {
                     navController.navigate(FeaturesScreen.PartnerRegistration.route)
                 }

@@ -42,7 +42,8 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 fun MainScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    goBackToAuth: () -> Unit = {}
+    goBackToAuth: () -> Unit = {},
+    navigateToLogin: () -> Unit = {}
 ) {
 
     var featuresTitle by rememberSaveable {
@@ -110,7 +111,10 @@ fun MainScreen(
                 onTherapistSearchActiveChange = {
                     therapistSearchActive = it
                 },
-                goBackToAuth = goBackToAuth
+                goBackToAuth = {
+                    navController.popBackStack()
+                    goBackToAuth()
+                }
             )
         }
     }

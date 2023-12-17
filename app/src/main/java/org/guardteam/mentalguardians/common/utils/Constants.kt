@@ -8,4 +8,6 @@ object Constants {
     const val USERNAME_KEY = "username_key"
     const val EMAIL_KEY = "email_key"
     const val PICTURE_KEY = "picture_key"
+    const val DYNAMIC_COLOR_KEY = "dynamic_color_key"
+    const val DARK_MODE_KEY = "dark_mode_key"
 }

@@ -31,4 +31,6 @@ sealed class FeaturesScreen(val route: String) {
     data object Prediction : FeaturesScreen(route = "prediction/{mood}") {
         fun createRoute(mood: String) = "prediction/$mood"
     }
+
+    data object ThemeSetting : FeaturesScreen("theme")
 }
