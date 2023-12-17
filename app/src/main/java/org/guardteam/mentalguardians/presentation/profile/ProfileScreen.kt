@@ -112,7 +112,7 @@ fun ProfileScreen(
             fontFamily = fontFamily,
             fontWeight = FontWeight.SemiBold
         )
-        ProfileDetail(username = profileData.username, address = profileData.address, telephone = profileData.telephone)
+        ProfileDetail(username = profileData.username, address = profileData.address ?: "", telephone = profileData.telephone ?: "")
         ExtraComponent(
             onClickProfile = navigateToEdit,
             onClickContent = navigateToContent,
