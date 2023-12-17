@@ -32,4 +32,12 @@ interface FeatureRepository {
 
     fun profile(): Flow<Result<Profile>>
     fun transaction(): Flow<Result<Transaction>>
+
+    fun editProfile(
+        username: String,
+        password: String,
+        email: String,
+        phone: String,
+        alamat: String,
+    ): Flow<Result<Response>>
 }

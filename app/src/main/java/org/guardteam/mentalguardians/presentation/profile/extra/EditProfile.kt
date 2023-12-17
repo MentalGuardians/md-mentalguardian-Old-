@@ -1,5 +1,6 @@
 package org.guardteam.mentalguardians.presentation.profile.extra
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,40 +12,42 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import org.guardteam.mentalguardians.common.state.InputTextState
+import org.guardteam.mentalguardians.common.utils.Result
+import org.guardteam.mentalguardians.common.utils.isInvalid
 import org.guardteam.mentalguardians.common.utils.isValidEmail
 import org.guardteam.mentalguardians.presentation.component.InputText
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
 @Composable
 fun EditProfile(
-    modifier: Modifier = Modifier
-){
-    EditComponent {
-
-    }
-}
-
-@Composable
-fun EditComponent(
     modifier: Modifier = Modifier,
-    onBackClick: () -> Unit
+    backToEdit: () -> Unit = {},
+    editProfileViewModel: EditProfileViewModel = hiltViewModel()
 ){
     var nameEdit by remember { mutableStateOf(InputTextState()) }
     var emailEdit by remember { mutableStateOf(InputTextState()) }
@@ -52,18 +55,36 @@ fun EditComponent(
         mutableStateOf(InputTextState())
     }
     var addressEdit by remember { mutableStateOf(InputTextState()) }
+    var passwordEdit by remember {
+        mutableStateOf(InputTextState())
+    }
+    var passwordVisibility by remember { mutableStateOf(false) }
+
+    val editProfile by editProfileViewModel.editProfile.collectAsState()
+
+    editProfile.let {
+        val context = LocalContext.current
+        if (!editProfile.hasBeenHandled){
+            when (val unhandled = editProfile.getContentIfNotHandled()){
+                is Result.Error -> {
+                    Toast.makeText(context, unhandled.error, Toast.LENGTH_SHORT).show()
+                }
+
+                is Result.Success -> {
+                    Toast.makeText(context, unhandled.data.message, Toast.LENGTH_SHORT).show()
+                    backToEdit()
+                }
+
+                else -> {}
+            }
+        }
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
             .padding(12.dp)
     ) {
-        Icon(
-            imageVector = Icons.Default.ArrowBack,
-            contentDescription = null,
-            modifier = modifier
-                .padding(vertical = 12.dp)
-                .clickable { onBackClick() }
-        )
         Text(
             text = "Edit Profile",
             fontFamily = fontFamily,
@@ -94,6 +115,35 @@ fun EditComponent(
                 }
             },
             modifier = modifier.padding(top = 12.dp)
+        )
+
+        InputText(
+            value = passwordEdit.value,
+            onChange = { newPw ->
+                passwordEdit = passwordEdit.copy(
+                    value = newPw,
+                    isError = newPw.length <= 6
+                )
+            },
+            label = "Enter New Password",
+            isError = passwordEdit.isError,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+            trailingIcon = {
+                val icon =
+                    if (passwordVisibility) Icons.Outlined.VisibilityOff else Icons.Outlined.Visibility
+                val desc = if (passwordVisibility) "Hide password" else "Show password"
+
+                IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
+                    Icon(imageVector = icon, contentDescription = desc)
+                }
+            },
+            supportingText = {
+                if (passwordEdit.isError) {
+                    Text(text = "Password at least 6 characters", fontFamily = fontFamily)
+                }
+            },
+            modifier = Modifier.padding(top = 8.dp)
         )
 
         InputText(
@@ -158,7 +208,23 @@ fun EditComponent(
 
         Spacer(modifier = modifier.weight(1f))
         Button(
-            onClick = { },
+            enabled = editProfile.peekContent() !is Result.Loading,
+            onClick = {
+                      when {
+                          nameEdit.isInvalid() -> nameEdit = nameEdit.copy(isError = true)
+                          emailEdit.isInvalid() -> emailEdit = emailEdit.copy(isError = true)
+                          passwordEdit.isInvalid() -> passwordEdit = passwordEdit.copy(isError = true)
+                          telephoneEdit.isInvalid() -> telephoneEdit = telephoneEdit.copy(isError = true)
+                          addressEdit.isInvalid() -> addressEdit = addressEdit.copy(isError = true)
+                          else -> editProfileViewModel.editProfile(
+                              username = nameEdit.value,
+                              email = emailEdit.value,
+                              password = passwordEdit.value,
+                              phone = telephoneEdit.value,
+                              alamat = addressEdit.value
+                          )
+                      }
+            },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary
             ),
@@ -176,6 +242,14 @@ fun EditComponent(
             )
         }
     }
+}
+
+@Composable
+fun EditComponent(
+    modifier: Modifier = Modifier,
+    onBackClick: () -> Unit
+){
+
 
 }
 
@@ -184,8 +258,6 @@ fun EditComponent(
 @Composable
 fun PreviewEdit(){
     MaterialTheme {
-        EditComponent {
-
-        }
+        EditProfile()
     }
 }

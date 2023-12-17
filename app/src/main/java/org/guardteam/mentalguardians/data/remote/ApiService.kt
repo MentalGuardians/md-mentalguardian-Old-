@@ -14,6 +14,7 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface ApiService {
@@ -86,4 +87,15 @@ interface ApiService {
     suspend fun Transaction(
         @Query("userId") userId: String
     ): TransactionDto
+
+    @FormUrlEncoded
+    @PUT("profile")
+    suspend fun editProfile(
+        @Query("userId") userId: String,
+        @Field("username") username: String,
+        @Field("password") password: String,
+        @Field("email") email: String,
+        @Field("phone") phone: String,
+        @Field("alamat") alamat: String
+    ): ResponseDto
 }
