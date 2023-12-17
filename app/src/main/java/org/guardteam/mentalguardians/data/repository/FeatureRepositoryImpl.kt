@@ -22,7 +22,6 @@ import org.guardteam.mentalguardians.data.mapper.toContentById
 import org.guardteam.mentalguardians.data.mapper.toProfileData
 import org.guardteam.mentalguardians.domain.model.Content
 import org.guardteam.mentalguardians.domain.model.ContentById
-import org.guardteam.mentalguardians.domain.model.HistoryData
 import org.guardteam.mentalguardians.domain.model.Prediction
 import org.guardteam.mentalguardians.domain.model.Response
 import org.guardteam.mentalguardians.domain.model.Therapist
@@ -166,17 +165,23 @@ class FeatureRepositoryImpl(
         }
     }
 
-    override fun profile(): Flow<Result<Profile>> = flow{
+    override fun profile(): Flow<Result<Profile>> = flow {
         emit(Result.Loading)
         try {
             val userId = runBlocking { localDataManager.getUserData().first().userId }
             val response = apiService.profile(userId = userId)
 
             emit(Result.Success(response.toProfileData()))
-        } catch (e: Exception){
-            if (e is HttpException){
+        } catch (e: Exception) {
+            if (e is HttpException) {
                 val jsonInString = e.response()?.errorBody()?.string()
                 val errorBody = Gson().fromJson(jsonInString, Response::class.java)
+                emit(Result.Error(errorBody.message))
+            } else {
+                emit(Result.Error(e.message.toString()))
+            }
+        }
+    }
 
     override fun transaction(): Flow<Result<Transaction>> = flow {
         emit(Result.Loading)

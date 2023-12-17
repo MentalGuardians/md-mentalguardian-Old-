@@ -128,7 +128,7 @@ object AppModule {
             getTherapist = GetTherapist(featureRepository),
             getTherapistById = GetTherapistById(featureRepository),
             postBooking = PostBooking(featureRepository),
-            getProfile = GetProfile(featureRepository)
+            getProfile = GetProfile(featureRepository),
             getTransaction = GetTransaction(featureRepository)
         )
     }
