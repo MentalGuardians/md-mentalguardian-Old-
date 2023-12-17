@@ -11,19 +11,19 @@ sealed class OnBoardingPage(
 ) {
     data object First : OnBoardingPage(
         image = R.drawable.meditation,
-        title = "Lorem Ipsum",
-        description = "Lorem ipsum dolor sit amet, consectetur"
+        title = "For You",
+        description = "Calm your day\nwith Mental \nGuardian"
     )
 
     data object Second : OnBoardingPage(
-        image = R.drawable.blaming,
-        title = "Lorem Ipsum",
-        description = "Lorem ipsum dolor sit amet, consectetur"
+        image = R.drawable.counseling,
+        title = "Counseling",
+        description = "Get special\nessions with \nExperts"
     )
 
     data object Third : OnBoardingPage(
-        image = R.drawable.schizophrenia,
-        title = "Lorem Ipsum",
-        description = "Lorem ipsum dolor sit amet, consectetur"
+        image = R.drawable.content,
+        title = "Self Meditation",
+        description = "Enjoy calming\nand educational \ncontent"
     )
 }

@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -24,10 +26,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.guardteam.mentalguardians.presentation.common.InputTextState
-import org.guardteam.mentalguardians.utils.isValidEmail
 import org.guardteam.mentalguardians.presentation.component.InputText
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
+import org.guardteam.mentalguardians.utils.isValidEmail
 
 @Composable
 fun PartnerRegistration(
@@ -52,7 +54,8 @@ fun PartnerRegistrationComponent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(12.dp)
+            .padding(24.dp)
+            .verticalScroll(rememberScrollState())
     ) {
         Text(
             text = "Partner Registration",

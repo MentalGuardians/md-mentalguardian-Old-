@@ -6,9 +6,12 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
@@ -35,11 +38,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.guardteam.mentalguardians.presentation.common.InputTextState
+import org.guardteam.mentalguardians.presentation.component.InputText
+import org.guardteam.mentalguardians.presentation.theme.fontFamily
 import org.guardteam.mentalguardians.utils.Result
 import org.guardteam.mentalguardians.utils.isInvalid
 import org.guardteam.mentalguardians.utils.isValidEmail
-import org.guardteam.mentalguardians.presentation.component.InputText
-import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
 @Composable
 fun EditProfile(
@@ -81,7 +84,8 @@ fun EditProfile(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(12.dp)
+            .padding(24.dp)
+            .verticalScroll(rememberScrollState())
     ) {
         Text(
             text = "Edit Profile",
@@ -205,6 +209,7 @@ fun EditProfile(
         )
 
         Spacer(modifier = modifier.weight(1f))
+        Spacer(modifier = modifier.height(24.dp))
         Button(
             enabled = editProfile.peekContent() !is Result.Loading,
             onClick = {

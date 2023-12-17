@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -41,11 +42,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import org.guardteam.mentalguardians.R
-import org.guardteam.mentalguardians.utils.Result
 import org.guardteam.mentalguardians.domain.model.ContentData
 import org.guardteam.mentalguardians.presentation.component.StatusItem
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
+import org.guardteam.mentalguardians.utils.Result
 
 @Composable
 fun ContentDetailScreen(
@@ -103,8 +104,8 @@ fun ContentDetailContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
             .padding(24.dp)
+            .verticalScroll(rememberScrollState())
     ) {
         AsyncImage(
             model = contentData.thumbnail,
@@ -122,120 +123,116 @@ fun ContentDetailContent(
             fontSize = 20.sp,
             color = MaterialTheme.colorScheme.onSurface
         )
-
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
+        Text(
+            text = "by ${contentData.author}",
+            fontFamily = fontFamily,
+            fontSize = 14.sp,
+            color = MaterialTheme.colorScheme.onSurface
+        )
+        Text(
+            text = contentData.labels,
+            fontFamily = fontFamily,
+            fontSize = 14.sp,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = "by ${contentData.author}",
-                fontFamily = fontFamily,
-                fontSize = 14.sp,
-                color = MaterialTheme.colorScheme.onSurface
+            Icon(
+                imageVector = Icons.Rounded.ThumbUp,
+                contentDescription = "Rating Icon",
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .size(16.dp)
             )
+
+            Spacer(modifier = Modifier.width(4.dp))
             Text(
-                text = contentData.labels,
+                text = "${contentData.likes}",
                 fontFamily = fontFamily,
                 fontSize = 14.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.ThumbUp,
-                    contentDescription = "Rating Icon",
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier
-                        .size(16.dp)
-                )
 
-                Spacer(modifier = Modifier.width(4.dp))
-                Text(
-                    text = "${contentData.likes}",
-                    fontFamily = fontFamily,
-                    fontSize = 14.sp,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+            Spacer(modifier = Modifier.width(16.dp))
 
-                Spacer(modifier = Modifier.width(16.dp))
+            Icon(
+                imageVector = Icons.Rounded.Comment,
+                contentDescription = "Comment",
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .size(16.dp)
+            )
 
-                Icon(
-                    imageVector = Icons.Rounded.Comment,
-                    contentDescription = "Comment",
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier
-                        .size(16.dp)
-                )
+            Spacer(modifier = Modifier.width(4.dp))
+            Text(
+                text = "${contentData.comments}",
+                fontFamily = fontFamily,
+                fontSize = 14.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
 
-                Spacer(modifier = Modifier.width(4.dp))
-                Text(
-                    text = "${contentData.comments}",
-                    fontFamily = fontFamily,
-                    fontSize = 14.sp,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+            Spacer(modifier = Modifier.width(16.dp))
 
-                Spacer(modifier = Modifier.width(16.dp))
+            Icon(
+                imageVector = Icons.Rounded.Visibility,
+                contentDescription = "Comment",
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .size(16.dp)
+            )
 
-                Icon(
-                    imageVector = Icons.Rounded.Visibility,
-                    contentDescription = "Comment",
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier
-                        .size(16.dp)
-                )
+            Spacer(modifier = Modifier.width(4.dp))
+            Text(
+                text = "${contentData.views}",
+                fontFamily = fontFamily,
+                fontSize = 14.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
 
-                Spacer(modifier = Modifier.width(4.dp))
-                Text(
-                    text = "${contentData.views}",
-                    fontFamily = fontFamily,
-                    fontSize = 14.sp,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
+        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(24.dp))
 
-            Spacer(modifier = Modifier.weight(1f))
+        Text(
+            text = "this button with navigate you to youtube app",
+            fontFamily = fontFamily,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Light,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+
+                .padding(top = 24.dp)
+        )
+        Button(
+            onClick = {
+                val uri = Uri.parse(contentData.videoId)
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                context.startActivity(intent)
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary
+            ),
+            shape = RoundedCornerShape(16.dp),
+            contentPadding = PaddingValues(14.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Icon(
+                imageVector = Icons.Rounded.PlayArrow,
+                contentDescription = "Play Button"
+            )
 
             Text(
-                text = "this button with navigate you to youtube app",
+                text = "Play Now",
                 fontFamily = fontFamily,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Light,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-
-                    .padding(top = 24.dp)
+                fontWeight = FontWeight.Medium,
+                fontSize = 18.sp
             )
-            Button(
-                onClick = {
-                    val uri = Uri.parse(contentData.videoId)
-                    val intent = Intent(Intent.ACTION_VIEW, uri)
-                    context.startActivity(intent)
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary
-                ),
-                shape = RoundedCornerShape(16.dp),
-                contentPadding = PaddingValues(14.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.PlayArrow,
-                    contentDescription = "Play Button"
-                )
-
-                Text(
-                    text = "Play Now",
-                    fontFamily = fontFamily,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 18.sp
-                )
-            }
         }
+
     }
 }
 
