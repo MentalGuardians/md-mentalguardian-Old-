@@ -107,7 +107,8 @@ fun TransactionBottomSheet(
             Button(
                 onClick = onClick,
                 shape = RoundedCornerShape(16.dp),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                enabled = buttonActive
             ) {
                 Text(
                     text = "Cancel",
