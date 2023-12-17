@@ -10,5 +10,6 @@ data class FeatureUseCase(
     val postBooking: PostBooking,
     val getProfile: GetProfile,
     val getTransaction: GetTransaction,
+    val postEditProfile: PostEditProfile
     val putCancelBooking: PutCancelBooking
 )

@@ -199,6 +199,31 @@ class FeatureRepositoryImpl(
         }
     }
 
+
+    override fun editProfile(
+        username: String,
+        password: String,
+        email: String,
+        phone: String,
+        alamat: String
+    ): Flow<Result<Response>> = flow {
+        emit(Result.Loading)
+        try {
+            val userId = runBlocking { localDataManager.getUserData().first().userId }
+            val response = apiService.editProfile(userId, username, password, email,phone, alamat)
+
+            emit(Result.Success(response.toResponse()))
+        } catch (e: Exception){
+            if (e is HttpException){
+                val jsonInString = e.response()?.errorBody()?.string()
+                val errorBody = Gson().fromJson(jsonInString, Response::class.java)
+                 emit(Result.Error(errorBody.message))
+            } else {
+              emit(Result.Error(e.message.toString()))
+            }
+        }
+    }
+
     override fun cancelBooking(bookingId: String): Flow<Result<Response>> = flow {
         emit(Result.Loading)
         try {
@@ -209,6 +234,7 @@ class FeatureRepositoryImpl(
             if (e is HttpException) {
                 val jsonInString = e.response()?.errorBody()?.string()
                 val errorBody = Gson().fromJson(jsonInString, Response::class.java)
+
                 emit(Result.Error(errorBody.message))
             } else {
                 emit(Result.Error(e.message.toString()))

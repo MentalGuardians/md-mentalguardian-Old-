@@ -88,6 +88,17 @@ interface ApiService {
         @Query("userId") userId: String
     ): TransactionDto
 
+    @FormUrlEncoded
+    @PUT("profile")
+    suspend fun editProfile(
+        @Query("userId") userId: String,
+        @Field("username") username: String,
+        @Field("password") password: String,
+        @Field("email") email: String,
+        @Field("phone") phone: String,
+        @Field("alamat") alamat: String
+      ): ResponseDto
+      
     @PUT("booking")
     suspend fun cancelBooking(
         @Query("bookingId") bookingId: String
