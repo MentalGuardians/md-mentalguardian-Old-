@@ -13,6 +13,7 @@ import org.guardteam.mentalguardians.data.mapper.toPrediction
 import org.guardteam.mentalguardians.data.mapper.toResponse
 import org.guardteam.mentalguardians.data.mapper.toTherapist
 import org.guardteam.mentalguardians.data.mapper.toTherapistById
+import org.guardteam.mentalguardians.data.mapper.toTransaction
 import org.guardteam.mentalguardians.data.remote.ApiService
 import org.guardteam.mentalguardians.domain.manager.LocalDataManager
 import org.guardteam.mentalguardians.domain.model.Content
@@ -22,6 +23,7 @@ import org.guardteam.mentalguardians.domain.model.Prediction
 import org.guardteam.mentalguardians.domain.model.Response
 import org.guardteam.mentalguardians.domain.model.Therapist
 import org.guardteam.mentalguardians.domain.model.TherapistById
+import org.guardteam.mentalguardians.domain.model.Transaction
 import org.guardteam.mentalguardians.domain.repository.FeatureRepository
 import retrofit2.HttpException
 
@@ -51,10 +53,11 @@ class FeatureRepositoryImpl(
         }
     }
 
-    override fun history(historyId: String): Flow<Result<HistoryData>> = flow {
+    override fun history(): Flow<Result<HistoryData>> = flow {
         emit(Result.Loading)
         try {
-            val response = apiService.historyPredict(historyId)
+            val userId = runBlocking { localDataManager.getUserData().first().userId }
+            val response = apiService.historyPredict(userId = userId)
             emit(Result.Success(response.toHistoryData()))
         } catch (e: Exception) {
             if (e is HttpException) {
@@ -158,4 +161,25 @@ class FeatureRepositoryImpl(
         }
     }
 
+    override fun transaction(): Flow<Result<Transaction>> = flow {
+        emit(Result.Loading)
+        try {
+            val userId = runBlocking { localDataManager.getUserData().first().userId }
+            val response = apiService.Transaction(userId)
+
+            emit(Result.Success(response.toTransaction()))
+        } catch (e: Exception) {
+            if (e is HttpException) {
+                val jsonInString = e.response()?.errorBody()?.string()
+                val errorBody = Gson().fromJson(jsonInString, Response::class.java)
+                emit(Result.Error(errorBody.message))
+            } else {
+                emit(Result.Error(e.message.toString()))
+            }
+        }
+    }
+
 }
+
+
+

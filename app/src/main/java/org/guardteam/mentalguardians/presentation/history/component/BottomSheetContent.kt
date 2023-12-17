@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.guardteam.mentalguardians.R
+import org.guardteam.mentalguardians.common.utils.toFormat
 import org.guardteam.mentalguardians.presentation.history.data.Mood
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
@@ -31,6 +32,8 @@ fun BottomSheetContent(
     mood: String,
     modifier: Modifier = Modifier
 ) {
+    val splitDate = date.split(" ")
+    val formatterDate = "${splitDate[0].toFormat("dd MMMM yyyy")} ${splitDate[1]}"
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -43,7 +46,7 @@ fun BottomSheetContent(
         ) {
             Column {
                 Text(
-                    text = date,
+                    text = formatterDate,
                     fontFamily = fontFamily,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium
@@ -68,14 +71,14 @@ fun MoodIcon(
     mood: String
 ) {
     val icon = when (mood) {
-        "Bad" -> painterResource(id = R.drawable.ic_negative)
-        "Good" -> painterResource(id = R.drawable.ic_positive)
+        "bad" -> painterResource(id = R.drawable.ic_negative)
+        "good" -> painterResource(id = R.drawable.ic_positive)
         else -> painterResource(id = R.drawable.ic_positive)
     }
 
     val color = when (mood) {
-        "Bad" -> Color.Red
-        "Good" -> Color.Green
+        "bad" -> Color.Red
+        "good" -> Color.Green
         else -> Color.Gray
     }
 

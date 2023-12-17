@@ -27,6 +27,7 @@ import org.guardteam.mentalguardians.domain.use_case.GetOnBoarding
 import org.guardteam.mentalguardians.domain.use_case.GetPredict
 import org.guardteam.mentalguardians.domain.use_case.GetTherapist
 import org.guardteam.mentalguardians.domain.use_case.GetTherapistById
+import org.guardteam.mentalguardians.domain.use_case.GetTransaction
 import org.guardteam.mentalguardians.domain.use_case.GetUserData
 import org.guardteam.mentalguardians.domain.use_case.OnBoardingUseCase
 import org.guardteam.mentalguardians.domain.use_case.PostBooking
@@ -125,7 +126,8 @@ object AppModule {
             getContentById = GetContentById(featureRepository),
             getTherapist = GetTherapist(featureRepository),
             getTherapistById = GetTherapistById(featureRepository),
-            postBooking = PostBooking(featureRepository)
+            postBooking = PostBooking(featureRepository),
+            getTransaction = GetTransaction(featureRepository)
         )
     }
 

@@ -9,11 +9,12 @@ import org.guardteam.mentalguardians.domain.model.Prediction
 import org.guardteam.mentalguardians.domain.model.Response
 import org.guardteam.mentalguardians.domain.model.Therapist
 import org.guardteam.mentalguardians.domain.model.TherapistById
+import org.guardteam.mentalguardians.domain.model.Transaction
 
 interface FeatureRepository {
 
     fun predict(text: String): Flow<Result<Prediction>>
-    fun history(historyId: String) : Flow<Result<HistoryData>>
+    fun history() : Flow<Result<HistoryData>>
     fun content(content: String): Flow<Result<Content>>
     fun contentById(contentId: String): Flow<Result<ContentById>>
 
@@ -27,4 +28,6 @@ interface FeatureRepository {
         time: String,
         method: String
     ): Flow<Result<Response>>
+
+    fun transaction(): Flow<Result<Transaction>>
 }

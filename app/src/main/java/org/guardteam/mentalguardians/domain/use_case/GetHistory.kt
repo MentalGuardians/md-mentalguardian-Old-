@@ -8,7 +8,7 @@ import org.guardteam.mentalguardians.domain.repository.FeatureRepository
 class GetHistory(
     private val repository: FeatureRepository
 ){
-    operator fun invoke(historyId : String): Flow<Result<HistoryData>> {
-        return repository.history(historyId)
+    operator fun invoke():Flow<Result<HistoryData>> {
+        return repository.history()
     }
 }

@@ -3,13 +3,16 @@ package org.guardteam.mentalguardians.presentation.transaction.component
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,70 +26,36 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.guardteam.mentalguardians.common.utils.toFormat
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
 @Composable
 fun TransactionBottomSheet(
-    modifier: Modifier = Modifier,
     psychologistName: String,
     date: String,
     time: String,
-    description: String,
-    link: String,
+    method: String,
     status: String,
-    whatsapp: String,
-    onClick: () -> Unit
-){
+    onClick: () -> Unit,
+    bookDate: String,
+    modifier: Modifier = Modifier,
+    link: String? = null,
+) {
     val context = LocalContext.current
+    val formattedDate = date.toFormat("dd MMMM yyyy")
+    val splitBookDate = bookDate.split(" ")
+    val formatterBookDate = "${splitBookDate[0].toFormat("dd MMMM yyyy")} ${splitBookDate[1]}"
     Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(24.dp)
     ) {
         Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
         ) {
-            Column() {
-                Text(
-                    text = psychologistName,
-                    fontFamily = fontFamily,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium
-                )
-                Text(
-                    text = "$date at $time",
-                    fontFamily = fontFamily,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium
-                )
-                ClickableText(
-                    text = AnnotatedString(whatsapp),
-                    onClick = {
-                              openWhatsapp(context, whatsapp)
-                    },
-                    modifier = modifier,
-                    style = TextStyle(
-                        color = MaterialTheme.colorScheme.primary,
-                        textDecoration = TextDecoration.Underline
-                    )
-                )
-                ClickableText(
-                    text = AnnotatedString(link),
-                    onClick = {
-                        openLink(context, link)
-                    },
-                    modifier = modifier,
-                    style = TextStyle(
-                        color = MaterialTheme.colorScheme.primary,
-                        textDecoration = TextDecoration.Underline
-                    )
-                )
-            }
-            Spacer(modifier = modifier.weight(1f))
-            val statusColor = when(status){
+            val statusColor = when (status) {
                 "Scheduled" -> Color(0xFFFFA500)
                 "Finished" -> Color(0xFF008000)
                 "Canceled" -> Color(0xFFFF0000)
@@ -97,17 +66,59 @@ fun TransactionBottomSheet(
                 color = statusColor
             )
         }
-        Spacer(modifier = modifier.height(8.dp))
-        Text(text = description)
+        Text(
+            text = psychologistName,
+            fontFamily = fontFamily,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Medium
+        )
+
+        Text(
+            text = "$formattedDate at $time",
+            fontFamily = fontFamily,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Medium
+        )
+        Text(text = "$method method")
+        link?.let {
+            ClickableText(
+                text = AnnotatedString(link),
+                onClick = {
+                    openLink(context, link)
+                },
+                modifier = modifier,
+                style = TextStyle(
+                    color = MaterialTheme.colorScheme.primary,
+                    textDecoration = TextDecoration.Underline
+                )
+            )
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+        Text(
+            text = "Requested at $formatterBookDate",
+            fontFamily = fontFamily,
+            fontSize = 12.sp,
+        )
+
+        if (status == "Scheduled") {
+            Spacer(modifier = Modifier.height(24.dp))
+            Button(
+                onClick = onClick,
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "Cancel",
+                    fontFamily = fontFamily
+                )
+            }
+        }
+
     }
 }
 
-private fun openWhatsapp(context: Context, noTelephone: String){
-    val uri = Uri.parse("https://api.whatsapp.com/send?phone=$noTelephone")
-    val intent = Intent(Intent.ACTION_VIEW, uri)
-    context.startActivity(intent)
-}
-private fun openLink(context: Context, link: String){
+private fun openLink(context: Context, link: String) {
     val uri = Uri.parse(link)
     val intent = Intent(Intent.ACTION_VIEW, uri)
     context.startActivity(intent)
@@ -115,18 +126,17 @@ private fun openLink(context: Context, link: String){
 
 @Preview(showBackground = true)
 @Composable
-fun TransactionBSPreview(){
+fun TransactionBSPreview() {
     MentalGuardiansTheme {
         TransactionBottomSheet(
             psychologistName = "Ihfansyah Pedo",
-            date = "22 November 2023",
+            date = "2023-12-18",
             time = "20.30",
-            description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             link = "https://meet.google.com/tsi/frfb-nzt",
             status = "Scheduled",
-            whatsapp ="+6282146804920"
-        ) {
-
-        }
+            method = "online",
+            onClick = {},
+            bookDate = "2023-12-17 09:09"
+        )
     }
 }

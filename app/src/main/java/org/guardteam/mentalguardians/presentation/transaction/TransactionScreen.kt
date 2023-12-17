@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
@@ -21,38 +23,39 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.guardteam.mentalguardians.common.utils.DataDummy
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.guardteam.mentalguardians.common.utils.Result
+import org.guardteam.mentalguardians.domain.model.TransactionData
+import org.guardteam.mentalguardians.presentation.component.StatusItem
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
-import org.guardteam.mentalguardians.presentation.transaction.component.TransactionItem
 import org.guardteam.mentalguardians.presentation.transaction.component.TransactionBottomSheet
+import org.guardteam.mentalguardians.presentation.transaction.component.TransactionItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TransactionScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: TransactionViewModel = hiltViewModel()
 ) {
     var bottomSheetState by remember { mutableStateOf(false) }
+    val bottomSheetData by viewModel.transactionData.collectAsStateWithLifecycle()
+    val result by viewModel.result.collectAsStateWithLifecycle()
 
     if (bottomSheetState) {
         ModalBottomSheet(onDismissRequest = { bottomSheetState = false }) {
-            LazyColumn(){
-                items(DataDummy.dataTransaction, key = {it.id}){
-                    TransactionBottomSheet(
-                        psychologistName = it.name,
-                        date = it.date,
-                        time = it.time,
-                        description = it.description,
-                        link = it.link,
-                        status = it.status,
-                        whatsapp = it.whatsapp
-                    ) {
-
-                    }
-                }
-            }
+            TransactionBottomSheet(
+                psychologistName = bottomSheetData.therapistName,
+                date = bottomSheetData.sessionDate,
+                time = bottomSheetData.sessionTime,
+                method = bottomSheetData.sessionMethod,
+                status = bottomSheetData.status,
+                link = bottomSheetData.link,
+                bookDate = bottomSheetData.bookingDate,
+                onClick = {}
+            )
         }
     }
-
 
     Column(
         modifier = modifier
@@ -78,24 +81,74 @@ fun TransactionScreen(
                 .padding(vertical = 16.dp)
         )
 
-        LazyColumn(
-            contentPadding = PaddingValues(bottom = 24.dp)
-        ) {
-            items(DataDummy.dataTransaction, key = { it.id }) {
-                TransactionItem(
-                    name = it.name,
-                    date = it.date,
-                    time = it.time,
-                    status = it.status,
-                    modifier = Modifier.clickable {
-                        bottomSheetState = true
+        when (val resultData = result) {
+            is Result.Loading -> {
+                StatusItem(
+                    modifier = modifier,
+                    status = "Loading"
+                )
+            }
+
+            is Result.Error -> {
+                StatusItem(
+                    modifier = modifier,
+                    status = "an error has occurred"
+                ) {
+                    Button(
+                        onClick = { viewModel.getTransaction() },
+                        shape = RoundedCornerShape(16.dp)
+                    ) {
+                        Text(
+                            text = "Reload",
+                            fontFamily = fontFamily
+                        )
+                    }
+                }
+            }
+
+            is Result.Success -> {
+                TransactionContent(
+                    transaction = resultData.data.historyBooking,
+                    onBottomSheetStateChange = {
+                        bottomSheetState = it
+                    },
+                    onBottomSheetDataChange = {
+                        viewModel.setTransactionData(it)
                     }
                 )
             }
-        }
 
+            else -> {}
+        }
     }
 }
+
+@Composable
+fun TransactionContent(
+    transaction: List<TransactionData>,
+    onBottomSheetStateChange: (Boolean) -> Unit,
+    onBottomSheetDataChange: (TransactionData) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(
+        contentPadding = PaddingValues(bottom = 24.dp),
+        modifier = modifier
+    ) {
+        items(transaction, key = { it.bookingId }) {
+            TransactionItem(
+                name = it.therapistName,
+                date = it.sessionDate,
+                time = it.sessionTime,
+                status = it.status,
+                modifier = Modifier.clickable {
+                    onBottomSheetDataChange(it)
+                    onBottomSheetStateChange(true)
+                }
+            )
+        }
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable

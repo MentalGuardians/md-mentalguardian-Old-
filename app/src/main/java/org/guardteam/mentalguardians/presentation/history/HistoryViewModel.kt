@@ -25,22 +25,19 @@ class HistoryViewModel @Inject constructor(
         MutableStateFlow(false)
     val bottomSheetState :StateFlow<Boolean> = _bottomSheetState
 
-    private val _bottomSheetData: MutableStateFlow<History> = MutableStateFlow(
-        History(
-            id = "",
-            date = "",
-            diagnose = "",
-            mood = ""
+    private val _bottomSheetData: MutableStateFlow<History> =
+        MutableStateFlow(
+            History(
+                id = "",
+                date = "",
+                diagnose = "",
+                mood = ""
+            )
         )
-    )
-    val bottomSheetData: StateFlow<History> = _bottomSheetData
+    val bottomSheetData : StateFlow<History> = _bottomSheetData
 
-    fun setBottomSheetData(history: History) {
+    fun setBottomSheetData(history: History){
         _bottomSheetData.value = history
-    }
-
-    init {
-        getHistory()
     }
 
     fun getHistory(){
@@ -57,5 +54,9 @@ class HistoryViewModel @Inject constructor(
 
     fun onDismissBottomSheet(){
         _bottomSheetState.value = false
+    }
+
+    init {
+        getHistory()
     }
 }
