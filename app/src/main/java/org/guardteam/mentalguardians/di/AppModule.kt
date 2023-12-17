@@ -46,6 +46,7 @@ import org.guardteam.mentalguardians.domain.use_case.ThemeUseCase
 import org.guardteam.mentalguardians.domain.use_case.UserDataUseCase
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -77,6 +78,9 @@ object AppModule {
         }
         val client = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+            .readTimeout(2, TimeUnit.MINUTES)
+            .writeTimeout(2, TimeUnit.MINUTES)
+            .connectTimeout(2, TimeUnit.MINUTES)
             .build()
         val retrofit = Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
