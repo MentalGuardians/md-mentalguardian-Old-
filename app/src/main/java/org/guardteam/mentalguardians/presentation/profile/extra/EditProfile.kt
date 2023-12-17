@@ -36,15 +36,12 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 fun EditProfile(
     modifier: Modifier = Modifier
 ){
-    EditComponent {
-
-    }
+    EditComponent()
 }
 
 @Composable
 fun EditComponent(
     modifier: Modifier = Modifier,
-    onBackClick: () -> Unit
 ){
     var nameEdit by remember { mutableStateOf(InputTextState()) }
     var emailEdit by remember { mutableStateOf(InputTextState()) }
@@ -57,13 +54,6 @@ fun EditComponent(
             .fillMaxSize()
             .padding(12.dp)
     ) {
-        Icon(
-            imageVector = Icons.Default.ArrowBack,
-            contentDescription = null,
-            modifier = modifier
-                .padding(vertical = 12.dp)
-                .clickable { onBackClick() }
-        )
         Text(
             text = "Edit Profile",
             fontFamily = fontFamily,
@@ -184,8 +174,6 @@ fun EditComponent(
 @Composable
 fun PreviewEdit(){
     MaterialTheme {
-        EditComponent {
-
-        }
+        EditComponent()
     }
 }

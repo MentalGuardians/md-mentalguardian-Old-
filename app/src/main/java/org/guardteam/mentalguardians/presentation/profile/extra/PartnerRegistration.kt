@@ -42,15 +42,12 @@ import org.guardteam.mentalguardians.presentation.theme.fontFamily
 fun PartnerRegistration(
     modifier: Modifier = Modifier,
 ){
-   PartnerRegistrationComponent {
-
-   }
+   PartnerRegistrationComponent()
 }
 
 @Composable
 fun PartnerRegistrationComponent(
     modifier: Modifier = Modifier,
-    onBackClick: () -> Unit
 ){
     var namePartner by remember {
         mutableStateOf(InputTextState())
@@ -66,13 +63,6 @@ fun PartnerRegistrationComponent(
             .fillMaxSize()
             .padding(12.dp)
     ) {
-        Icon(
-            imageVector = Icons.Default.ArrowBack,
-            contentDescription = null,
-            modifier = modifier
-                .padding(vertical = 12.dp)
-                .clickable { onBackClick() }
-        )
         Text(
             text = "Partner Registration",
             fontFamily = fontFamily,
