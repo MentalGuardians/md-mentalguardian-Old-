@@ -1,8 +1,8 @@
 package org.guardteam.mentalguardians.data.remote
 
-import org.guardteam.mentalguardians.data.remote.dto.HistoryDto
 import org.guardteam.mentalguardians.data.remote.dto.ContentByIdDto
 import org.guardteam.mentalguardians.data.remote.dto.ContentDto
+import org.guardteam.mentalguardians.data.remote.dto.HistoryDto
 import org.guardteam.mentalguardians.data.remote.dto.LoginDto
 import org.guardteam.mentalguardians.data.remote.dto.PredictionDto
 import org.guardteam.mentalguardians.data.remote.dto.ProfileDto
@@ -39,7 +39,7 @@ interface ApiService {
     suspend fun predict(
         @Field("userId") userId: String,
         @Field("text") text: String
-    ): PredictionDto 
+    ): PredictionDto
 
     @FormUrlEncoded
     @POST("content-recommender")
@@ -82,9 +82,9 @@ interface ApiService {
     suspend fun profile(
         @Query("userId") userId: String
     ): ProfileDto
-  
+
     @GET("booking")
-    suspend fun Transaction(
+    suspend fun transaction(
         @Query("userId") userId: String
     ): TransactionDto
 
@@ -97,5 +97,10 @@ interface ApiService {
         @Field("email") email: String,
         @Field("phone") phone: String,
         @Field("alamat") alamat: String
+      ): ResponseDto
+      
+    @PUT("booking")
+    suspend fun cancelBooking(
+        @Query("bookingId") bookingId: String
     ): ResponseDto
 }

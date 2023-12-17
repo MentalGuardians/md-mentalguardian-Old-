@@ -48,6 +48,7 @@ fun EditProfile(
     modifier: Modifier = Modifier,
     backToEdit: () -> Unit = {},
     editProfileViewModel: EditProfileViewModel = hiltViewModel()
+    modifier: Modifier = Modifier
 ){
     var nameEdit by remember { mutableStateOf(InputTextState()) }
     var emailEdit by remember { mutableStateOf(InputTextState()) }
@@ -244,20 +245,10 @@ fun EditProfile(
     }
 }
 
-@Composable
-fun EditComponent(
-    modifier: Modifier = Modifier,
-    onBackClick: () -> Unit
-){
-
-
-}
-
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewEdit(){
     MaterialTheme {
-        EditProfile()
+        EditProfile(
     }
 }

@@ -19,9 +19,11 @@ import org.guardteam.mentalguardians.domain.repository.FeatureRepository
 import org.guardteam.mentalguardians.domain.use_case.AuthUseCase
 import org.guardteam.mentalguardians.domain.use_case.ClearUserData
 import org.guardteam.mentalguardians.domain.use_case.FeatureUseCase
-import org.guardteam.mentalguardians.domain.use_case.GetHistory
 import org.guardteam.mentalguardians.domain.use_case.GetContent
 import org.guardteam.mentalguardians.domain.use_case.GetContentById
+import org.guardteam.mentalguardians.domain.use_case.GetDarkTheme
+import org.guardteam.mentalguardians.domain.use_case.GetDynamicColor
+import org.guardteam.mentalguardians.domain.use_case.GetHistory
 import org.guardteam.mentalguardians.domain.use_case.GetLoginState
 import org.guardteam.mentalguardians.domain.use_case.GetOnBoarding
 import org.guardteam.mentalguardians.domain.use_case.GetPredict
@@ -35,8 +37,12 @@ import org.guardteam.mentalguardians.domain.use_case.PostBooking
 import org.guardteam.mentalguardians.domain.use_case.PostEditProfile
 import org.guardteam.mentalguardians.domain.use_case.PostLogin
 import org.guardteam.mentalguardians.domain.use_case.PostRegister
+import org.guardteam.mentalguardians.domain.use_case.PutCancelBooking
+import org.guardteam.mentalguardians.domain.use_case.SaveDarkTheme
+import org.guardteam.mentalguardians.domain.use_case.SaveDynamicColor
 import org.guardteam.mentalguardians.domain.use_case.SaveOnBoarding
 import org.guardteam.mentalguardians.domain.use_case.SaveUserData
+import org.guardteam.mentalguardians.domain.use_case.ThemeUseCase
 import org.guardteam.mentalguardians.domain.use_case.UserDataUseCase
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -132,6 +138,20 @@ object AppModule {
             getProfile = GetProfile(featureRepository),
             getTransaction = GetTransaction(featureRepository),
             postEditProfile = PostEditProfile(featureRepository)
+            putCancelBooking = PutCancelBooking(featureRepository)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideThemeUseCase(
+        localDataManager: LocalDataManager
+    ): ThemeUseCase {
+        return ThemeUseCase(
+            GetDynamicColor(localDataManager = localDataManager),
+            GetDarkTheme(localDataManager),
+            SaveDynamicColor(localDataManager),
+            SaveDarkTheme(localDataManager)
         )
     }
 

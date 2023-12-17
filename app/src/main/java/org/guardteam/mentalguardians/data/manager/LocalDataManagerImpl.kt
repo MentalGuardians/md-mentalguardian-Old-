@@ -10,6 +10,8 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.guardteam.mentalguardians.common.utils.Constants.APP_PREF
+import org.guardteam.mentalguardians.common.utils.Constants.DARK_MODE_KEY
+import org.guardteam.mentalguardians.common.utils.Constants.DYNAMIC_COLOR_KEY
 import org.guardteam.mentalguardians.common.utils.Constants.EMAIL_KEY
 import org.guardteam.mentalguardians.common.utils.Constants.LOGINSTATE_KEY
 import org.guardteam.mentalguardians.common.utils.Constants.ONBOARDING_KEY
@@ -74,6 +76,30 @@ class LocalDataManagerImpl(context: Context) : LocalDataManager {
         }
     }
 
+    override fun getDynamicColorState(): Flow<Boolean> {
+        return datastore.data.map { pref ->
+            pref[dynamicColorKey] ?: true
+        }
+    }
+
+    override suspend fun setDynamicColorState(state: Boolean) {
+        datastore.edit { pref ->
+            pref[dynamicColorKey] = state
+        }
+    }
+
+    override fun getDarkModeState(): Flow<String> {
+        return datastore.data.map { pref ->
+            pref[darkModeKey] ?: "Automatic"
+        }
+    }
+
+    override suspend fun setDarkModeState(state: String) {
+        datastore.edit { pref ->
+            pref[darkModeKey] = state
+        }
+    }
+
     private companion object {
         val onBoardingKey = booleanPreferencesKey(name = ONBOARDING_KEY)
         val userIdKey = stringPreferencesKey(name = USERID_KEY)
@@ -81,5 +107,7 @@ class LocalDataManagerImpl(context: Context) : LocalDataManager {
         val emailKey = stringPreferencesKey(name = EMAIL_KEY)
         val pictureKey = stringPreferencesKey(name = PICTURE_KEY)
         val loginStateKey = booleanPreferencesKey(name = LOGINSTATE_KEY)
+        val dynamicColorKey = booleanPreferencesKey(name = DYNAMIC_COLOR_KEY)
+        val darkModeKey = stringPreferencesKey(name = DARK_MODE_KEY)
     }
 }

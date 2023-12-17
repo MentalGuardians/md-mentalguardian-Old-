@@ -5,12 +5,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 
@@ -26,8 +28,16 @@ class MainActivity : ComponentActivity() {
             !mainViewModel.isLoading.value
         }
         setContent {
+            val dynamicColor by mainViewModel.dynamicColor.collectAsStateWithLifecycle(initialValue = true)
+            val darkTheme by mainViewModel.DarkTheme.collectAsStateWithLifecycle(initialValue = "Automatic")
             MentalGuardiansTheme(
-                dynamicColor = false
+                dynamicColor = dynamicColor,
+                darkTheme = when (darkTheme) {
+                    "Automatic" -> isSystemInDarkTheme()
+                    "Dark" -> true
+                    "Light" -> false
+                    else -> isSystemInDarkTheme()
+                }
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),

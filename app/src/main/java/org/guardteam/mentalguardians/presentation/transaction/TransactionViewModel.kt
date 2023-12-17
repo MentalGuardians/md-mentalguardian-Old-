@@ -6,7 +6,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.guardteam.mentalguardians.common.utils.Event
 import org.guardteam.mentalguardians.common.utils.Result
+import org.guardteam.mentalguardians.domain.model.Response
 import org.guardteam.mentalguardians.domain.model.Transaction
 import org.guardteam.mentalguardians.domain.model.TransactionData
 import org.guardteam.mentalguardians.domain.use_case.FeatureUseCase
@@ -19,6 +21,10 @@ class TransactionViewModel @Inject constructor(
 
     private val _result: MutableStateFlow<Result<Transaction>> = MutableStateFlow(Result.None)
     val result: StateFlow<Result<Transaction>> = _result
+
+    private val _cancel: MutableStateFlow<Event<Result<Response>>> =
+        MutableStateFlow(Event(Result.None))
+    val cancel: StateFlow<Event<Result<Response>>> = _cancel
 
     private val _transactionData: MutableStateFlow<TransactionData> = MutableStateFlow(
         TransactionData(
@@ -49,5 +55,13 @@ class TransactionViewModel @Inject constructor(
 
     fun setTransactionData(transactionData: TransactionData) {
         _transactionData.value = transactionData
+    }
+
+    fun cancelBooking(bookingId: String) {
+        viewModelScope.launch {
+            featureUseCase.putCancelBooking(bookingId).collect {
+                _cancel.value = Event(it)
+            }
+        }
     }
 }
