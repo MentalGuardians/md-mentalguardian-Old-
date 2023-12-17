@@ -24,16 +24,24 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import org.guardteam.mentalguardians.common.utils.DataDummy
+import org.guardteam.mentalguardians.common.utils.Result
 import org.guardteam.mentalguardians.presentation.profile.component.ExtraComponent
 import org.guardteam.mentalguardians.presentation.profile.component.ProfileComponent
 import org.guardteam.mentalguardians.presentation.profile.component.ProfileDetail
+import org.guardteam.mentalguardians.presentation.profile.data.Profile
 import org.guardteam.mentalguardians.presentation.theme.MentalGuardiansTheme
 import org.guardteam.mentalguardians.presentation.theme.fontFamily
 
@@ -44,18 +52,32 @@ fun ProfileScreen(
     navigateToContent: () -> Unit = {},
     navigateToTherapist: () -> Unit = {},
     navigateToRegistration: () -> Unit = {},
+    viewModel: ProfileViewModel = hiltViewModel()
 ) {
+    val profile by viewModel.profile.collectAsState()
+    var profileData by remember {
+        mutableStateOf(Profile(
+            "",
+            "",
+            "",
+            "",
+            ""
+        ))
+    }
+    when(val resultData = profile){
+        is Result.Success -> {
+            profileData = resultData.data
+        }
+
+        else -> {}
+    }
+
     Column(modifier = modifier
         .fillMaxSize()
         .padding(24.dp)
     ) {
-        LazyColumn(modifier = modifier){
-            items(DataDummy.dataProfile, key = {it.id}){
-                ProfileComponent(
-                    username = it.username, account = it.account
-                )
-            }
-        }
+
+        ProfileComponent(username = profileData.username, account = profileData.account)
         Card (
             shape = RoundedCornerShape(10.dp),
             colors = CardDefaults.cardColors(
@@ -90,15 +112,7 @@ fun ProfileScreen(
             fontFamily = fontFamily,
             fontWeight = FontWeight.SemiBold
         )
-        LazyColumn(){
-            items(DataDummy.dataProfile, key = {it.id}){
-                ProfileDetail(
-                    username = it.username,
-                    address = it.address,
-                    telephone = it.telephone
-                )
-            }
-        }
+        ProfileDetail(username = profileData.username, address = profileData.address, telephone = profileData.telephone)
         ExtraComponent(
             onClickProfile = navigateToEdit,
             onClickContent = navigateToContent,

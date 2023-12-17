@@ -16,6 +16,7 @@ import org.guardteam.mentalguardians.domain.manager.LocalDataManager
 import org.guardteam.mentalguardians.domain.model.HistoryData
 import org.guardteam.mentalguardians.data.mapper.toContent
 import org.guardteam.mentalguardians.data.mapper.toContentById
+import org.guardteam.mentalguardians.data.mapper.toProfileData
 import org.guardteam.mentalguardians.domain.model.Content
 import org.guardteam.mentalguardians.domain.model.ContentById
 import org.guardteam.mentalguardians.domain.model.Prediction
@@ -23,6 +24,7 @@ import org.guardteam.mentalguardians.domain.model.Response
 import org.guardteam.mentalguardians.domain.model.Therapist
 import org.guardteam.mentalguardians.domain.model.TherapistById
 import org.guardteam.mentalguardians.domain.repository.FeatureRepository
+import org.guardteam.mentalguardians.presentation.profile.data.Profile
 import retrofit2.HttpException
 
 class FeatureRepositoryImpl(
@@ -152,6 +154,25 @@ class FeatureRepositoryImpl(
             if (e is HttpException) {
                 val jsonInString = e.response()?.errorBody()?.string()
                 val errorBody = Gson().fromJson(jsonInString, Response::class.java)
+                emit(Result.Error(errorBody.message))
+            } else {
+                emit(Result.Error(e.message.toString()))
+            }
+        }
+    }
+
+    override fun profile(): Flow<Result<Profile>> = flow{
+        emit(Result.Loading)
+        try {
+            val userId = runBlocking { localDataManager.getUserData().first().userId }
+            val response = apiService.profile(userId = userId)
+
+            emit(Result.Success(response.toProfileData()))
+        } catch (e: Exception){
+            if (e is HttpException){
+                val jsonInString = e.response()?.errorBody()?.string()
+                val errorBody = Gson().fromJson(jsonInString, Response::class.java)
+
                 emit(Result.Error(errorBody.message))
             } else {
                 emit(Result.Error(e.message.toString()))

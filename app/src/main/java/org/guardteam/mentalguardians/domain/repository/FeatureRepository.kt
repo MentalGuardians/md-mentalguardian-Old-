@@ -9,6 +9,7 @@ import org.guardteam.mentalguardians.domain.model.Prediction
 import org.guardteam.mentalguardians.domain.model.Response
 import org.guardteam.mentalguardians.domain.model.Therapist
 import org.guardteam.mentalguardians.domain.model.TherapistById
+import org.guardteam.mentalguardians.presentation.profile.data.Profile
 
 interface FeatureRepository {
 
@@ -27,4 +28,6 @@ interface FeatureRepository {
         time: String,
         method: String
     ): Flow<Result<Response>>
+
+    fun profile(): Flow<Result<Profile>>
 }
