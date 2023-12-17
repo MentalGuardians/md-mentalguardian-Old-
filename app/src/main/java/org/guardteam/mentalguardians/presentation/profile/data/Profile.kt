@@ -1,7 +1,7 @@
 package org.guardteam.mentalguardians.presentation.profile.data
 
 data class Profile(
-    val id: Int,
+    val id: String,
     val account: String,
     val username: String,
     val address: String,

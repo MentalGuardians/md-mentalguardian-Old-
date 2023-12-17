@@ -79,17 +79,6 @@ object DataDummy {
     }
 
 
-    val dataProfile = listOf(
-        Profile(
-            1,
-            "Ihfansyahpedo9@gmail.com",
-            "Ihfansyah Pedo",
-            "Jl. Laksda Adisucipto, Papringan, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281",
-            "123456789"
-        )
-    )
-
-
     val listDate: List<Day> by lazy {
         val currentDate = LocalDate.now()
         val startOfSecondWeek = currentDate.plusDays(1)

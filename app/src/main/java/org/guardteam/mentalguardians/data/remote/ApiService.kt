@@ -5,6 +5,7 @@ import org.guardteam.mentalguardians.data.remote.dto.ContentByIdDto
 import org.guardteam.mentalguardians.data.remote.dto.ContentDto
 import org.guardteam.mentalguardians.data.remote.dto.LoginDto
 import org.guardteam.mentalguardians.data.remote.dto.PredictionDto
+import org.guardteam.mentalguardians.data.remote.dto.ProfileDto
 import org.guardteam.mentalguardians.data.remote.dto.ResponseDto
 import org.guardteam.mentalguardians.data.remote.dto.TherapistByIdDto
 import org.guardteam.mentalguardians.data.remote.dto.TherapistDto
@@ -76,6 +77,11 @@ interface ApiService {
         @Field("jenis_konseling") method: String
     ): ResponseDto
 
+    @GET("profile")
+    suspend fun profile(
+        @Query("userId") userId: String
+    ): ProfileDto
+  
     @GET("booking")
     suspend fun Transaction(
         @Query("userId") userId: String
