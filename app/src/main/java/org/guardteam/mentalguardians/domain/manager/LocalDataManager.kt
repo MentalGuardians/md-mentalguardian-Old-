@@ -16,4 +16,12 @@ interface LocalDataManager {
     fun getLoginState(): Flow<Boolean>
 
     suspend fun clearUserData()
+
+    fun getDynamicColorState(): Flow<Boolean>
+
+    suspend fun setDynamicColorState(state: Boolean)
+
+    fun getDarkModeState(): Flow<String>
+
+    suspend fun setDarkModeState(state: String)
 }
