@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class ProfileDto(
 
 	@field:SerializedName("phone")
-	val phone: String,
+	val phone: String? = null,
 
 	@field:SerializedName("error")
 	val error: Boolean,
@@ -29,5 +29,5 @@ data class ProfileDto(
 	val username: String,
 
 	@field:SerializedName("alamat")
-	val alamat: String
+	val alamat: String? = null
 )
