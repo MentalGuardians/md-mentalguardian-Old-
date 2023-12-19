@@ -113,6 +113,9 @@ fun NavGraphBuilder.featuresNavGraph(
                             FeaturesScreen.Therapist.createRoute(it)
                         }
                     )
+                },
+                backToHome = {
+                    navController.navigateUp()
                 }
             )
             onFeaturesTitleChange("Prediction Result")
